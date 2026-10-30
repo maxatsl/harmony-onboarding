@@ -1,0 +1,610 @@
+<meta charset="utf-8">
+<title>HARMONY First Session</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Pastel consumer, seed 1113022440. Pale tiles whose ink is the dark of their own hue, one large
+   radius stepping down inside, nothing raised at rest. The dealt cobalt is replaced by the subject's own
+   green; amber is the second hue and carries "short of target" and the injection day. */
+:root{
+  --ground:#EBF2EC; --surface:#FFFFFF; --raised:#F3F8F4; --active:#E4EDE6;
+  --border:#DFE8E1; --rule:#EEF3EF; --control:#C7D3C9;
+  --text:#15201A; --muted:#55605A; --faint:#5F6B64;
+  --accent:#1F7A46; --accent-soft:#DDEFE2; --accent-mid:#BCDFC6; --accent-ink:#10402A;
+  --warm:#9A5B0B; --warm-soft:#FBEBD4; --warm-ink:#5E370A;
+  --radius-card:20px; --radius-inner:12px; --radius-control:10px;
+  --gap:16px; --card-pad:18px;
+  --font:'Manrope',Inter,system-ui,-apple-system,sans-serif;
+}
+:root[data-theme="dark"],
+:root:not([data-theme="light"]){color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--ground);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;
+  margin:0;-webkit-font-smoothing:antialiased}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:24px 40px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.phone{background:var(--surface);border-radius:28px;overflow:hidden;max-width:430px;width:100%;
+  margin:0 auto;display:flex;flex-direction:column;min-height:640px}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-size:28px;font-weight:700;line-height:1.16;letter-spacing:-.02em}
+h2{font-size:24px;font-weight:700;line-height:1.2;letter-spacing:-.015em}
+h3{font-size:18px;font-weight:600;line-height:1.3}
+p{margin:0}
+.lead{color:var(--muted);font-size:16px}
+.small{color:var(--muted);font-size:14px;line-height:1.5}
+.label{color:var(--faint);font-size:14px;font-weight:500}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+
+/* top bar: a wordmark with its mark, and the quiz progress as the one warm element */
+.bar{display:flex;align-items:center;gap:10px;padding:16px 18px 12px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.brand svg{display:block}
+.tools{display:flex;gap:6px;margin-left:auto}
+.track{height:6px;border-radius:999px;background:var(--active);margin:0 18px 4px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--warm);border-radius:999px;transition:width .25s ease-out}
+.screen{padding:16px 18px 24px;display:flex;flex-direction:column;gap:16px;flex:1}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:17px 20px;
+  font-weight:600;font-size:17px;width:100%;transition:background .12s}
+.btn:hover{background:var(--accent-ink)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:var(--raised);color:var(--text);font-weight:500}
+.btn.ghost:hover{background:var(--active)}
+
+.opt{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-inner);padding:16px;font-size:16px;color:var(--text);font-weight:500;
+  transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--control);background:var(--raised)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.opts{display:flex;flex-direction:column;gap:10px}
+
+.note{background:var(--raised);border-radius:var(--radius-inner);padding:14px 16px;font-size:15px;line-height:1.5}
+.note b.hd{display:block;font-size:14px;font-weight:600;color:var(--accent-ink);margin-bottom:4px}
+.note.warm{background:var(--warm-soft)}
+.note.warm b.hd{color:var(--warm-ink)}
+
+/* the profile builds as she answers */
+.strip{display:flex;flex-wrap:wrap;gap:6px;min-height:30px}
+.chip{font-size:13px;font-weight:500;background:var(--accent-soft);color:var(--accent-ink);
+  border-radius:999px;padding:5px 11px;white-space:nowrap}
+.chip.pending{background:var(--raised);color:var(--faint);font-weight:400}
+
+/* the figure is the face: one ring, the grams inside it */
+.ring{position:relative;width:148px;height:148px;margin:0 auto;flex:none}
+.ring.sm{width:112px;height:112px}
+.ring.sm svg{width:112px;height:112px}
+.ring.sm .rv{font-size:28px}
+.ring.sm .rv u{font-size:15px}
+.ring.sm .rs{font-size:12px;max-width:84px}
+.ring svg{width:148px;height:148px;transform:rotate(-90deg);display:block}
+.ring .rt{fill:none;stroke:var(--active);stroke-width:12}
+.ring .rf{fill:none;stroke:var(--accent);stroke-width:12;stroke-linecap:round;
+  transition:stroke-dashoffset .5s ease-out}
+.ring .rf.warm{stroke:var(--warm)}
+.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.rv{font-size:36px;font-weight:700;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rv u{text-decoration:none;font-size:18px;font-weight:600;color:var(--muted);margin-left:2px}
+.rs{font-size:13px;color:var(--muted);text-align:center;max-width:104px;line-height:1.25}
+
+.card{background:var(--raised);border-radius:var(--radius-card);padding:var(--card-pad);
+  display:flex;flex-direction:column;gap:14px}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.row:last-child{border-bottom:0}
+.row span{color:var(--muted)}
+.row b{font-variant-numeric:tabular-nums;font-weight:600;color:var(--text)}
+
+/* the dose week — the product's own instrument. Each kind has its own mark, not its own colour. */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.day{background:var(--surface);border-radius:8px;padding:8px 2px 7px;text-align:center;border-bottom:3px solid transparent}
+.day .d{font-size:11px;color:var(--faint);display:block;font-weight:500}
+.day .m{font-size:12px;font-weight:600;line-height:1.2;margin-top:3px;display:block}
+.day.low{background:var(--raised)}
+.day.up{background:var(--accent-soft);color:var(--accent-ink)}
+.day.full{background:var(--accent-mid);color:var(--accent-ink);border-bottom-color:var(--accent)}
+.day.shot{background:var(--warm-soft);color:var(--warm-ink);border-bottom-color:var(--warm)}
+.day.today{outline:2px solid var(--accent);outline-offset:1px}
+.keys{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted)}
+.keys span{display:flex;align-items:center;gap:6px}
+.keys i{width:14px;height:14px;border-radius:4px;display:block;border-bottom:3px solid transparent}
+.k-shot{background:var(--warm-soft);border-bottom-color:var(--warm)}
+.k-low{background:var(--raised)}
+.k-up{background:var(--accent-soft)}
+.k-full{background:var(--accent-mid);border-bottom-color:var(--accent)}
+
+/* paywall */
+.plan{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-inner);
+  padding:16px;color:var(--text);font-size:16px;font-weight:500}
+.plan:hover{border-color:var(--control)}
+.plan.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.plan .pr{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.save{font-size:12px;font-weight:600;background:var(--accent);color:#fff;border-radius:999px;
+  padding:3px 8px;margin-left:8px;vertical-align:1px}
+.plan.sel .save{background:var(--accent-ink)}
+input[type=email]{width:100%;font:inherit;padding:15px 16px;border:1px solid var(--border);
+  border-radius:var(--radius-inner);background:var(--surface);color:var(--text)}
+input[type=email]::placeholder{color:var(--faint)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+
+.meal{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-inner);
+  padding:16px;color:var(--text);font-size:16px;font-weight:500}
+.meal:hover{border-color:var(--control);background:var(--raised)}
+.meal .pr{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;color:var(--muted)}
+
+.streak{display:flex;align-items:center;gap:14px;background:var(--accent-soft);
+  border-radius:var(--radius-card);padding:16px 18px;color:var(--accent-ink)}
+.streak .n{font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;flex:none}
+
+.build{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+/* drawn art: one flat language, the palette's own colours, every figure from a real number */
+.art{background:var(--raised);border-radius:var(--radius-card);padding:18px;display:flex;
+  flex-direction:column;gap:12px;align-items:center}
+.art svg{width:100%;height:auto;display:block;max-width:300px}
+.art .cap{font-size:13px;color:var(--muted);text-align:center;line-height:1.4}
+.src{font-size:13px;color:var(--faint);line-height:1.45}
+/* a fragment of the product's own screen */
+.ui{background:var(--raised);border-radius:var(--radius-card);padding:18px;display:flex;justify-content:center}
+.uicard{width:230px;background:var(--surface);border-radius:14px;padding:14px;display:flex;
+  flex-direction:column;gap:10px}
+.uirow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;line-height:1.35}
+.uirow b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+.uibar{height:8px;border-radius:999px;background:var(--active);overflow:hidden}
+.uibar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.uitag{align-self:flex-start;font-size:12px;font-weight:600;background:var(--accent-soft);
+  color:var(--accent-ink);border-radius:999px;padding:4px 10px}
+.build li{color:var(--faint);font-size:16px;display:flex;gap:10px;align-items:flex-start;transition:color .2s}
+.build li.done{color:var(--text)}
+.build li i{width:20px;height:20px;border-radius:999px;background:var(--active);flex:none;margin-top:2px}
+.build li.done i{background:var(--accent)}
+
+/* prototype chrome */
+.devbtn{font-size:13px;font-weight:500;background:var(--raised);border:0;color:var(--muted);
+  border-radius:999px;padding:6px 12px}
+.devbtn[aria-pressed="true"]{background:var(--accent);color:#fff}
+.panel{max-width:430px;width:100%;margin:0 auto;background:var(--surface);border-radius:var(--radius-card);
+  padding:18px;display:flex;flex-direction:column;gap:12px}
+.log{font-size:14px;line-height:1.6;max-height:200px;overflow-y:auto;border-top:1px solid var(--rule);
+  padding-top:10px;margin:0;list-style:none;font-variant-numeric:tabular-nums}
+.log li{display:flex;gap:10px;padding:2px 0}
+.log .t{color:var(--faint)}
+.log .e{font-weight:600}
+.log .e.key{color:var(--accent)}
+.drive{font-size:13px;font-weight:500;background:var(--warm-soft);color:var(--warm-ink);
+  border-radius:999px;padding:5px 11px;align-self:flex-start}
+.legend{font-size:14px;color:var(--muted);line-height:1.8}
+.caption{max-width:430px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:6px}
+.spacer{flex:1;min-height:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.fade{animation:fade .18s ease-out}
+@keyframes fade{from{opacity:.5}to{opacity:1}}
+</style>
+
+<div class="wrap">
+  <div class="caption">
+    <h3>HARMONY — the first session</h3>
+    <p class="small">Clickable prototype, ad click to the first logged meal. All data, scoring and payments are mocked.</p>
+  </div>
+
+  <div class="phone">
+    <div class="bar">
+      <span class="brand">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+          <circle cx="11" cy="11" r="11" fill="#DDEFE2"/>
+          <path d="M6 15c0-5 4-8 10-8-1 6-5 8-10 8z" fill="#1F7A46"/>
+          <path d="M6 15c2.5-2.5 5-4 8.5-5.5" stroke="#DDEFE2" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        Harmony
+      </span>
+      <div class="tools">
+        <button class="devbtn" id="tDrives" aria-pressed="false">Drives</button>
+        <button class="devbtn" id="tEvents" aria-pressed="false">Events</button>
+      </div>
+    </div>
+    <div class="track"><i id="prog" style="width:0%"></i></div>
+    <div id="stage"></div>
+  </div>
+
+  <div class="panel" id="events" hidden>
+    <h3>Analytics events</h3>
+    <p class="small"><b>The optimization target is <span class="num">QuizComplete</span>, not Purchase.</b> Meta restricts
+      lower-funnel events (Purchase, InitiateCheckout, Add to Cart) for data sources classified as health and wellness.
+      Purchase still fires for our own reporting — it just cannot be the bid event.</p>
+    <ul class="log" id="log"></ul>
+  </div>
+
+  <div class="panel" id="drives" hidden>
+    <h3>Octalysis drives in use</h3>
+    <p class="small">White Hat by design (CD1–CD3). <b>CD8 Loss and Avoidance is deliberately suppressed:</b> the problem
+      already supplies it at full strength, and a punishing streak would penalise her for side effects on exactly the days
+      she is deciding whether to quit.</p>
+    <p class="legend" id="driveLegend"></p>
+  </div>
+</div>
+
+<script>
+var QUIZ=[
+ {id:'glp',q:'Where are you with GLP-1 medication?',
+  why:'The plan is different in each case. If you are not on a medication, we build a menopause-only plan instead.',
+  opts:[['on','Taking one now'],['soon','Starting within a month'],['stopped','Stopped, and regaining'],['research','Just looking into it']]},
+ {id:'med',q:'Which one, and how long?',
+  why:'Appetite suppression differs by medication and deepens over the first months. We never advise on dose — that is between you and your prescriber.',
+  opts:[['sema_new','Semaglutide, under 3 months'],['sema_est','Semaglutide, 3 months or more'],['tirz_new','Tirzepatide, under 3 months'],['tirz_est','Tirzepatide, 3 months or more'],['na','Prefer not to say']]},
+ {id:'meno',q:'Where are you with menopause?',
+  why:'Falling oestrogen changes how much protein it takes to hold on to muscle. It is the reason a general tracker sets your target too low.',
+  opts:[['peri','Perimenopause'],['meno','Menopause'],['post','Post-menopause'],['unsure','Not sure']]},
+ {id:'worry',q:'What worries you most right now?',
+  opts:[['muscle','Losing muscle and strength'],['energy','Having no energy'],['face','My face and skin'],['regain','Regaining all of it']]},
+ {id:'breakfast',q:'A typical breakfast?',weight:true,
+  opts:[['coffee','Coffee, maybe nothing'],['carb','Toast or cereal'],['yog','Yoghurt and fruit'],['prot','Eggs or a protein shake']]},
+ {id:'strength',q:'Strength training right now?',
+  opts:[['none','None'],['occ','Occasionally'],['low','Once or twice a week'],['high','Three times a week or more']]},
+ {id:'restart',q:'Have you stopped a GLP-1 before and started again?',
+  opts:[['yes','Yes'],['no','No'],['na','Does not apply']]}
+];
+var BFAST={coffee:0,carb:8,yog:14,prot:24};
+var MEALS=[['Greek yoghurt, berries, seeds',22],['Two eggs on toast',18],['Coffee and a banana',3]];
+var DOSE=['Injection day — eat before the dip','Appetite usually lowest — protein first, volume later',
+ 'Still low — liquid protein counts','Appetite starting to come back','Best day to train',
+ 'Strong appetite — hold the line','Day before your shot — top up protein'];
+var DRIVES={hook:'CD7 Curiosity + CD1 Calling',quiz:'CD3 Instant Feedback + CD7 Zeigarnik',
+ build:'CD2 Progress — the magic moment',teaser:'CD7 Curiosity + CD1 Calling',result:'CD2 Accomplishment — the PROOF moment',lead:'CD4 Ownership',
+ paywall:'CD6 Scarcity — the only Black Hat screen',dose:'CD3 Feedback',meal:'CD3 Empowerment',
+ aha:'CD3 Instant Feedback — the AHA moment',loop:'CD2 + CD4 Investment, CD8 withheld'};
+
+var EMAIL_PH='you@example.com'; // taste-skill-ignore: RFC 2606 reserved domain in a field placeholder, not invented user data
+
+var S={step:0,qi:0,weightKg:74,plan:'q4',meal:null};
+var stage=document.getElementById('stage'),logEl=document.getElementById('log');
+
+function ev(name,key){
+  var li=document.createElement('li');
+  var t=new Date().toLocaleTimeString([], {hour12:false});
+  li.innerHTML='<span class="t">'+t+'</span><span class="e'+(key?' key':'')+'">'+name+'</span>';
+  logEl.appendChild(li); logEl.scrollTop=logEl.scrollHeight;
+}
+function prog(n){document.getElementById('prog').style.width=Math.round(n/10*100)+'%'}
+
+/* one ring: the figure is the screen's face */
+function ring(pct,value,unit,sub,warm,sm,id){
+  var c=2*Math.PI*62,off=c*(1-Math.max(0,Math.min(1,pct/100)));
+  return '<div class="ring'+(sm?' sm':'')+'"'+(id?' id="'+id+'"':'')+'><svg viewBox="0 0 148 148" aria-hidden="true">'+
+   '<circle class="rt" cx="74" cy="74" r="62"/>'+
+   '<circle class="rf'+(warm?' warm':'')+'" cx="74" cy="74" r="62" stroke-dasharray="'+c.toFixed(1)+
+   '" stroke-dashoffset="'+off.toFixed(1)+'"/></svg>'+
+   '<div class="rc"><span class="rv">'+value+'<u>'+unit+'</u></span><span class="rs">'+sub+'</span></div></div>';
+}
+function target(){
+  var f=1.4;
+  if(S.meno==='meno'||S.meno==='post')f+=0.2;
+  if(S.glp==='on'||S.glp==='soon')f+=0.2;
+  if(S.med==='sema_est'||S.med==='tirz_est')f+=0.1;
+  if(S.strength==='low')f+=0.1; else if(S.strength==='high')f+=0.2;
+  f=Math.min(f,2.2);
+  var daily=Math.round(S.weightKg*f);
+  return {f:Math.round(f*10)/10,daily:daily,morning:Math.round(daily*0.35)};
+}
+function risk(){
+  var t=target(),gap=t.morning-(BFAST[S.breakfast]||0),s=0;
+  if(gap>18)s+=2; else if(gap>8)s+=1;
+  if(S.strength==='none')s+=2; else if(S.strength==='occ')s+=1;
+  if(S.meno==='meno'||S.meno==='post')s+=1;
+  if(S.med==='sema_est'||S.med==='tirz_est')s+=1;
+  if(S.restart==='yes')s+=1;
+  return s>=5?2:(s>=3?1:0);
+}
+function strip(){
+  var out='',lab={on:'On GLP-1',soon:'Starting soon',stopped:'Restarting',research:'Researching'};
+  var meds={sema_new:'Semaglutide, new',sema_est:'Semaglutide, 3mo+',tirz_new:'Tirzepatide, new',tirz_est:'Tirzepatide, 3mo+',na:'Medication private'};
+  var men={peri:'Perimenopause',meno:'Menopause',post:'Post-menopause',unsure:'Stage unknown'};
+  var str={none:'No strength work',occ:'Strength: occasional',low:'Strength: 1–2x',high:'Strength: 3x+'};
+  function c(v){return v?'<span class="chip">'+v+'</span>':''}
+  out+=c(lab[S.glp])+c(meds[S.med])+c(men[S.meno]);
+  if(S.breakfast!==undefined&&S.breakfast!==null)out+=c('Morning protein now: '+(BFAST[S.breakfast]||0)+' g');
+  out+=c(str[S.strength]);
+  if(!out)out='<span class="chip pending">Your profile builds as you answer</span>';
+  return '<div class="strip">'+out+'</div>';
+}
+function driveBadge(k){
+  return document.getElementById('drives').hidden?'':'<span class="drive">'+DRIVES[k]+'</span>';
+}
+function go(fn){stage.className='fade';fn();}
+
+/* ---------- drawn art ---------- */
+/* Every figure is drawn from a real number, not decoration. */
+function artAdoption(){
+  /* 100 marks, 22 filled: one mark is one adult in a hundred. */
+  var h='<svg viewBox="0 0 300 152" role="img" aria-label="A hundred marks, twenty-two of them filled: 22 per cent of US adults aged 50 to 64 currently take a GLP-1">';
+  for(var i=0;i<100;i++){
+    var x=22+(i%10)*28, y=12+Math.floor(i/10)*14;
+    h+='<circle cx="'+x+'" cy="'+y+'" r="5" fill="'+(i<22?'#1F7A46':'#C8E2CF')+'"/>';
+  }
+  return h+'</svg>';
+}
+function artLeanMass(){
+  /* STEP-1, 68 weeks: body weight -15.0%, lean body mass -9.7% from baseline. */
+  return '<svg viewBox="0 0 300 150" role="img" aria-label="Two bars: body weight down fifteen per cent, lean mass down nine point seven per cent">'+
+   '<text x="0" y="22" font-size="13" fill="#55605A" font-family="Manrope,sans-serif">Body weight</text>'+
+   '<rect x="0" y="32" width="276" height="26" rx="8" fill="#DDEFE2"/>'+
+   '<rect x="0" y="32" width="235" height="26" rx="8" fill="#1F7A46"/>'+
+   '<text x="286" y="50" font-size="13" fill="#15201A" font-family="Manrope,sans-serif" text-anchor="end" font-weight="600">-15.0%</text>'+
+   '<text x="0" y="92" font-size="13" fill="#55605A" font-family="Manrope,sans-serif">Lean body mass</text>'+
+   '<rect x="0" y="102" width="276" height="26" rx="8" fill="#FBEBD4"/>'+
+   '<rect x="0" y="102" width="178" height="26" rx="8" fill="#9A5B0B"/>'+
+   '<text x="286" y="120" font-size="13" fill="#15201A" font-family="Manrope,sans-serif" text-anchor="end" font-weight="600">-9.7%</text>'+
+   '</svg>';
+}
+function artSpread(){
+  /* Mamerow 2014: the same 90 g a day in two patterns. Bars are to scale against the 65 g meal. */
+  var meals=[['Breakfast',30,10],['Lunch',30,15],['Dinner',30,65]],h,i,S=68/65;
+  h='<svg viewBox="0 0 300 215" role="img" aria-label="Two protein patterns over three meals: thirty, thirty, thirty grams against ten, fifteen, sixty-five grams">'+
+    '<text x="8" y="76" font-size="13" font-weight="600" fill="#10402A" font-family="Manrope,sans-serif">Even</text>'+
+    '<text x="8" y="186" font-size="13" font-weight="600" fill="#5E370A" font-family="Manrope,sans-serif">Skewed</text>';
+  for(i=0;i<3;i++){
+    var x=92+i*62, e=Math.round(meals[i][1]*S), k=Math.round(meals[i][2]*S);
+    h+='<rect x="'+x+'" y="'+(80-e)+'" width="34" height="'+e+'" rx="5" fill="#1F7A46"/>'+
+       '<text x="'+(x+17)+'" y="'+(75-e)+'" font-size="12" font-weight="600" fill="#15201A" text-anchor="middle" font-family="Manrope,sans-serif">'+meals[i][1]+' g</text>'+
+       '<rect x="'+x+'" y="'+(190-k)+'" width="34" height="'+k+'" rx="5" fill="#9A5B0B"/>'+
+       '<text x="'+(x+17)+'" y="'+(185-k)+'" font-size="12" font-weight="600" fill="#15201A" text-anchor="middle" font-family="Manrope,sans-serif">'+meals[i][2]+' g</text>'+
+       '<text x="'+(x+17)+'" y="208" font-size="12" fill="#55605A" text-anchor="middle" font-family="Manrope,sans-serif">'+meals[i][0]+'</text>';
+  }
+  return h+'</svg>';
+}
+function artMealCard(){
+  return '<div class="ui"><div class="uicard">'+
+   '<span class="uitag">Scored in 2 seconds</span>'+
+   '<div class="uirow"><span>Greek yoghurt, berries, seeds</span><b>22 g</b></div>'+
+   '<div class="uibar"><i style="width:85%"></i></div>'+
+   '<div class="uirow"><span style="color:var(--muted)">Of 26 g before noon</span><b>85%</b></div>'+
+   '</div></div>';
+}
+
+/* ---------- teasers: shown after the question whose index is the key ---------- */
+var TEASERS={
+ 0:{t:'You are not early. You are in the middle of it.',
+    art:artAdoption,cap:'Each figure is one adult in a hundred; the filled ones are taking a GLP-1 right now.',
+    b:'About 22% of US adults aged 50 to 64 are taking a GLP-1 right now — the highest share of any age group. Across all US adults it is 12%, so this age band runs close to double the national rate.',
+    src:'KFF Health Tracking Poll, fielded 27 October – 2 November 2025'},
+ 2:{t:'The scale cannot tell you what you lost.',
+    art:artLeanMass,cap:'Change from baseline over 68 weeks on semaglutide 2.4 mg.',
+    b:'In the STEP-1 body-composition substudy, body weight fell 15.0% — and lean body mass fell 9.7%. Muscle is not protected by default. That is the whole reason this app exists.',
+    src:'Wilding et al., New England Journal of Medicine, 2021; DXA substudy, 140 participants'},
+ 4:{t:'Three meals of 30&nbsp;g beat one of 65&nbsp;g',
+    art:artSpread,cap:'The same 90 g of protein a day, in two patterns.',
+    b:'Only the pattern changed — and 24-hour muscle protein synthesis came out 25% higher when the protein was spread evenly: 0.075 against 0.056 %/h.',
+    src:'Mamerow et al., Journal of Nutrition, 2014. Crossover trial, 8 healthy adults, mean age 37 — a small study, and the only one this screen rests on.',
+    m:'Protein you will actually eat is protein you eat early. On a GLP-1 the evening meal is the one that gets skipped, so we put your target on the morning and ask you to change one meal instead of three. That is our decision, not a clinical finding.'},
+ 5:{t:'We score the meal, not the day',
+    art:artMealCard,cap:'',
+    b:'One photograph, one number, no food diary. A day you can still fix at 11am is worth more than a verdict at midnight.',
+    src:''}
+};
+function scrTeaser(idx,next){
+  var z=TEASERS[idx];
+  var pic=z.art===artMealCard?z.art():('<div class="art">'+z.art()+(z.cap?'<p class="cap">'+z.cap+'</p>':'')+'</div>');
+  stage.innerHTML='<div class="screen">'+driveBadge('teaser')+
+   '<h2>'+z.t+'</h2>'+pic+
+   '<p class="lead">'+z.b+'</p>'+
+   (z.src?'<p class="src">'+z.src+'</p>':'')+
+   (z.m?'<div class="note"><b class="hd">Harmony method</b>'+z.m+'</div>':'')+
+   '<div class="spacer"></div><button class="btn" id="tc">Continue</button></div>';
+  ev('TeaserViewed · q'+(idx+1));
+  document.getElementById('tc').onclick=function(){go(next)};
+}
+
+/* ---------- screens ---------- */
+function scrHook(){
+  prog(0);
+  stage.innerHTML='<div class="screen">'+driveBadge('hook')+
+   '<h1>The weight you lose should not be muscle.</h1>'+
+   '<p class="lead">For women 40+ on a GLP-1. Seven questions, about a minute. You will see your daily protein target before we ask you for anything.</p>'+
+   '<div class="note"><b class="hd">What we are not</b>No prescriptions, no dosing advice, no medical claims. We work with whatever your doctor already prescribed.</div>'+
+   '<div class="spacer"></div>'+
+   '<button class="btn" id="go">Start</button>'+
+   '<p class="small">18+. Weight-management advertising is restricted to adults.</p></div>';
+  document.getElementById('go').onclick=function(){ev('QuizStart');S.qi=0;go(scrQuiz)};
+}
+function scrQuiz(){
+  var q=QUIZ[S.qi];prog(S.qi+1);
+  var h='<div class="screen">'+driveBadge('quiz')+strip()+
+   '<p class="label">Question '+(S.qi+1)+' of '+QUIZ.length+'</p>'+
+   '<h2>'+q.q+'</h2>';
+  if(q.why)h+='<div class="note"><b class="hd">Why we ask</b>'+q.why+'</div>';
+  h+='<div class="opts">';
+  for(var i=0;i<q.opts.length;i++)
+    h+='<button class="opt'+(S[q.id]===q.opts[i][0]?' sel':'')+'" data-v="'+q.opts[i][0]+'">'+q.opts[i][1]+'</button>';
+  h+='</div>';
+  if(q.weight)h+='<div class="card"><p class="label">And roughly your weight — it sets the target</p>'+
+   '<p style="text-align:center;font-size:28px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums">'+
+   '<span id="wtv">'+S.weightKg+'</span><span style="font-size:16px;font-weight:600;color:var(--muted);margin-left:3px">kg</span></p>'+
+   '<input type="range" id="wt" min="50" max="130" step="1" value="'+S.weightKg+'" aria-label="Body weight in kilograms"></div>';
+  h+='<div class="spacer"></div>';
+  if(S.qi>0)h+='<button class="btn ghost" id="back">Back</button>';
+  h+='</div>';
+  stage.innerHTML=h;
+  if(q.weight){
+    var w=document.getElementById('wt');
+    w.oninput=function(){S.weightKg=+w.value;document.getElementById('wtv').textContent=w.value};
+  }
+  var btns=stage.querySelectorAll('.opt');
+  for(var j=0;j<btns.length;j++)btns[j].onclick=function(){
+    S[q.id]=this.getAttribute('data-v');
+    ev('QuizAnswer · '+q.id);
+    var done=S.qi,last=false;
+    if(S.qi===0&&(S[q.id]==='research')){S.qi=2;}
+    else if(S.qi<QUIZ.length-1)S.qi++;
+    else{ev('QuizComplete',true);last=true}
+    var next=last?scrMagic:scrQuiz;
+    if(TEASERS[done])return go(function(){scrTeaser(done,next)});
+    go(next);
+  };
+  if(S.qi>0)document.getElementById('back').onclick=function(){S.qi--;go(scrQuiz)};
+}
+function scrMagic(){
+  prog(8);
+  var steps=[[0,'Matching your medication stage'],[26,'Adjusting protein for falling oestrogen'],
+             [52,'Mapping your dose week'],[76,'Checking your breakfast against the target']];
+  var h='<div class="screen">'+driveBadge('build')+
+   '<h2>Building your plan</h2>'+
+   '<div class="card" style="align-items:center;gap:16px">'+ring(0,'0','%','',false,false,'mr')+
+     '<p class="lead" id="mstep" style="text-align:center">'+steps[0][1]+'</p></div>'+
+   '<ul class="build" id="ml">';
+  for(var i=0;i<steps.length;i++)h+='<li id="m'+i+'"><i></i><span>'+steps[i][1]+'</span></li>';
+  h+='</ul><div class="spacer"></div>'+
+   '<p class="src">Built from your seven answers. Nothing here is a diagnosis.</p></div>';
+  stage.innerHTML=h;
+  var rf=document.querySelector('#mr .rf'),rv=document.querySelector('#mr .rv'),
+      st=document.getElementById('mstep'),C=2*Math.PI*62,n=0;
+  rf.style.transition='none';
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var tick=setInterval(function(){
+    n+=reduced?25:2;
+    if(n>100)n=100;
+    rf.setAttribute('stroke-dashoffset',(C*(1-n/100)).toFixed(1));
+    rv.innerHTML=n+'<u>%</u>';
+    for(var i=0;i<steps.length;i++)if(n>=steps[i][0]){
+      var el=document.getElementById('m'+i);if(el)el.className='done';
+      st.textContent=steps[i][1];
+    }
+    if(n>=100){clearInterval(tick);ev('PlanBuilt');setTimeout(function(){go(scrResult)},620)}
+  },reduced?120:38);
+}
+function scrResult(){
+  prog(9);
+  var t=target(),have=BFAST[S.breakfast]||0,gap=Math.max(0,t.morning-have),r=risk();
+  var pct=Math.min(100,Math.round(have/t.morning*100));
+  var bands=['Lower','Moderate','Elevated'];
+  stage.innerHTML='<div class="screen">'+driveBadge('result')+
+   '<h2>Your daily protein target</h2>'+
+   '<div class="card" style="align-items:center;gap:16px">'+
+     ring(100,t.daily,'g','Every day')+
+     '<p class="lead" style="text-align:center"><span class="num">'+t.morning+' g</span> of it before noon — that is where the loss happens.</p></div>'+
+   '<div class="card'+(gap>0?'':'')+'" style="align-items:center;gap:14px">'+
+     ring(pct,have,'g','Your breakfast now',gap>0,true)+
+     '<p class="lead" style="text-align:center">That is <span class="num">'+pct+'%</span> of your morning target'+
+     (gap>0?' — <b class="num">'+gap+' g</b> short of the muscle-protecting range.':', which already clears it.')+'</p></div>'+
+   '<div class="rows">'+
+     '<div class="row"><span>Protein factor applied</span><b>'+t.f+' g/kg</b></div>'+
+     '<div class="row"><span>Body weight used</span><b>'+S.weightKg+' kg</b></div>'+
+     '<div class="row"><span>Lean-mass risk profile</span><b>'+bands[r]+'</b></div>'+
+   '</div>'+
+   '<p class="small">Based on your answers, not a diagnosis. Nothing here replaces your prescriber.</p>'+
+   '<h3>Your dose week</h3>'+week(0)+
+   '<div class="note"><b class="hd">Why this matters now</b>You are in the window that decides how much muscle you keep. You are not shrinking — you are rebuilding.</div>'+
+   '<button class="btn" id="save">Save my plan</button></div>';
+  document.getElementById('save').onclick=function(){ev('ResultViewed');go(scrLead)};
+}
+function week(shotIdx){
+  var d=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],h='<div class="week">';
+  var kind=['shot','low','low','up','up','full','full'],mark=['Shot','Low','Low','Up','Up','Full','Full'];
+  for(var i=0;i<7;i++){
+    var rel=(i-shotIdx+7)%7;
+    h+='<div class="day '+kind[rel]+(i===0?' today':'')+'"><span class="d">'+d[i]+'</span>'+
+       '<span class="m">'+mark[rel]+'</span></div>';
+  }
+  return h+'</div><div class="keys"><span><i class="k-shot"></i>Injection day</span>'+
+   '<span><i class="k-low"></i>Low appetite</span><span><i class="k-up"></i>Returning</span>'+
+   '<span><i class="k-full"></i>Full appetite</span></div>';
+}
+function scrLead(){
+  prog(10);
+  stage.innerHTML='<div class="screen">'+driveBadge('lead')+
+   '<h2>Where should we send it?</h2>'+
+   '<p class="lead">Your protein target and dose-week plan, so you have them even before you decide.</p>'+
+   '<input type="email" id="em" placeholder="'+EMAIL_PH+'" autocomplete="email" aria-label="Email address">'+
+   '<div class="spacer"></div><button class="btn" id="next">Save and continue</button>'+
+   '<p class="small">We email the plan. You can delete the record at any time.</p></div>';
+  document.getElementById('next').onclick=function(){ev('LeadCaptured');go(scrPaywall)};
+}
+function scrPaywall(){
+  var t=target();
+  var plans=[['p4','4 weeks','$29.99',''],['q4','Quarterly','$59.99','save 33%'],['y4','Annual','$129.99','save 64%']];
+  var h='<div class="screen">'+driveBadge('paywall')+
+   '<h2>'+t.daily+' g a day, built around your shot</h2>'+
+   '<div class="note warm"><b class="hd">What this costs next to the medication</b>The medication runs $200–1,000 a month. Protecting what it takes from your muscle and bone starts at $7.50 a week.</div>'+
+   '<div class="opts">';
+  for(var i=0;i<plans.length;i++)
+    h+='<button class="plan'+(S.plan===plans[i][0]?' sel':'')+'" data-p="'+plans[i][0]+'">'+
+       '<span>'+plans[i][1]+(plans[i][3]?'<span class="save">'+plans[i][3]+'</span>':'')+'</span>'+
+       '<span class="pr">'+plans[i][2]+'</span></button>';
+  h+='</div><div class="spacer"></div><button class="btn" id="buy">Start my plan</button>'+
+   '<p class="small">Cancel any time. Your plan stays saved for 24 hours. No medical advice. 18+.</p></div>';
+  stage.innerHTML=h;
+  ev('PaywallView');
+  var ps=stage.querySelectorAll('.plan');
+  for(var j=0;j<ps.length;j++)ps[j].onclick=function(){
+    S.plan=this.getAttribute('data-p');ev('PlanSelected · '+S.plan);go(scrPaywall);
+  };
+  document.getElementById('buy').onclick=function(){ev('Purchase (mock, reporting only)',true);go(scrDose)};
+}
+function scrDose(){
+  prog(10);
+  var opts=[['0','Today'],['1','Tomorrow'],['2','In 2–3 days'],['4','In 4 or more days'],['x','Not sure yet']];
+  var h='<div class="screen">'+driveBadge('dose')+
+   '<h2>When is your next shot?</h2><p class="lead">It sets which day of the week your plan treats as low-appetite.</p><div class="opts">';
+  for(var i=0;i<opts.length;i++)h+='<button class="opt" data-v="'+opts[i][0]+'">'+opts[i][1]+'</button>';
+  h+='</div><div class="spacer"></div></div>';
+  stage.innerHTML=h;
+  var b=stage.querySelectorAll('.opt');
+  for(var j=0;j<b.length;j++)b[j].onclick=function(){ev('DoseWeekSet');go(scrMeal)};
+}
+function scrMeal(){
+  var t=target();
+  var h='<div class="screen">'+driveBadge('meal')+
+   '<h2>Log your first meal</h2>'+
+   '<p class="lead">Day 1, before noon. Target: <span class="num">'+t.morning+' g</span>. Photograph it, or pick one to try the scoring.</p>'+
+   '<div class="opts">';
+  for(var i=0;i<MEALS.length;i++)
+    h+='<button class="meal" data-i="'+i+'"><span>'+MEALS[i][0]+'</span><span class="pr">'+MEALS[i][1]+' g</span></button>';
+  h+='</div><p class="small">Photo recognition is mocked in this prototype.</p><div class="spacer"></div></div>';
+  stage.innerHTML=h;
+  var b=stage.querySelectorAll('.meal');
+  for(var j=0;j<b.length;j++)b[j].onclick=function(){
+    S.meal=+this.getAttribute('data-i');ev('FirstMealLogged',true);go(scrAha);
+  };
+}
+function scrAha(){
+  var t=target(),p=MEALS[S.meal][1],pct=Math.round(p/t.morning*100),ok=pct>=80;
+  stage.innerHTML='<div class="screen">'+driveBadge('aha')+
+   '<h2>'+MEALS[S.meal][0]+'</h2>'+
+   '<div class="card" style="align-items:center;gap:14px">'+
+     ring(pct,p,'g','Of '+t.morning+' g before noon',!ok)+
+     '<p class="lead" style="text-align:center"><span class="num">'+pct+'%</span> of your morning target'+
+     (ok?' — you are in the muscle-protecting range.':'.')+'</p></div>'+
+   (ok?'<div class="note"><b class="hd">Why that counts</b>Enough protein early is what tells your body to hold on to muscle while the medication suppresses your appetite.</div>'
+      :'<div class="note warm"><b class="hd">A twenty-second fix</b>Add Greek yoghurt and you are at <b class="num">'+(p+15)+' g</b> — over the line, without more volume.</div>')+
+   '<div class="spacer"></div><button class="btn" id="n">See tomorrow</button></div>';
+  document.getElementById('n').onclick=function(){go(scrLoop)};
+}
+function scrLoop(){
+  stage.innerHTML='<div class="screen">'+driveBadge('loop')+
+   '<h2>Day 1 in range</h2>'+
+   '<div class="streak"><span class="n">1</span><span>Protein days in range.<br><span style="font-size:14px">Shot days are rest days — your streak will not break the day after your injection.</span></span></div>'+
+   '<div class="note"><b class="hd">Tomorrow is day 2 of your dose week</b>'+DOSE[1]+'. We will open with a plan built for a small appetite.</div>'+
+   '<h3>Your week</h3>'+week(0)+
+   '<div class="note"><b class="hd">What we never show you</b>Your weight is not the headline here. The numbers you see are the ones you control: protein, sessions, days in range.</div>'+
+   '<div class="spacer"></div><button class="btn ghost" id="again">Run it again</button></div>';
+  document.getElementById('again').onclick=function(){
+    S={step:0,qi:0,weightKg:74,plan:'q4',meal:null};logEl.innerHTML='';go(scrHook);
+  };
+}
+
+/* overlays */
+function tog(btn,panel,after){
+  btn.onclick=function(){
+    var on=panel.hidden;panel.hidden=!on;btn.setAttribute('aria-pressed',String(on));if(after)after();
+  };
+}
+tog(document.getElementById('tEvents'),document.getElementById('events'));
+tog(document.getElementById('tDrives'),document.getElementById('drives'),function(){
+  var l=document.getElementById('driveLegend'),k=Object.keys(DRIVES),o='';
+  for(var i=0;i<k.length;i++)o+=k[i]+' → '+DRIVES[k[i]]+'<br>';
+  l.innerHTML=o;
+});
+scrHook();
+</script>
