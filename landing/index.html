@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Harmony — Keep strong and harmonize your life</title>
+<meta name="description" content="A strength and protein plan for women 45–60 in menopause, on a GLP-1 or not. See your plan before you pay, and a strength score you can watch move.">
+<meta property="og:title" content="Harmony — Keep strong and harmonize your life">
+<meta property="og:description" content="A strength and protein plan for women in menopause, on a GLP-1 or not.">
+<meta property="og:image" content="/assets/hook-a.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,ital,wght@6..72,0,300;6..72,0,400;6..72,1,300&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --forest:#224228;--forest-2:#2d5234;--olive:#5c6f5d;--sage:#849671;--sage-2:#b8c09f;--sage-pale:#ced4b8;--tint:#e7ebdc;
+  --canvas:#f7f1e8;--paper-2:#efe7da;--white:#fff;--ink:#1c1b1a;--stone:#4a4741;--ash:#6f6d69;--gold:#af751b;--gold-pale:#ddbe78;
+  --serif:'Newsreader',Georgia,serif;--sans:'Inter',system-ui,-apple-system,sans-serif;
+  --max:1200px;--pad:clamp(20px,4vw,40px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2{font-family:var(--serif);font-weight:300;letter-spacing:-.02em;line-height:1.04;text-wrap:balance}
+h1{font-size:clamp(44px,5vw,68px)}
+.nb{white-space:nowrap}
+h2{font-size:clamp(34px,4.2vw,58px)}
+h3{font-size:20px;font-weight:600;line-height:1.3}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+section{padding:clamp(72px,10vw,140px) 0}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--stone);max-width:620px}
+.small{font-size:14px;color:var(--ash)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.btn{display:inline-block;border:0;border-radius:999px;padding:18px 30px;font:600 17px/1 var(--sans);text-decoration:none;cursor:pointer;
+  background:var(--forest);color:var(--canvas);transition:transform .12s,background .15s}
+.btn:hover{background:var(--forest-2)}
+.btn:active{transform:scale(.98)}
+.on-dark .btn{background:var(--canvas);color:var(--forest)}
+.on-dark .btn:hover{background:#fff}
+
+/* nav */
+.nav{background:var(--forest);color:var(--canvas)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:76px}
+.brand{display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.brand b{font-family:var(--serif);font-weight:400;font-size:26px}
+.brand span{font-family:var(--serif);font-style:italic;font-weight:300;font-size:14px;color:var(--gold-pale)}
+.nav nav{display:flex;gap:26px;margin-left:auto;font-size:15px}
+.nav nav a{text-decoration:none;color:var(--sage-pale)}
+.nav nav a:hover{color:var(--canvas)}
+.nav .btn{padding:12px 20px;font-size:15px}
+.nav .btn{white-space:nowrap}
+@media (max-width:420px){.brand span{font-size:12px;white-space:nowrap}.nav .wrap{gap:12px}.nav .btn{padding:11px 16px}}
+
+/* hero */
+.hero{background:var(--forest);color:var(--canvas);padding:clamp(40px,6vw,72px) 0 clamp(72px,9vw,120px)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center}
+.hero .lead{color:var(--sage-pale);margin:28px 0 36px}
+.hero .small{color:var(--sage);margin-top:18px}
+.hero-photo{position:relative;border-radius:32px;overflow:hidden;aspect-ratio:4/5}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.badge{position:absolute;left:24px;bottom:24px;display:flex;align-items:center;gap:14px;background:var(--canvas);color:var(--ink);border-radius:18px;padding:14px 20px}
+.badge b{font:600 36px/1 var(--sans);color:var(--forest)}
+.badge span{font-size:14px;line-height:1.3;color:var(--stone)}
+
+/* protein calculator */
+.calc .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.calc .lead{margin-top:22px}
+.calc-card{background:var(--white);border-radius:28px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:26px}
+.field label,.field legend{display:block;font-size:15px;font-weight:600;margin-bottom:10px;color:var(--stone)}
+fieldset.field{border:0;padding:0;margin:0;min-width:0}
+.weight-out{font:300 44px/1 var(--serif)}
+.weight-out small{font:500 16px var(--sans);color:var(--stone);margin-left:4px}
+input[type=range]{width:100%;accent-color:var(--forest);margin-top:12px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{margin:0;font-weight:500;font-size:15px;padding:11px 18px;border-radius:999px;background:var(--tint);color:var(--ink);cursor:pointer}
+.seg input:checked+label{background:var(--forest);color:var(--canvas)}
+.seg input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.result{background:var(--forest);color:var(--canvas);border-radius:22px;padding:24px 26px;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 18px}
+.result b{font:300 64px/1 var(--serif)}
+.result span{color:var(--sage-pale);font-size:16px}
+
+/* problem */
+.problem{background:var(--paper-2)}
+.problem .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(32px,5vw,72px);align-items:end}
+.stat{white-space:nowrap;font:700 clamp(84px,11vw,150px)/.9 var(--sans);color:var(--forest);letter-spacing:-.03em;margin:34px 0 14px}
+.stat-label{font-size:21px;max-width:520px}
+.stat-2{display:flex;gap:16px;align-items:baseline;margin-top:30px;padding-left:18px;border-left:3px solid var(--sage)}
+.stat-2 b{font:700 34px/1 var(--sans);color:var(--forest)}
+.quote{font:italic 300 clamp(26px,2.6vw,36px)/1.2 var(--serif);color:var(--forest)}
+.sources{margin-top:34px;font-size:13px;color:var(--ash);max-width:900px}
+
+/* steps */
+.steps{background:var(--sage-pale)}
+.steps .head{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap;margin-bottom:56px}
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px)}
+.step img{border-radius:24px;width:100%;height:auto;background:var(--white)}
+.step .when{display:block;font:italic 300 22px/1 var(--serif);color:var(--forest);margin:22px 0 8px}
+.step p{font-size:16px;color:var(--stone)}
+
+/* audience */
+.who .wrap>h2{margin-bottom:56px;max-width:860px}
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px)}
+.who-card{border-radius:32px;overflow:hidden;background:var(--white);display:grid;grid-template-rows:auto 1fr}
+.who-card img{aspect-ratio:16/10;width:100%;height:auto;object-fit:cover;object-position:50% 30%}
+.who-card .body{padding:clamp(24px,3vw,36px)}
+.who-card h3{font-family:var(--serif);font-weight:300;font-size:34px;margin-bottom:14px;color:var(--forest)}
+.who-card ul{margin:0;padding-left:20px;color:var(--stone)}
+.who-card li{margin-bottom:8px}
+
+/* compare */
+.compare{background:var(--forest);color:var(--canvas)}
+.compare .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.compare .lead{color:var(--sage-pale);margin-top:22px}
+table{width:100%;border-collapse:collapse;font-size:17px}
+th,td{text-align:left;padding:16px 10px;border-bottom:1px solid rgba(255,255,255,.14)}
+th{font-weight:600;color:var(--gold-pale)}
+td.y,td.n{text-align:center;width:120px}
+th.c{text-align:center}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--gold-pale)}
+.ring{display:inline-block;width:16px;height:16px;border-radius:50%;border:2px solid var(--sage)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* pricing */
+.pricing .wrap>h2{max-width:760px}
+.pricing .lead{margin:22px 0 52px}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,32px)}
+.plan{border-radius:28px;padding:clamp(26px,3vw,40px);background:var(--tint);display:flex;flex-direction:column;gap:12px}
+.plan.best{background:var(--forest);color:var(--canvas)}
+.plan .tag{align-self:flex-start;font-size:13px;font-weight:600;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:5px 12px}
+.plan .price{font:300 64px/1 var(--serif)}
+.plan .per{font-size:16px;color:var(--stone)}
+.plan.best .per{color:var(--sage-pale)}
+.plan ul{margin:8px 0 18px;padding-left:20px;font-size:16px}
+.plan .btn{align-self:flex-start;margin-top:auto}
+.plan.best .btn{background:var(--canvas);color:var(--forest)}
+.fine{margin-top:26px;font-size:14px;color:var(--ash)}
+
+/* faq */
+.faq{background:var(--paper-2)}
+.faq .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,5vw,72px)}
+details{border-bottom:1px solid #d6cdbd;padding:22px 0}
+summary{cursor:pointer;font-size:20px;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--serif);font-size:28px;line-height:1;color:var(--forest)}
+details[open] summary::after{content:"–"}
+details p{margin-top:12px;color:var(--stone);max-width:640px}
+
+/* final */
+.final{background:var(--forest);color:var(--canvas);text-align:center}
+.final h2{max-width:900px;margin:0 auto}
+.final .lead{color:var(--sage-pale);margin:24px auto 40px}
+footer{background:var(--forest);color:var(--sage);border-top:1px solid rgba(255,255,255,.12);padding:36px 0;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+footer b{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--canvas)}
+
+/* motion */
+.rise{opacity:0;transform:translateY(22px);transition:opacity .6s ease-out,transform .6s ease-out}
+.rise.in{opacity:1;transform:none}
+.no-js .rise{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}.rise{opacity:1;transform:none}}
+
+@media (max-width:900px){
+  .hero .wrap,.calc .wrap,.problem .wrap,.compare .wrap,.faq .wrap,.who-grid,.plans{grid-template-columns:1fr}
+  .steps-row{grid-template-columns:1fr 1fr}
+  .nav nav{display:none}
+  .nav .btn{margin-left:auto}
+  .hero-photo{aspect-ratio:4/4.4}
+}
+@media (max-width:520px){
+  body{font-size:17px}
+  .steps-row{grid-template-columns:1fr 1fr;gap:14px}
+  .step .when{font-size:19px}
+  td.y,td.n{width:64px}
+}
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js')</script>
+
+<header class="nav on-dark">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Harmony home"><b>Harmony</b><span>Keep strong and harmonize your life</span></a>
+    <nav aria-label="Sections"><a href="#how">How it works</a><a href="#who">Who it’s for</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></nav>
+    <a class="btn" href="/">Take the quiz</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero on-dark" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div>
+        <h1 id="hero-title">Your body changed. Your plan should too.</h1>
+        <p class="lead">Harmony is a strength and protein plan for women <span class="nb">45–60</span> in menopause, on a GLP‑1 or not. One minute of questions, your plan before you pay, and a strength score you can watch move.</p>
+        <a class="btn" href="/">Take the 1‑minute quiz</a>
+        <p class="small">No prescriptions. No dosing advice. Works with whatever your doctor prescribed.</p>
+      </div>
+      <div class="hero-photo">
+        <img src="/assets/hook-a.webp" width="800" height="934" alt="A woman in her fifties doing a squat with a dumbbell in her living room" fetchpriority="high">
+        <div class="badge"><b>62</b><span>Strength Score<br>day 1 baseline</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="calc" aria-labelledby="calc-title">
+    <div class="wrap">
+      <div class="rise">
+        <h2 id="calc-title">How much protein does your body need now?</h2>
+        <p class="lead">After 45 the same meals hold on to less muscle, and on a GLP‑1 you may barely feel hungry. Move the slider to see your starting daily target.</p>
+        <p class="small" style="margin-top:18px">A starting estimate of 1.2–1.6 g per kg of body weight, not medical advice. Your plan refines it from your answers.</p>
+      </div>
+      <form class="calc-card rise" id="calc" onsubmit="return false" aria-label="Protein target calculator">
+        <div class="field">
+          <label for="wt">Your weight</label>
+          <div class="weight-out"><output id="wt-out" for="wt">165</output><small>lb</small></div>
+          <input type="range" id="wt" min="100" max="300" step="1" value="165">
+        </div>
+        <fieldset class="field">
+          <legend>Are you taking a GLP‑1?</legend>
+          <div class="seg">
+            <input type="radio" name="glp" id="glp-no" value="no" checked><label for="glp-no">No</label>
+            <input type="radio" name="glp" id="glp-yes" value="yes"><label for="glp-yes">Yes, Ozempic, Wegovy, Zepbound or similar</label>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Where are you with menopause?</legend>
+          <div class="seg">
+            <input type="radio" name="stage" id="st-peri" value="peri"><label for="st-peri">Perimenopause</label>
+            <input type="radio" name="stage" id="st-meno" value="meno" checked><label for="st-meno">Menopause or after</label>
+          </div>
+        </fieldset>
+        <div class="result" aria-live="polite"><b id="daily">95 g</b><span id="daily-note">a day, about 35 g of it before noon</span></div>
+        <a class="btn" href="/">Get my full plan</a>
+      </form>
+    </div>
+  </section>
+
+  <section class="problem" aria-labelledby="problem-title">
+    <div class="wrap">
+      <div class="rise">
+        <h2 id="problem-title">On a GLP‑1, the weight you lose is not all fat.</h2>
+        <p class="stat">38–40%</p>
+        <p class="stat-label">of the weight lost on semaglutide was lean mass in the STEP‑1 body‑composition study.</p>
+        <div class="stat-2"><b>≈25%</b><span>on tirzepatide, in SURMOUNT‑1</span></div>
+      </div>
+      <div class="rise">
+        <p class="quote">Free trackers count the pounds you lose. Harmony measures the strength you keep.</p>
+      </div>
+    </div>
+    <div class="wrap"><p class="sources">Sources: Wilding et al., NEJM 2021, STEP‑1 DXA substudy (n=140, 68 weeks); Look et al., Diabetes Obes Metab 2025, SURMOUNT‑1 (n=160, 72 weeks). DXA lean mass also includes water and organs, so muscle is a share of it.</p></div>
+  </section>
+
+  <section class="steps" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="head rise">
+        <h2 id="how-title">Your first 14 days</h2>
+        <a class="btn" href="/">Start now</a>
+      </div>
+      <div class="steps-row">
+        <div class="step rise"><img src="/assets/screens/screen_quiz.webp" width="600" height="1200" alt="Quiz question: are you taking a GLP-1 right now?" loading="lazy"><span class="when">Minute 1</span><p>Answer up to nine questions about your body, your routine and your medication.</p></div>
+        <div class="step rise"><img src="/assets/screens/screen_result.webp" width="600" height="1200" alt="Your plan: 115 grams of protein a day and a 14-day calendar" loading="lazy"><span class="when">Minute 2</span><p>See your protein target, your risk band and a 14‑day calendar before you pay.</p></div>
+        <div class="step rise"><img src="/assets/screens/screen_score.webp" width="600" height="1200" alt="Strength Score of 64 out of 100 after the home strength test" loading="lazy"><span class="when">Day 1</span><p>A five‑minute home strength test sets your Strength Score. You re‑test every week.</p></div>
+        <div class="step rise"><img src="/assets/screens/screen_report.webp" width="600" height="1200" alt="Sample day-14 report with strength, protein and symptoms" loading="lazy"><span class="when">Day 14</span><p>Your report on strength, protein and symptoms, ready to share with your doctor.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="who" id="who" aria-labelledby="who-title">
+    <div class="wrap">
+      <h2 id="who-title" class="rise">Built for your body at <span class="nb">45–60</span>, with or without a GLP‑1.</h2>
+      <div class="who-grid">
+        <article class="who-card rise">
+          <img src="/assets/hook-c.webp" width="800" height="934" alt="A woman in her fifties carrying two full shopping bags along a garden path" loading="lazy">
+          <div class="body">
+            <h3>On a GLP‑1</h3>
+            <ul>
+              <li>Protein first on the days your appetite disappears</li>
+              <li>Training planned around your injection week</li>
+              <li>The day after your shot is a rest day, and your streak does not break</li>
+              <li>A dated plan for the weeks after your last dose</li>
+            </ul>
+          </div>
+        </article>
+        <article class="who-card rise">
+          <img src="/assets/hook-b.webp" width="800" height="934" alt="A smiling woman with silver hair holding a cup of tea at home" loading="lazy">
+          <div class="body">
+            <h3>Not on a GLP‑1</h3>
+            <ul>
+              <li>Strength and protein set by your menopause stage</li>
+              <li>Hot flashes and sleep logged in one tap</li>
+              <li>Short home sessions, no gym needed</li>
+              <li>The same weekly Strength Score and day‑14 report</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare on-dark" aria-labelledby="compare-title">
+    <div class="wrap">
+      <div class="rise">
+        <h2 id="compare-title">Free trackers count pounds. Harmony measures strength.</h2>
+        <p class="lead">Protein targets and photo food logging are now free in many apps. We give you those too, and then we measure what the scale cannot.</p>
+      </div>
+      <table class="rise">
+        <caption class="vh">Harmony compared with free GLP‑1 trackers</caption>
+        <thead><tr><th scope="col">What you get</th><th scope="col" class="c">Harmony</th><th scope="col" class="c">Free trackers</th></tr></thead>
+        <tbody>
+          <tr><td>Works without a GLP‑1</td><td class="y"><span class="dot"></span><span class="vh">Yes</span></td><td class="n"><span class="ring"></span><span class="vh">No</span></td></tr>
+          <tr><td>Calibrated to your menopause stage</td><td class="y"><span class="dot"></span><span class="vh">Yes</span></td><td class="n"><span class="ring"></span><span class="vh">No</span></td></tr>
+          <tr><td>Progressive strength programme</td><td class="y"><span class="dot"></span><span class="vh">Yes</span></td><td class="n"><span class="ring"></span><span class="vh">No</span></td></tr>
+          <tr><td>Weekly measured strength re‑test</td><td class="y"><span class="dot"></span><span class="vh">Yes</span></td><td class="n"><span class="ring"></span><span class="vh">No</span></td></tr>
+          <tr><td>Day‑14 report for your doctor</td><td class="y"><span class="dot"></span><span class="vh">Yes</span></td><td class="n"><span class="ring"></span><span class="vh">No</span></td></tr>
+          <tr><td>Protein targets and photo logging</td><td class="y"><span class="dot"></span><span class="vh">Yes</span></td><td class="n"><span class="dot"></span><span class="vh">Yes</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <h2 id="pricing-title" class="rise">Less than a coffee a week next to what the medication costs.</h2>
+      <p class="lead rise">Choose a plan after you have seen yours. No free trial to forget, no hidden steps to cancel.</p>
+      <div class="plans">
+        <div class="plan best rise">
+          <span class="tag">Best value</span>
+          <h3>12 months</h3>
+          <p class="price">$129.99</p>
+          <p class="per">billed once a year · about $2.50 a week</p>
+          <ul><li>Your full plan and every weekly re‑test</li><li>Day‑14 report, then a new one every month</li><li>Plan for after your last dose, if you stop</li></ul>
+          <a class="btn" href="/">Take the quiz</a>
+        </div>
+        <div class="plan rise">
+          <h3>4 weeks</h3>
+          <p class="price">$14.99</p>
+          <p class="per">for the first 4 weeks, then $29.99 every 4 weeks</p>
+          <ul><li>Everything in the annual plan</li><li>Cancel any time in one tap</li></ul>
+          <a class="btn" href="/">Take the quiz</a>
+        </div>
+      </div>
+      <p class="fine">We remind you before every renewal. Prices in US dollars.</p>
+    </div>
+  </section>
+
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 id="faq-title" class="rise">Questions women ask us</h2>
+      <div class="rise">
+        <details><summary>Is Harmony medical advice?</summary><p>No. Harmony does not prescribe, does not give dosing advice and does not replace your doctor. It plans your protein and training around whatever your doctor already prescribed, and gives you a report you can bring to your next appointment.</p></details>
+        <details><summary>Do I need to be on a GLP‑1?</summary><p>No. If you are not on a medication, your plan is built around your menopause stage. If you are, it also follows your injection week and, when you decide to stop, the weeks after your last dose.</p></details>
+        <details><summary>What do I need for the strength test?</summary><p>A sturdy chair, one flight of stairs and two shopping bags. It takes about five minutes at home. Skip any move that is not safe for you.</p></details>
+        <details><summary>What is the Strength Score?</summary><p>Harmony’s own score out of 100, built from three home tests: chair stands in 30 seconds, one flight of stairs, and carrying two bags. It is a way to track your progress, not a clinical assessment.</p></details>
+        <details><summary>How do I cancel?</summary><p>In one tap, from your account, at any time. We send a reminder before every renewal.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final on-dark" aria-labelledby="final-title">
+    <div class="wrap">
+      <h2 id="final-title" class="rise">Make sure what you lose is fat, and see it every week.</h2>
+      <p class="lead rise">One minute of questions. Your plan before you pay.</p>
+      <a class="btn rise" href="/">Take the 1‑minute quiz</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Harmony</b><br>Keep strong and harmonize your life</div>
+    <div>Capstone prototype, Zimran IT School, Team 8 · Payments are simulated<br>Not medical advice. Talk to your doctor before starting a new exercise programme.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var wt=document.getElementById('wt'),out=document.getElementById('wt-out'),daily=document.getElementById('daily'),note=document.getElementById('daily-note');
+  function val(n){var r=document.querySelector('input[name="'+n+'"]:checked');return r?r.value:''}
+  function calc(){
+    var lb=+wt.value,kg=lb/2.2046,f=1.2;
+    if(val('stage')==='meno')f+=0.1;
+    if(val('glp')==='yes')f+=0.2;
+    f=Math.min(f,1.6);
+    var d=Math.round(kg*f/5)*5;
+    out.textContent=lb;
+    daily.textContent=d+' g';
+    note.textContent='a day, about '+Math.round(d*0.35)+' g of it before noon';
+  }
+  document.getElementById('calc').addEventListener('input',calc);
+  calc();
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    document.querySelectorAll('.rise').forEach(function(el,i){el.style.transitionDelay=(i%4)*70+'ms';io.observe(el)});
+  }else{document.querySelectorAll('.rise').forEach(function(el){el.classList.add('in')})}
+})();
+</script>
+</body>
+</html>
