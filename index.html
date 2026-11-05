@@ -182,7 +182,7 @@ input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radi
   <div class="phone f-forest" id="phone">
     <div class="bar">
       <span class="brandbox"><span class="wm">Harmony</span><span class="slogan" id="slogan" hidden>Keep strong and harmonize your life</span></span>
-      <div class="tools">
+      <div class="tools" id="devTools" hidden>
         <button class="devbtn" id="tDrives" aria-pressed="false">Drives</button>
         <button class="devbtn" id="tEvents" aria-pressed="false">Events</button>
       </div>
@@ -558,6 +558,8 @@ tog(document.getElementById('tDrives'),document.getElementById('drives'),functio
   var k=Object.keys(DRIVES),o='';for(var i=0;i<k.length;i++)o+=k[i]+' → '+DRIVES[k[i]]+'<br>';
   document.getElementById('driveLegend').innerHTML=o;
 });
+/* jury/dev overlays: add ?dev to the URL to show the Drives and Events buttons */
+if(/[?&]dev\b/.test(location.search))document.getElementById('devTools').hidden=false;
 /* review shortcut: index.html#s=result opens one screen with sample answers */
 (function(){
   var m=/s=(\w+)/.exec(location.hash||''),map={hook:scrHook,quiz:scrQuiz,teaser:function(){scrTeaser(TEASERS.breakfast,scrBuild)},
