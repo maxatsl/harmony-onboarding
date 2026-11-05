@@ -41,8 +41,8 @@ button{font:inherit;cursor:pointer;color:inherit}
 .phone.f-sage{background:var(--sage-pale)}
 .bar{display:flex;align-items:center;gap:10px;padding:22px 24px 10px}
 .wm{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:.01em}
-.tools{display:flex;gap:6px;margin-left:auto}
-.devbtn{font-size:12px;font-weight:500;border:0;border-radius:999px;padding:6px 11px;background:rgba(0,0,0,.06);color:inherit}
+.tools{display:flex;gap:6px;margin-left:auto;align-self:flex-start}
+.devbtn{font-size:12px;font-weight:500;border:0;border-radius:999px;padding:5px 9px;background:rgba(0,0,0,.06);color:inherit}
 .f-forest .devbtn{background:rgba(255,255,255,.12)}
 .devbtn[aria-pressed="true"]{background:var(--forest);color:var(--canvas)}
 .f-forest .devbtn[aria-pressed="true"]{background:var(--canvas);color:var(--forest)}
@@ -57,7 +57,8 @@ button{font:inherit;cursor:pointer;color:inherit}
 .small{font-size:13px;color:var(--ash);line-height:1.45}
 .f-forest .small{color:var(--sage)}
 .src{font-size:12px;color:var(--ash);line-height:1.45}
-.slogan{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--gold-pale)}
+.brandbox{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.slogan{font-family:var(--serif);font-size:15px;font-weight:300;line-height:1.2;color:var(--gold-pale);white-space:nowrap}
 
 .btn{display:block;width:100%;border:0;border-radius:999px;padding:18px 20px;font-weight:600;font-size:16px;
   background:var(--forest);color:var(--canvas);transition:transform .08s,background .15s}
@@ -69,7 +70,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .f-forest .btn.ghost{background:transparent;color:var(--sage-pale)}
 
 /* hook */
-.photo{margin:4px -24px 0;height:380px;background:var(--forest-2) center/cover no-repeat;position:relative}
+.photo{margin:4px 0 0;height:360px;border-radius:24px;overflow:hidden;background:var(--forest-2);position:relative}
 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
 
 /* quiz */
@@ -180,7 +181,7 @@ input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radi
 
   <div class="phone f-forest" id="phone">
     <div class="bar">
-      <span class="wm">Harmony</span>
+      <span class="brandbox"><span class="wm">Harmony</span><span class="slogan" id="slogan" hidden>Keep strong and harmonize your life</span></span>
       <div class="tools">
         <button class="devbtn" id="tDrives" aria-pressed="false">Drives</button>
         <button class="devbtn" id="tEvents" aria-pressed="false">Events</button>
@@ -257,7 +258,7 @@ function ev(name,key){
 function field(f){phone.className='phone'+(f?' f-'+f:'')}
 function prog(p){document.getElementById('trackWrap').hidden=(p===null);if(p!==null)document.getElementById('prog').style.width=p+'%'}
 function badge(k){return document.getElementById('drives').hidden?'':'<span class="drive">'+DRIVES[k]+'</span>'}
-function go(fn){stage.className='';void stage.offsetWidth;stage.className='fade';fn();window.scrollTo(0,0)}
+function go(fn){document.getElementById('slogan').hidden=true;stage.className='';void stage.offsetWidth;stage.className='fade';fn();window.scrollTo(0,0)}
 function val(x){return typeof x==='function'?x():x}
 function kg(){return Math.round(S.lb/2.2046)}
 function ring(pct,value,unit,sub,id){
@@ -337,12 +338,11 @@ var TEASERS={
 
 /* ---------- screens ---------- */
 function scrHook(){
-  field('forest');prog(null);
+  field('forest');prog(null);document.getElementById('slogan').hidden=false;
   stage.innerHTML='<div class="screen" style="padding-top:0">'+badge('hook')+
    '<div class="photo" id="photo"><img src="assets/hook-a.webp" width="800" height="934" alt="A woman in her fifties doing a squat with a dumbbell at home" fetchpriority="high" onerror="this.remove()"></div>'+
    '<h1 style="margin-top:10px">Your body changed. Your plan should too.</h1>'+
    '<p class="lead">A strength and protein plan for women in menopause, on GLP‑1 or not.</p>'+
-   '<p class="slogan">Keep strong and harmonize your life</p>'+
    '<div class="spacer"></div>'+
    '<button class="btn" id="go">Take the 1-minute quiz</button>'+
    '<p class="small">No prescriptions, no dosing advice. 18+.</p></div>';
