@@ -1,70 +1,48 @@
-# HARMONY — onboarding prototype
+# Harmony — onboarding prototype
 
-A clickable prototype of the first session of HARMONY, a GLP-1 nutrition and strength
-companion for women 40+ in menopause. It runs from the ad click through to the first
-logged meal: 20 screens, no backend, no build step.
+**Keep strong and harmonize your life.**
+A strength and protein plan for women in menopause, on GLP-1 or not.
 
-Coursework for a product-management course on digital B2C subscription products
-(Homework 2, part 2 of 3).
+A clickable prototype of Harmony's first session, from the ad click to the 2-week report.
+Built for the Zimran IT School Capstone (Zero to One). No backend, no build step: one HTML file
+with inline CSS and vanilla ES5. Fonts: Newsreader and Inter from Google Fonts.
 
 ## Running it
 
-Open `index.html` in a browser. There is nothing to install and nothing to build —
-the whole thing is one self-contained HTML file with inline CSS and vanilla ES5.
-The only external dependency is the Manrope webfont from Google Fonts.
+Open `index.html` in a browser. Nothing to install.
 
-## What it does
-
-The quiz result is computed, not canned. Seven answers plus a body weight feed a
-protein-target heuristic, so running it twice with different answers gives different
-numbers. Two overlays in the top bar expose the thinking behind the screens:
-
-- **Drives** labels every screen with the Octalysis core drive it leans on.
-- **Events** shows the analytics event log and which event is the optimization target.
+Review shortcut: `index.html#s=<screen>` opens one screen with sample answers
+(`hook`, `quiz`, `teaser`, `result`, `lead`, `paywall`, `test`, `chair`, `score`, `report`).
 
 ## The flow
 
-| # | Screen |
-|---|---|
-| 1 | Hook |
-| 2–12 | Seven quiz questions with four teasers between them |
-| 13 | Magic page — a ring counts to 100% while the plan is built |
-| 14 | Result — the proof moment, before the paywall |
-| 15 | Email capture |
-| 16 | Paywall |
-| 17 | Next injection date |
-| 18 | First meal |
-| 19 | Scored — the aha moment, after the paywall |
-| 20 | Loop close |
+| Stage | Screens | What it proves |
+|---|---|---|
+| Hook | Menopause-first headline, photo, slogan | The ad promise, kept on the first screen |
+| Quiz | 7–9 questions, branching on GLP-1 status | No GLP-1: 7 questions. On GLP-1: + medication and two evidence teasers. Stopping or stopped: + date of the last dose |
+| Plan | Build animation → result | Protein target in grams, lean-mass risk band, 14-day calendar — all computed from the answers, before the paywall |
+| Paywall | Email → plans | $129.99 / year or $14.99 for the first 4 weeks, then $29.99 / 4 weeks. One-tap cancel |
+| Aha (after payment) | 3-part home strength test → Strength Score | The baseline she re-tests every week |
+| Report | Sample day-14 report | The tangible 2-week result, shareable with her doctor. Days 7 and 14 are illustrative |
 
-The split between screen 14 and screen 19 is deliberate: the result justifies paying,
-the scored meal proves she can do it. They move different metrics.
+Two overlays in the top bar expose the thinking behind the screens:
+
+- **Events** — the analytics log. The optimisation target is `QuizComplete`, not Purchase,
+  because Meta restricts lower-funnel events for health-classified data sources.
+- **Drives** — the Octalysis core drive each screen leans on. Loss aversion is deliberately withheld.
+
+## Design
+
+Style "Olive field", built on the Oura design-system analysis (warm paper, thin serif display,
+earth fields) with forest green as the single action colour. Photos in `assets/` are AI-generated
+(Gemini, Nano Banana 2) from the prompts in `assets/PROMPTS.md`.
 
 ## Sources behind the teasers
 
 | Teaser | Claim | Source |
 |---|---|---|
-| After Q1 | 22% of US adults aged 50–64 currently take a GLP-1 | KFF Health Tracking Poll, fielded 27 Oct – 2 Nov 2025 |
-| After Q3 | Body weight −15.0%, lean body mass −9.7% at 68 weeks | Wilding et al., NEJM 2021, STEP-1 DXA substudy, n=140 |
-| After Q5 | 24-hour muscle protein synthesis 25% higher on even protein distribution | Mamerow et al., J Nutr 2014, crossover, n=8 |
-| After Q6 | — | Shows the product's own scoring card |
+| After Q1 (GLP-1 users) | 22% of US adults aged 50–64 currently take a GLP-1 | KFF Health Tracking Poll, 27 Oct – 2 Nov 2025 |
+| After menopause (GLP-1 users) | Body weight −15.0%, lean body mass −9.7% at 68 weeks | Wilding et al., NEJM 2021, STEP-1 DXA substudy, n=140 |
+| After breakfast | 24-hour muscle protein synthesis 25% higher with even protein distribution | Mamerow et al., J Nutr 2014, crossover, n=8 |
 
-The Q5 teaser separates the study from the product decision: putting the target on the
-morning rather than only spreading it evenly is HARMONY's choice, and the screen says so.
-
-## What is mocked
-
-Photo recognition, payment, accounts, email delivery and any backend. The protein
-target is a transparent heuristic written for this prototype, **not a clinical
-algorithm**, and it would need review by a qualified professional before anything real
-ships. Nothing here is medical advice.
-
-## Deploying
-
-Any static host. For Vercel:
-
-```bash
-npx vercel@latest deploy --prod
-```
-
-`vercel.json` sets `X-Robots-Tag: noindex`, so the prototype stays out of search results.
+Not medical advice. Payments, email, photo logging and the PDF report are mocked.

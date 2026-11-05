@@ -1,610 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<title>HARMONY First Session</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Harmony — Keep strong and harmonize your life</title>
+<meta name="description" content="A strength and protein plan for women in menopause, on GLP-1 or not.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Inter:wght@400;500;600&display=swap">
 <style>
-/* Pastel consumer, seed 1113022440. Pale tiles whose ink is the dark of their own hue, one large
-   radius stepping down inside, nothing raised at rest. The dealt cobalt is replaced by the subject's own
-   green; amber is the second hue and carries "short of target" and the injection day. */
+/* Style B "Olive field", built on the Oura token system (DESIGN.md): warm paper, thin serif display,
+   earth fields. Forest green replaces Oura's action blue as the one action colour. */
 :root{
-  --ground:#EBF2EC; --surface:#FFFFFF; --raised:#F3F8F4; --active:#E4EDE6;
-  --border:#DFE8E1; --rule:#EEF3EF; --control:#C7D3C9;
-  --text:#15201A; --muted:#55605A; --faint:#5F6B64;
-  --accent:#1F7A46; --accent-soft:#DDEFE2; --accent-mid:#BCDFC6; --accent-ink:#10402A;
-  --warm:#9A5B0B; --warm-soft:#FBEBD4; --warm-ink:#5E370A;
-  --radius-card:20px; --radius-inner:12px; --radius-control:10px;
-  --gap:16px; --card-pad:18px;
-  --font:'Manrope',Inter,system-ui,-apple-system,sans-serif;
+  --forest:#224228; --forest-2:#2d5234; --olive:#5c6f5d; --sage:#849671; --sage-2:#b8c09f; --sage-pale:#ced4b8;
+  --canvas:#f7f1e8; --paper-2:#efe7da; --white:#fff; --ink:#1c1b1a; --stone:#4a4741; --ash:#6f6d69;
+  --gold:#af751b; --gold-pale:#ddbe78;
+  --serif:'Newsreader',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
 }
-:root[data-theme="dark"],
-:root:not([data-theme="light"]){color-scheme:light}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:var(--ground);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;
-  margin:0;-webkit-font-smoothing:antialiased}
-.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:24px 40px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
-.phone{background:var(--surface);border-radius:28px;overflow:hidden;max-width:430px;width:100%;
-  margin:0 auto;display:flex;flex-direction:column;min-height:640px}
-h1,h2,h3{margin:0;text-wrap:balance}
-h1{font-size:28px;font-weight:700;line-height:1.16;letter-spacing:-.02em}
-h2{font-size:24px;font-weight:700;line-height:1.2;letter-spacing:-.015em}
-h3{font-size:18px;font-weight:600;line-height:1.3}
-p{margin:0}
-.lead{color:var(--muted);font-size:16px}
-.small{color:var(--muted);font-size:14px;line-height:1.5}
-.label{color:var(--faint);font-size:14px;font-weight:500}
-.num{font-variant-numeric:tabular-nums;font-weight:600}
+html,body{margin:0}
+body{background:#e7e0d3;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2{font-family:var(--serif);font-weight:300;letter-spacing:-.02em;line-height:1.04;text-wrap:balance}
+h1{font-size:52px}
+h2{font-size:34px}
+h3{font-size:17px;font-weight:600;line-height:1.3}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.nb{white-space:nowrap}
 
-/* top bar: a wordmark with its mark, and the quiz progress as the one warm element */
-.bar{display:flex;align-items:center;gap:10px;padding:16px 18px 12px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:-.01em}
-.brand svg{display:block}
+.wrap{max-width:960px;margin:0 auto;padding:28px 16px 48px;display:flex;flex-direction:column;gap:20px}
+.caption{max-width:400px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:4px}
+.caption .t{font-family:var(--serif);font-size:26px;font-weight:300}
+.caption .s{font-size:14px;color:var(--stone)}
+
+/* the phone; its field colour changes by screen */
+.phone{max-width:400px;width:100%;margin:0 auto;border-radius:40px;overflow:hidden;display:flex;flex-direction:column;
+  min-height:min(800px,100svh);background:var(--canvas);transition:background .25s ease-out}
+.phone.f-forest{background:var(--forest);color:var(--canvas)}
+.phone.f-sage{background:var(--sage-pale)}
+.bar{display:flex;align-items:center;gap:10px;padding:22px 24px 10px}
+.wm{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:.01em}
 .tools{display:flex;gap:6px;margin-left:auto}
-.track{height:6px;border-radius:999px;background:var(--active);margin:0 18px 4px;overflow:hidden}
-.track i{display:block;height:100%;background:var(--warm);border-radius:999px;transition:width .25s ease-out}
-.screen{padding:16px 18px 24px;display:flex;flex-direction:column;gap:16px;flex:1}
-button{font:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.devbtn{font-size:12px;font-weight:500;border:0;border-radius:999px;padding:6px 11px;background:rgba(0,0,0,.06);color:inherit}
+.f-forest .devbtn{background:rgba(255,255,255,.12)}
+.devbtn[aria-pressed="true"]{background:var(--forest);color:var(--canvas)}
+.f-forest .devbtn[aria-pressed="true"]{background:var(--canvas);color:var(--forest)}
+.track{height:4px;border-radius:4px;background:rgba(0,0,0,.08);margin:6px 24px 0;overflow:hidden}
+.track i{display:block;height:100%;background:var(--forest);border-radius:4px;transition:width .3s ease-out}
+.f-forest .track{background:rgba(255,255,255,.14)} .f-forest .track i{background:var(--canvas)}
+.screen{padding:20px 24px 28px;display:flex;flex-direction:column;gap:16px;flex:1}
+.spacer{flex:1;min-height:8px}
 
-.btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:17px 20px;
-  font-weight:600;font-size:17px;width:100%;transition:background .12s}
-.btn:hover{background:var(--accent-ink)}
-.btn:active{transform:translateY(1px)}
-.btn.ghost{background:var(--raised);color:var(--text);font-weight:500}
-.btn.ghost:hover{background:var(--active)}
+.lead{font-size:16px;color:var(--stone)}
+.f-forest .lead{color:var(--sage-pale)}
+.small{font-size:13px;color:var(--ash);line-height:1.45}
+.f-forest .small{color:var(--sage)}
+.src{font-size:12px;color:var(--ash);line-height:1.45}
+.slogan{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--gold-pale)}
 
-.opt{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-inner);padding:16px;font-size:16px;color:var(--text);font-weight:500;
-  transition:border-color .12s,background .12s}
-.opt:hover{border-color:var(--control);background:var(--raised)}
-.opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.btn{display:block;width:100%;border:0;border-radius:999px;padding:18px 20px;font-weight:600;font-size:16px;
+  background:var(--forest);color:var(--canvas);transition:transform .08s,background .15s}
+.btn:hover{background:var(--forest-2)}
+.btn:active{transform:scale(.985)}
+.f-forest .btn{background:var(--canvas);color:var(--forest)}
+.f-forest .btn:hover{background:#fff}
+.btn.ghost{background:transparent;color:var(--stone);padding:10px}
+.f-forest .btn.ghost{background:transparent;color:var(--sage-pale)}
+
+/* hook */
+.photo{margin:4px -24px 0;height:380px;background:var(--forest-2) center/cover no-repeat;position:relative}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
+
+/* quiz */
 .opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:block;width:100%;text-align:left;border:0;border-radius:18px;padding:16px 18px;font-size:16px;
+  background:var(--white);color:var(--ink);transition:background .12s,transform .08s}
+.opt:hover{background:#fbf8f3}
+.opt:active{transform:scale(.99)}
+.opt.sel{background:var(--forest);color:var(--canvas)}
+.opt small{display:block;font-size:13px;opacity:.7;margin-top:2px}
+.why{font-size:14px;color:var(--ash)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}
+.chip{font-size:12px;font-weight:500;background:var(--paper-2);color:var(--stone);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.weight{background:var(--white);border-radius:24px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;align-items:center}
+.weight b{font-family:var(--serif);font-weight:300;font-size:64px;line-height:1}
+.weight b u{text-decoration:none;font-family:var(--sans);font-size:18px;color:var(--stone);margin-left:4px}
+input[type=range]{width:100%;accent-color:var(--forest)}
+.stepper{display:flex;align-items:center;justify-content:center;gap:22px}
+.stepper button{width:56px;height:56px;border-radius:999px;border:0;background:var(--forest);color:var(--canvas);font-size:26px;line-height:1}
 
-.note{background:var(--raised);border-radius:var(--radius-inner);padding:14px 16px;font-size:15px;line-height:1.5}
-.note b.hd{display:block;font-size:14px;font-weight:600;color:var(--accent-ink);margin-bottom:4px}
-.note.warm{background:var(--warm-soft)}
-.note.warm b.hd{color:var(--warm-ink)}
+/* teasers: drawn figures from real numbers */
+.art{background:var(--white);border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.art svg{width:100%;max-width:300px;height:auto;display:block}
+.art .cap{font-size:13px;color:var(--ash);text-align:center}
+.method{background:var(--paper-2);border-radius:18px;padding:14px 16px;font-size:15px}
+.method b{display:block;font-size:13px;color:var(--forest);margin-bottom:2px}
 
-/* the profile builds as she answers */
-.strip{display:flex;flex-wrap:wrap;gap:6px;min-height:30px}
-.chip{font-size:13px;font-weight:500;background:var(--accent-soft);color:var(--accent-ink);
-  border-radius:999px;padding:5px 11px;white-space:nowrap}
-.chip.pending{background:var(--raised);color:var(--faint);font-weight:400}
+/* rings and data */
+.ring{position:relative;width:200px;height:200px;margin:4px auto 0;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg);display:block}
+.ring .rt{fill:none;stroke:var(--sage-2);stroke-width:13}
+.ring .rf{fill:none;stroke:var(--forest);stroke-width:13;stroke-linecap:round;transition:stroke-dashoffset .6s ease-out}
+.f-forest .ring .rt{stroke:rgba(255,255,255,.14)} .f-forest .ring .rf{stroke:var(--gold-pale)}
+.ring .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .rv{font-family:var(--serif);font-weight:300;font-size:64px;line-height:1;color:var(--forest)}
+.f-forest .ring .rv{color:var(--canvas)}
+.ring .rv u{text-decoration:none;font-family:var(--sans);font-size:20px;margin-left:2px}
+.ring .rs{font-size:13px;color:var(--stone)}
+.f-forest .ring .rs{color:var(--sage-pale)}
+.panel{background:var(--forest);color:var(--canvas);border-radius:24px;padding:6px 18px}
+.f-forest .panel{background:var(--forest-2)}
+.panel.light{background:var(--white);color:var(--ink)}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;font-size:15px}
+.kv+.kv{box-shadow:0 -1px 0 rgba(255,255,255,.12) inset}
+.panel.light .kv+.kv{box-shadow:0 -1px 0 #ece6dc inset}
+.kv b{font-family:var(--serif);font-weight:300;font-size:26px;white-space:nowrap}
+.tests{display:flex;gap:8px}
+.tests div{flex:1;background:var(--canvas);border-radius:16px;padding:12px;font-size:12px;line-height:1.35;color:var(--stone)}
+.tests b{display:block;font-size:20px;font-weight:500;color:var(--ink)}
 
-/* the figure is the face: one ring, the grams inside it */
-.ring{position:relative;width:148px;height:148px;margin:0 auto;flex:none}
-.ring.sm{width:112px;height:112px}
-.ring.sm svg{width:112px;height:112px}
-.ring.sm .rv{font-size:28px}
-.ring.sm .rv u{font-size:15px}
-.ring.sm .rs{font-size:12px;max-width:84px}
-.ring svg{width:148px;height:148px;transform:rotate(-90deg);display:block}
-.ring .rt{fill:none;stroke:var(--active);stroke-width:12}
-.ring .rf{fill:none;stroke:var(--accent);stroke-width:12;stroke-linecap:round;
-  transition:stroke-dashoffset .5s ease-out}
-.ring .rf.warm{stroke:var(--warm)}
-.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.rv{font-size:36px;font-weight:700;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.rv u{text-decoration:none;font-size:18px;font-weight:600;color:var(--muted);margin-left:2px}
-.rs{font-size:13px;color:var(--muted);text-align:center;max-width:104px;line-height:1.25}
+/* 14-day calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal div{background:var(--white);border-radius:10px;padding:8px 2px;text-align:center;font-size:12px;line-height:1.2}
+.cal div b{display:block;font-size:11px;font-weight:500;color:var(--ash)}
+.cal .key{background:var(--forest);color:var(--canvas)} .cal .key b{color:var(--sage-pale)}
+.cal .rest{background:var(--paper-2)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--stone)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:4px;display:block}
 
-.card{background:var(--raised);border-radius:var(--radius-card);padding:var(--card-pad);
-  display:flex;flex-direction:column;gap:14px}
-.rows{display:flex;flex-direction:column}
-.row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:15px}
-.row:last-child{border-bottom:0}
-.row span{color:var(--muted)}
-.row b{font-variant-numeric:tabular-nums;font-weight:600;color:var(--text)}
-
-/* the dose week — the product's own instrument. Each kind has its own mark, not its own colour. */
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.day{background:var(--surface);border-radius:8px;padding:8px 2px 7px;text-align:center;border-bottom:3px solid transparent}
-.day .d{font-size:11px;color:var(--faint);display:block;font-weight:500}
-.day .m{font-size:12px;font-weight:600;line-height:1.2;margin-top:3px;display:block}
-.day.low{background:var(--raised)}
-.day.up{background:var(--accent-soft);color:var(--accent-ink)}
-.day.full{background:var(--accent-mid);color:var(--accent-ink);border-bottom-color:var(--accent)}
-.day.shot{background:var(--warm-soft);color:var(--warm-ink);border-bottom-color:var(--warm)}
-.day.today{outline:2px solid var(--accent);outline-offset:1px}
-.keys{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted)}
-.keys span{display:flex;align-items:center;gap:6px}
-.keys i{width:14px;height:14px;border-radius:4px;display:block;border-bottom:3px solid transparent}
-.k-shot{background:var(--warm-soft);border-bottom-color:var(--warm)}
-.k-low{background:var(--raised)}
-.k-up{background:var(--accent-soft)}
-.k-full{background:var(--accent-mid);border-bottom-color:var(--accent)}
+/* build list */
+.build{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.build li{color:var(--sage);display:flex;gap:10px;align-items:flex-start;transition:color .2s}
+.build li.done{color:var(--canvas)}
+.build li i{width:18px;height:18px;border-radius:999px;background:rgba(255,255,255,.14);flex:none;margin-top:3px}
+.build li.done i{background:var(--gold-pale)}
 
 /* paywall */
-.plan{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-inner);
-  padding:16px;color:var(--text);font-size:16px;font-weight:500}
-.plan:hover{border-color:var(--control)}
-.plan.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
-.plan .pr{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-.save{font-size:12px;font-weight:600;background:var(--accent);color:#fff;border-radius:999px;
-  padding:3px 8px;margin-left:8px;vertical-align:1px}
-.plan.sel .save{background:var(--accent-ink)}
-input[type=email]{width:100%;font:inherit;padding:15px 16px;border:1px solid var(--border);
-  border-radius:var(--radius-inner);background:var(--surface);color:var(--text)}
-input[type=email]::placeholder{color:var(--faint)}
-input[type=range]{width:100%;accent-color:var(--accent)}
+.plan{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;border:0;
+  border-radius:20px;padding:16px 18px;background:var(--white);color:var(--ink);font-size:16px}
+.plan.sel{background:var(--forest);color:var(--canvas)}
+.plan .pr{text-align:right;white-space:nowrap;font-weight:600}
+.plan .pr small,.plan .nm small{display:block;font-weight:400;font-size:12px;opacity:.75}
+.save{font-size:11px;font-weight:600;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:3px 8px;margin-left:6px}
+input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radius:16px;background:var(--white);color:var(--ink)}
 
-.meal{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-inner);
-  padding:16px;color:var(--text);font-size:16px;font-weight:500}
-.meal:hover{border-color:var(--control);background:var(--raised)}
-.meal .pr{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;color:var(--muted)}
-
-.streak{display:flex;align-items:center;gap:14px;background:var(--accent-soft);
-  border-radius:var(--radius-card);padding:16px 18px;color:var(--accent-ink)}
-.streak .n{font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;flex:none}
-
-.build{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
-/* drawn art: one flat language, the palette's own colours, every figure from a real number */
-.art{background:var(--raised);border-radius:var(--radius-card);padding:18px;display:flex;
-  flex-direction:column;gap:12px;align-items:center}
-.art svg{width:100%;height:auto;display:block;max-width:300px}
-.art .cap{font-size:13px;color:var(--muted);text-align:center;line-height:1.4}
-.src{font-size:13px;color:var(--faint);line-height:1.45}
-/* a fragment of the product's own screen */
-.ui{background:var(--raised);border-radius:var(--radius-card);padding:18px;display:flex;justify-content:center}
-.uicard{width:230px;background:var(--surface);border-radius:14px;padding:14px;display:flex;
-  flex-direction:column;gap:10px}
-.uirow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;line-height:1.35}
-.uirow b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
-.uibar{height:8px;border-radius:999px;background:var(--active);overflow:hidden}
-.uibar i{display:block;height:100%;background:var(--accent);border-radius:999px}
-.uitag{align-self:flex-start;font-size:12px;font-weight:600;background:var(--accent-soft);
-  color:var(--accent-ink);border-radius:999px;padding:4px 10px}
-.build li{color:var(--faint);font-size:16px;display:flex;gap:10px;align-items:flex-start;transition:color .2s}
-.build li.done{color:var(--text)}
-.build li i{width:20px;height:20px;border-radius:999px;background:var(--active);flex:none;margin-top:2px}
-.build li.done i{background:var(--accent)}
+/* report bars */
+.bars{display:flex;align-items:flex-end;gap:12px;height:130px;margin-top:22px}
+.bars div{flex:1;border-radius:12px 12px 4px 4px;position:relative;background:var(--sage-2)}
+.bars span{position:absolute;top:-22px;left:0;right:0;text-align:center;font-size:13px;color:var(--forest)}
+.bars .empty{background:transparent;box-shadow:inset 0 0 0 2px var(--sage-2)}
+.blab{display:flex;gap:12px;font-size:12px;color:var(--olive)}
+.blab span{flex:1;text-align:center}
+.tag{align-self:flex-start;font-size:12px;font-weight:500;background:var(--forest);color:var(--canvas);border-radius:999px;padding:4px 10px}
 
 /* prototype chrome */
-.devbtn{font-size:13px;font-weight:500;background:var(--raised);border:0;color:var(--muted);
-  border-radius:999px;padding:6px 12px}
-.devbtn[aria-pressed="true"]{background:var(--accent);color:#fff}
-.panel{max-width:430px;width:100%;margin:0 auto;background:var(--surface);border-radius:var(--radius-card);
-  padding:18px;display:flex;flex-direction:column;gap:12px}
-.log{font-size:14px;line-height:1.6;max-height:200px;overflow-y:auto;border-top:1px solid var(--rule);
-  padding-top:10px;margin:0;list-style:none;font-variant-numeric:tabular-nums}
-.log li{display:flex;gap:10px;padding:2px 0}
-.log .t{color:var(--faint)}
-.log .e{font-weight:600}
-.log .e.key{color:var(--accent)}
-.drive{font-size:13px;font-weight:500;background:var(--warm-soft);color:var(--warm-ink);
-  border-radius:999px;padding:5px 11px;align-self:flex-start}
-.legend{font-size:14px;color:var(--muted);line-height:1.8}
-.caption{max-width:430px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:6px}
-.spacer{flex:1;min-height:8px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-.fade{animation:fade .18s ease-out}
-@keyframes fade{from{opacity:.5}to{opacity:1}}
-</style>
+.side{max-width:400px;width:100%;margin:0 auto;background:var(--canvas);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.log{font-size:13px;line-height:1.6;max-height:220px;overflow-y:auto;margin:0;padding:0;list-style:none;font-variant-numeric:tabular-nums}
+.log li{display:flex;gap:10px}
+.log .t{color:var(--ash)} .log .e{font-weight:600} .log .e.key{color:var(--forest)}
+.drive{font-size:12px;font-weight:500;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:4px 10px;align-self:flex-start}
 
+.fade{animation:fade .22s ease-out}
+@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:440px){
+  .wrap{padding:0;gap:0} .caption,.side{display:none} .phone{border-radius:0;min-height:100svh}
+  h1{font-size:46px}
+}
+</style>
+</head>
+<body>
 <div class="wrap">
   <div class="caption">
-    <h3>HARMONY — the first session</h3>
-    <p class="small">Clickable prototype, ad click to the first logged meal. All data, scoring and payments are mocked.</p>
+    <p class="t">Harmony — first session</p>
+    <p class="s">Clickable prototype: ad click → quiz → plan → paywall → strength test → 2-week report. Payments and scoring are mocked.</p>
   </div>
 
-  <div class="phone">
+  <div class="phone f-forest" id="phone">
     <div class="bar">
-      <span class="brand">
-        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-          <circle cx="11" cy="11" r="11" fill="#DDEFE2"/>
-          <path d="M6 15c0-5 4-8 10-8-1 6-5 8-10 8z" fill="#1F7A46"/>
-          <path d="M6 15c2.5-2.5 5-4 8.5-5.5" stroke="#DDEFE2" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-        </svg>
-        Harmony
-      </span>
+      <span class="wm">Harmony</span>
       <div class="tools">
         <button class="devbtn" id="tDrives" aria-pressed="false">Drives</button>
         <button class="devbtn" id="tEvents" aria-pressed="false">Events</button>
       </div>
     </div>
-    <div class="track"><i id="prog" style="width:0%"></i></div>
+    <div class="track" id="trackWrap"><i id="prog" style="width:0%"></i></div>
     <div id="stage"></div>
   </div>
 
-  <div class="panel" id="events" hidden>
+  <div class="side" id="events" hidden>
     <h3>Analytics events</h3>
-    <p class="small"><b>The optimization target is <span class="num">QuizComplete</span>, not Purchase.</b> Meta restricts
-      lower-funnel events (Purchase, InitiateCheckout, Add to Cart) for data sources classified as health and wellness.
-      Purchase still fires for our own reporting — it just cannot be the bid event.</p>
+    <p class="small"><b>The optimisation target is QuizComplete, not Purchase.</b> Meta restricts lower-funnel events for
+      data sources classified as health. Purchase still fires for our own reporting.</p>
     <ul class="log" id="log"></ul>
   </div>
-
-  <div class="panel" id="drives" hidden>
+  <div class="side" id="drives" hidden>
     <h3>Octalysis drives in use</h3>
-    <p class="small">White Hat by design (CD1–CD3). <b>CD8 Loss and Avoidance is deliberately suppressed:</b> the problem
-      already supplies it at full strength, and a punishing streak would penalise her for side effects on exactly the days
-      she is deciding whether to quit.</p>
-    <p class="legend" id="driveLegend"></p>
+    <p class="small">White Hat by design. <b>CD8 Loss and Avoidance is deliberately withheld:</b> the day after an
+      injection is a rest day and the streak does not break.</p>
+    <p class="small" id="driveLegend"></p>
   </div>
 </div>
 
 <script>
+/* ---------- content ---------- */
+var GLP_OPTS=[['none','No, not taking one'],['early','Yes, first 12 weeks','Ozempic, Wegovy, Zepbound, Mounjaro'],
+  ['steady','Yes, on a steady dose'],['stopping','Planning to stop soon'],['stopped','Stopped in the last year']];
+function onGlp(){return S.glp&&S.glp!=='none'}
+function exitPhase(){return S.glp==='stopping'||S.glp==='stopped'}
+
 var QUIZ=[
- {id:'glp',q:'Where are you with GLP-1 medication?',
-  why:'The plan is different in each case. If you are not on a medication, we build a menopause-only plan instead.',
-  opts:[['on','Taking one now'],['soon','Starting within a month'],['stopped','Stopped, and regaining'],['research','Just looking into it']]},
- {id:'med',q:'Which one, and how long?',
-  why:'Appetite suppression differs by medication and deepens over the first months. We never advise on dose — that is between you and your prescriber.',
-  opts:[['sema_new','Semaglutide, under 3 months'],['sema_est','Semaglutide, 3 months or more'],['tirz_new','Tirzepatide, under 3 months'],['tirz_est','Tirzepatide, 3 months or more'],['na','Prefer not to say']]},
+ {id:'glp',q:'Are you taking a GLP‑1 right now?',
+  why:'We ask because protein and training needs change with the dose. Not on one? You get the menopause plan.',opts:GLP_OPTS},
+ {id:'med',q:'Which medication?',when:onGlp,
+  why:'Appetite suppression differs by medication. We never advise on dose — that stays with your prescriber.',
+  opts:[['sema','Semaglutide','Ozempic, Wegovy'],['tirz','Tirzepatide','Mounjaro, Zepbound'],['other','Another one'],['na','Prefer not to say']]},
  {id:'meno',q:'Where are you with menopause?',
-  why:'Falling oestrogen changes how much protein it takes to hold on to muscle. It is the reason a general tracker sets your target too low.',
-  opts:[['peri','Perimenopause'],['meno','Menopause'],['post','Post-menopause'],['unsure','Not sure']]},
- {id:'worry',q:'What worries you most right now?',
-  opts:[['muscle','Losing muscle and strength'],['energy','Having no energy'],['face','My face and skin'],['regain','Regaining all of it']]},
- {id:'breakfast',q:'A typical breakfast?',weight:true,
+  why:'Falling oestrogen changes how much protein it takes to hold on to muscle.',
+  opts:[['peri','Perimenopause','Cycles changing, first symptoms'],['meno','Menopause','No period for close to a year'],['post','Post-menopause','More than a year'],['unsure','Not sure']]},
+ {id:'worry',q:'What bothers you most right now?',
+  why:'Your answer sets what your first week focuses on.',
+  opts:[['strength','Losing strength and muscle'],['energy','Always tired, low energy'],['flashes','Hot flashes and poor sleep'],['weight','My weight behaves differently']]},
+ {id:'breakfast',q:'A typical breakfast?',
   opts:[['coffee','Coffee, maybe nothing'],['carb','Toast or cereal'],['yog','Yoghurt and fruit'],['prot','Eggs or a protein shake']]},
  {id:'strength',q:'Strength training right now?',
-  opts:[['none','None'],['occ','Occasionally'],['low','Once or twice a week'],['high','Three times a week or more']]},
- {id:'restart',q:'Have you stopped a GLP-1 before and started again?',
-  opts:[['yes','Yes'],['no','No'],['na','Does not apply']]}
+  opts:[['none','None'],['occ','Now and then'],['low','Once or twice a week'],['high','Three times a week or more']]},
+ {id:'age',q:'How old are you?',why:'Strength norms are set by age.',
+  opts:[['40','40–44'],['45','45–49'],['50','50–54'],['55','55–59'],['60','60 or older']]},
+ {id:'weight',q:'Roughly your weight?',kind:'weight',why:'It sets your protein target in grams.'},
+ {id:'exit',when:exitPhase,
+  q:function(){return S.glp==='stopping'?'When is your last planned dose?':'When was your last dose?'},
+  why:'Your plan counts from that date, so the hardest weeks get the most support.',
+  opts:function(){return S.glp==='stopping'?
+    [['2','In the next 4 weeks'],['8','In 1–3 months'],['16','In 3 months or more'],['0','Not decided yet']]:
+    [['-2','Less than a month ago'],['-8','1–3 months ago'],['-20','3–12 months ago']]}}
 ];
 var BFAST={coffee:0,carb:8,yog:14,prot:24};
-var MEALS=[['Greek yoghurt, berries, seeds',22],['Two eggs on toast',18],['Coffee and a banana',3]];
-var DOSE=['Injection day — eat before the dip','Appetite usually lowest — protein first, volume later',
- 'Still low — liquid protein counts','Appetite starting to come back','Best day to train',
- 'Strong appetite — hold the line','Day before your shot — top up protein'];
-var DRIVES={hook:'CD7 Curiosity + CD1 Calling',quiz:'CD3 Instant Feedback + CD7 Zeigarnik',
- build:'CD2 Progress — the magic moment',teaser:'CD7 Curiosity + CD1 Calling',result:'CD2 Accomplishment — the PROOF moment',lead:'CD4 Ownership',
- paywall:'CD6 Scarcity — the only Black Hat screen',dose:'CD3 Feedback',meal:'CD3 Empowerment',
- aha:'CD3 Instant Feedback — the AHA moment',loop:'CD2 + CD4 Investment, CD8 withheld'};
+var DRIVES={hook:'CD7 Curiosity + CD1 Calling',quiz:'CD3 Instant Feedback + CD7 Zeigarnik',teaser:'CD7 Curiosity',
+ build:'CD2 Progress',result:'CD2 Accomplishment — the proof moment',lead:'CD4 Ownership',
+ paywall:'CD6 Scarcity — the only Black Hat screen',test:'CD3 Empowerment',score:'CD2 — the aha moment',
+ report:'CD2 + CD4 Investment, CD8 withheld'};
+var EMAIL_PH='you@example.com'; // taste-skill-ignore: RFC 2606 reserved domain in a field placeholder
 
-var EMAIL_PH='you@example.com'; // taste-skill-ignore: RFC 2606 reserved domain in a field placeholder, not invented user data
+var S,stage=document.getElementById('stage'),phone=document.getElementById('phone'),logEl=document.getElementById('log');
+function reset(){S={qi:0,lb:165,plan:'year',chair:11,stairs:null,carry:null}}
+reset();
 
-var S={step:0,qi:0,weightKg:74,plan:'q4',meal:null};
-var stage=document.getElementById('stage'),logEl=document.getElementById('log');
-
+/* ---------- helpers ---------- */
 function ev(name,key){
-  var li=document.createElement('li');
-  var t=new Date().toLocaleTimeString([], {hour12:false});
+  var li=document.createElement('li'),t=new Date().toLocaleTimeString([],{hour12:false});
   li.innerHTML='<span class="t">'+t+'</span><span class="e'+(key?' key':'')+'">'+name+'</span>';
-  logEl.appendChild(li); logEl.scrollTop=logEl.scrollHeight;
+  logEl.appendChild(li);logEl.scrollTop=logEl.scrollHeight;
 }
-function prog(n){document.getElementById('prog').style.width=Math.round(n/10*100)+'%'}
+function field(f){phone.className='phone'+(f?' f-'+f:'')}
+function prog(p){document.getElementById('trackWrap').hidden=(p===null);if(p!==null)document.getElementById('prog').style.width=p+'%'}
+function badge(k){return document.getElementById('drives').hidden?'':'<span class="drive">'+DRIVES[k]+'</span>'}
+function go(fn){stage.className='';void stage.offsetWidth;stage.className='fade';fn();window.scrollTo(0,0)}
+function val(x){return typeof x==='function'?x():x}
+function kg(){return Math.round(S.lb/2.2046)}
+function ring(pct,value,unit,sub,id){
+  var c=2*Math.PI*86,off=c*(1-Math.max(0,Math.min(1,pct/100)));
+  return '<div class="ring"'+(id?' id="'+id+'"':'')+'><svg viewBox="0 0 200 200" aria-hidden="true">'+
+   '<circle class="rt" cx="100" cy="100" r="86"/><circle class="rf" cx="100" cy="100" r="86" stroke-dasharray="'+
+   c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg><div class="rc"><span class="rv">'+value+
+   (unit?'<u>'+unit+'</u>':'')+'</span><span class="rs">'+sub+'</span></div></div>';
+}
+function visible(){var o=[];for(var i=0;i<QUIZ.length;i++)if(!QUIZ[i].when||QUIZ[i].when())o.push(i);return o}
 
-/* one ring: the figure is the screen's face */
-function ring(pct,value,unit,sub,warm,sm,id){
-  var c=2*Math.PI*62,off=c*(1-Math.max(0,Math.min(1,pct/100)));
-  return '<div class="ring'+(sm?' sm':'')+'"'+(id?' id="'+id+'"':'')+'><svg viewBox="0 0 148 148" aria-hidden="true">'+
-   '<circle class="rt" cx="74" cy="74" r="62"/>'+
-   '<circle class="rf'+(warm?' warm':'')+'" cx="74" cy="74" r="62" stroke-dasharray="'+c.toFixed(1)+
-   '" stroke-dashoffset="'+off.toFixed(1)+'"/></svg>'+
-   '<div class="rc"><span class="rv">'+value+'<u>'+unit+'</u></span><span class="rs">'+sub+'</span></div></div>';
-}
+/* ---------- the model: computed from her answers ---------- */
 function target(){
-  var f=1.4;
-  if(S.meno==='meno'||S.meno==='post')f+=0.2;
-  if(S.glp==='on'||S.glp==='soon')f+=0.2;
-  if(S.med==='sema_est'||S.med==='tirz_est')f+=0.1;
-  if(S.strength==='low')f+=0.1; else if(S.strength==='high')f+=0.2;
-  f=Math.min(f,2.2);
-  var daily=Math.round(S.weightKg*f);
-  return {f:Math.round(f*10)/10,daily:daily,morning:Math.round(daily*0.35)};
+  var f=1.2;
+  if(S.meno==='meno'||S.meno==='post')f+=0.1;
+  if(onGlp())f+=0.2;
+  if(S.strength==='low')f+=0.1;else if(S.strength==='high')f+=0.2;
+  f=Math.min(f,1.6);
+  var d=Math.round(kg()*f/5)*5;
+  return {f:Math.round(f*10)/10,daily:d,morning:Math.round(d*0.35)};
 }
 function risk(){
   var t=target(),gap=t.morning-(BFAST[S.breakfast]||0),s=0;
-  if(gap>18)s+=2; else if(gap>8)s+=1;
-  if(S.strength==='none')s+=2; else if(S.strength==='occ')s+=1;
+  if(gap>18)s+=2;else if(gap>8)s+=1;
+  if(S.strength==='none')s+=2;else if(S.strength==='occ')s+=1;
   if(S.meno==='meno'||S.meno==='post')s+=1;
-  if(S.med==='sema_est'||S.med==='tirz_est')s+=1;
-  if(S.restart==='yes')s+=1;
+  if(onGlp())s+=1;
+  if(+S.age>=55)s+=1;
   return s>=5?2:(s>=3?1:0);
 }
-function strip(){
-  var out='',lab={on:'On GLP-1',soon:'Starting soon',stopped:'Restarting',research:'Researching'};
-  var meds={sema_new:'Semaglutide, new',sema_est:'Semaglutide, 3mo+',tirz_new:'Tirzepatide, new',tirz_est:'Tirzepatide, 3mo+',na:'Medication private'};
-  var men={peri:'Perimenopause',meno:'Menopause',post:'Post-menopause',unsure:'Stage unknown'};
-  var str={none:'No strength work',occ:'Strength: occasional',low:'Strength: 1–2x',high:'Strength: 3x+'};
-  function c(v){return v?'<span class="chip">'+v+'</span>':''}
-  out+=c(lab[S.glp])+c(meds[S.med])+c(men[S.meno]);
-  if(S.breakfast!==undefined&&S.breakfast!==null)out+=c('Morning protein now: '+(BFAST[S.breakfast]||0)+' g');
-  out+=c(str[S.strength]);
-  if(!out)out='<span class="chip pending">Your profile builds as you answer</span>';
-  return '<div class="strip">'+out+'</div>';
+function score(){
+  var c=Math.min(40,Math.round(S.chair/20*40));
+  var st={fast:30,mid:22,slow:14,rail:6}[S.stairs]||0;
+  var ca={long:30,mid:20,short:10,no:4}[S.carry]||0;
+  return {total:c+st+ca,c:c,st:st,ca:ca};
 }
-function driveBadge(k){
-  return document.getElementById('drives').hidden?'':'<span class="drive">'+DRIVES[k]+'</span>';
-}
-function go(fn){stage.className='fade';fn();}
 
-/* ---------- drawn art ---------- */
-/* Every figure is drawn from a real number, not decoration. */
+/* ---------- drawn figures, each from a real number ---------- */
 function artAdoption(){
-  /* 100 marks, 22 filled: one mark is one adult in a hundred. */
-  var h='<svg viewBox="0 0 300 152" role="img" aria-label="A hundred marks, twenty-two of them filled: 22 per cent of US adults aged 50 to 64 currently take a GLP-1">';
-  for(var i=0;i<100;i++){
-    var x=22+(i%10)*28, y=12+Math.floor(i/10)*14;
-    h+='<circle cx="'+x+'" cy="'+y+'" r="5" fill="'+(i<22?'#1F7A46':'#C8E2CF')+'"/>';
-  }
+  var h='<svg viewBox="0 0 300 152" role="img" aria-label="22 of 100 marks filled: 22 per cent of US adults aged 50 to 64 currently take a GLP-1">';
+  for(var i=0;i<100;i++)h+='<circle cx="'+(22+(i%10)*28)+'" cy="'+(12+Math.floor(i/10)*14)+'" r="5" fill="'+(i<22?'#224228':'#ced4b8')+'"/>';
   return h+'</svg>';
 }
-function artLeanMass(){
-  /* STEP-1, 68 weeks: body weight -15.0%, lean body mass -9.7% from baseline. */
-  return '<svg viewBox="0 0 300 150" role="img" aria-label="Two bars: body weight down fifteen per cent, lean mass down nine point seven per cent">'+
-   '<text x="0" y="22" font-size="13" fill="#55605A" font-family="Manrope,sans-serif">Body weight</text>'+
-   '<rect x="0" y="32" width="276" height="26" rx="8" fill="#DDEFE2"/>'+
-   '<rect x="0" y="32" width="235" height="26" rx="8" fill="#1F7A46"/>'+
-   '<text x="286" y="50" font-size="13" fill="#15201A" font-family="Manrope,sans-serif" text-anchor="end" font-weight="600">-15.0%</text>'+
-   '<text x="0" y="92" font-size="13" fill="#55605A" font-family="Manrope,sans-serif">Lean body mass</text>'+
-   '<rect x="0" y="102" width="276" height="26" rx="8" fill="#FBEBD4"/>'+
-   '<rect x="0" y="102" width="178" height="26" rx="8" fill="#9A5B0B"/>'+
-   '<text x="286" y="120" font-size="13" fill="#15201A" font-family="Manrope,sans-serif" text-anchor="end" font-weight="600">-9.7%</text>'+
-   '</svg>';
+function artLean(){
+  return '<svg viewBox="0 0 300 140" role="img" aria-label="Body weight down 15 per cent, lean mass down 9.7 per cent">'+
+   '<text x="0" y="18" font-size="13" fill="#4a4741" font-family="Inter,sans-serif">Body weight</text>'+
+   '<rect x="0" y="28" width="300" height="26" rx="8" fill="#ced4b8"/><rect x="0" y="28" width="235" height="26" rx="8" fill="#224228"/>'+
+   '<text x="292" y="46" font-size="13" fill="#224228" text-anchor="end" font-weight="600" font-family="Inter,sans-serif">−15.0%</text>'+
+   '<text x="0" y="88" font-size="13" fill="#4a4741" font-family="Inter,sans-serif">Lean body mass</text>'+
+   '<rect x="0" y="98" width="300" height="26" rx="8" fill="#efe7da"/><rect x="0" y="98" width="178" height="26" rx="8" fill="#af751b"/>'+
+   '<text x="292" y="116" font-size="13" fill="#684d07" text-anchor="end" font-weight="600" font-family="Inter,sans-serif">−9.7%</text></svg>';
 }
 function artSpread(){
-  /* Mamerow 2014: the same 90 g a day in two patterns. Bars are to scale against the 65 g meal. */
-  var meals=[['Breakfast',30,10],['Lunch',30,15],['Dinner',30,65]],h,i,S=68/65;
-  h='<svg viewBox="0 0 300 215" role="img" aria-label="Two protein patterns over three meals: thirty, thirty, thirty grams against ten, fifteen, sixty-five grams">'+
-    '<text x="8" y="76" font-size="13" font-weight="600" fill="#10402A" font-family="Manrope,sans-serif">Even</text>'+
-    '<text x="8" y="186" font-size="13" font-weight="600" fill="#5E370A" font-family="Manrope,sans-serif">Skewed</text>';
-  for(i=0;i<3;i++){
-    var x=92+i*62, e=Math.round(meals[i][1]*S), k=Math.round(meals[i][2]*S);
-    h+='<rect x="'+x+'" y="'+(80-e)+'" width="34" height="'+e+'" rx="5" fill="#1F7A46"/>'+
-       '<text x="'+(x+17)+'" y="'+(75-e)+'" font-size="12" font-weight="600" fill="#15201A" text-anchor="middle" font-family="Manrope,sans-serif">'+meals[i][1]+' g</text>'+
-       '<rect x="'+x+'" y="'+(190-k)+'" width="34" height="'+k+'" rx="5" fill="#9A5B0B"/>'+
-       '<text x="'+(x+17)+'" y="'+(185-k)+'" font-size="12" font-weight="600" fill="#15201A" text-anchor="middle" font-family="Manrope,sans-serif">'+meals[i][2]+' g</text>'+
-       '<text x="'+(x+17)+'" y="208" font-size="12" fill="#55605A" text-anchor="middle" font-family="Manrope,sans-serif">'+meals[i][0]+'</text>';
-  }
+  var m=[['Breakfast',30,10],['Lunch',30,15],['Dinner',30,65]],k=68/65,h='<svg viewBox="0 0 300 215" role="img" aria-label="Even protein 30, 30, 30 grams against skewed 10, 15, 65 grams">'+
+   '<text x="6" y="76" font-size="13" font-weight="600" fill="#224228" font-family="Inter,sans-serif">Even</text>'+
+   '<text x="6" y="186" font-size="13" font-weight="600" fill="#684d07" font-family="Inter,sans-serif">Skewed</text>';
+  for(var i=0;i<3;i++){var x=92+i*62,e=Math.round(m[i][1]*k),s=Math.round(m[i][2]*k);
+    h+='<rect x="'+x+'" y="'+(80-e)+'" width="34" height="'+e+'" rx="5" fill="#224228"/><text x="'+(x+17)+'" y="'+(75-e)+'" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">'+m[i][1]+' g</text>'+
+       '<rect x="'+x+'" y="'+(190-s)+'" width="34" height="'+s+'" rx="5" fill="#af751b"/><text x="'+(x+17)+'" y="'+(185-s)+'" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">'+m[i][2]+' g</text>'+
+       '<text x="'+(x+17)+'" y="208" font-size="12" fill="#4a4741" text-anchor="middle" font-family="Inter,sans-serif">'+m[i][0]+'</text>';}
   return h+'</svg>';
 }
-function artMealCard(){
-  return '<div class="ui"><div class="uicard">'+
-   '<span class="uitag">Scored in 2 seconds</span>'+
-   '<div class="uirow"><span>Greek yoghurt, berries, seeds</span><b>22 g</b></div>'+
-   '<div class="uibar"><i style="width:85%"></i></div>'+
-   '<div class="uirow"><span style="color:var(--muted)">Of 26 g before noon</span><b>85%</b></div>'+
-   '</div></div>';
-}
-
-/* ---------- teasers: shown after the question whose index is the key ---------- */
+/* teasers shown after a question id; `when` limits who sees them */
 var TEASERS={
- 0:{t:'You are not early. You are in the middle of it.',
-    art:artAdoption,cap:'Each figure is one adult in a hundred; the filled ones are taking a GLP-1 right now.',
-    b:'About 22% of US adults aged 50 to 64 are taking a GLP-1 right now — the highest share of any age group. Across all US adults it is 12%, so this age band runs close to double the national rate.',
-    src:'KFF Health Tracking Poll, fielded 27 October – 2 November 2025'},
- 2:{t:'The scale cannot tell you what you lost.',
-    art:artLeanMass,cap:'Change from baseline over 68 weeks on semaglutide 2.4 mg.',
-    b:'In the STEP-1 body-composition substudy, body weight fell 15.0% — and lean body mass fell 9.7%. Muscle is not protected by default. That is the whole reason this app exists.',
-    src:'Wilding et al., New England Journal of Medicine, 2021; DXA substudy, 140 participants'},
- 4:{t:'Three meals of 30&nbsp;g beat one of 65&nbsp;g',
-    art:artSpread,cap:'The same 90 g of protein a day, in two patterns.',
-    b:'Only the pattern changed — and 24-hour muscle protein synthesis came out 25% higher when the protein was spread evenly: 0.075 against 0.056 %/h.',
-    src:'Mamerow et al., Journal of Nutrition, 2014. Crossover trial, 8 healthy adults, mean age 37 — a small study, and the only one this screen rests on.',
-    m:'Protein you will actually eat is protein you eat early. On a GLP-1 the evening meal is the one that gets skipped, so we put your target on the morning and ask you to change one meal instead of three. That is our decision, not a clinical finding.'},
- 5:{t:'We score the meal, not the day',
-    art:artMealCard,cap:'',
-    b:'One photograph, one number, no food diary. A day you can still fix at 11am is worth more than a verdict at midnight.',
-    src:''}
+ glp:{when:onGlp,t:'You are not early. You are in the middle of it.',art:artAdoption,
+   cap:'Each mark is one adult in a hundred; filled ones take a GLP‑1 now.',
+   b:'About 22% of US adults aged 50–64 take a GLP‑1 right now — the highest of any age group, close to double the national 12%.',
+   src:'KFF Health Tracking Poll, fielded 27 Oct – 2 Nov 2025'},
+ meno:{when:onGlp,t:'The scale cannot tell you what you lost.',art:artLean,cap:'Change from baseline over 68 weeks on semaglutide 2.4 mg.',
+   b:'In the STEP‑1 body-composition substudy, weight fell 15.0% — and lean body mass fell 9.7%. Muscle is not protected by default.',
+   src:'Wilding et al., NEJM 2021; DXA substudy, 140 participants'},
+ breakfast:{t:'Three meals of 30 g beat one of 65 g',art:artSpread,cap:'The same 90 g of protein a day, in two patterns.',
+   b:'Only the pattern changed — and 24-hour muscle protein synthesis came out 25% higher with protein spread evenly.',
+   src:'Mamerow et al., Journal of Nutrition 2014. Crossover, 8 adults — a small study.',
+   m:'So we put a third of your target before noon and ask you to change one meal, not three. That is our method, not a clinical finding.'}
 };
-function scrTeaser(idx,next){
-  var z=TEASERS[idx];
-  var pic=z.art===artMealCard?z.art():('<div class="art">'+z.art()+(z.cap?'<p class="cap">'+z.cap+'</p>':'')+'</div>');
-  stage.innerHTML='<div class="screen">'+driveBadge('teaser')+
-   '<h2>'+z.t+'</h2>'+pic+
-   '<p class="lead">'+z.b+'</p>'+
-   (z.src?'<p class="src">'+z.src+'</p>':'')+
-   (z.m?'<div class="note"><b class="hd">Harmony method</b>'+z.m+'</div>':'')+
-   '<div class="spacer"></div><button class="btn" id="tc">Continue</button></div>';
-  ev('TeaserViewed · q'+(idx+1));
-  document.getElementById('tc').onclick=function(){go(next)};
-}
 
 /* ---------- screens ---------- */
 function scrHook(){
-  prog(0);
-  stage.innerHTML='<div class="screen">'+driveBadge('hook')+
-   '<h1>The weight you lose should not be muscle.</h1>'+
-   '<p class="lead">For women 40+ on a GLP-1. Seven questions, about a minute. You will see your daily protein target before we ask you for anything.</p>'+
-   '<div class="note"><b class="hd">What we are not</b>No prescriptions, no dosing advice, no medical claims. We work with whatever your doctor already prescribed.</div>'+
+  field('forest');prog(null);
+  stage.innerHTML='<div class="screen" style="padding-top:0">'+badge('hook')+
+   '<div class="photo" id="photo"><img src="assets/hook-a.webp" width="800" height="934" alt="A woman in her fifties doing a squat with a dumbbell at home" fetchpriority="high" onerror="this.remove()"></div>'+
+   '<h1 style="margin-top:10px">Your body changed. Your plan should too.</h1>'+
+   '<p class="lead">A strength and protein plan for women in menopause, on GLP‑1 or not.</p>'+
+   '<p class="slogan">Keep strong and harmonize your life</p>'+
    '<div class="spacer"></div>'+
-   '<button class="btn" id="go">Start</button>'+
-   '<p class="small">18+. Weight-management advertising is restricted to adults.</p></div>';
+   '<button class="btn" id="go">Take the 1-minute quiz</button>'+
+   '<p class="small">No prescriptions, no dosing advice. 18+.</p></div>';
   document.getElementById('go').onclick=function(){ev('QuizStart');S.qi=0;go(scrQuiz)};
 }
-function scrQuiz(){
-  var q=QUIZ[S.qi];prog(S.qi+1);
-  var h='<div class="screen">'+driveBadge('quiz')+strip()+
-   '<p class="label">Question '+(S.qi+1)+' of '+QUIZ.length+'</p>'+
-   '<h2>'+q.q+'</h2>';
-  if(q.why)h+='<div class="note"><b class="hd">Why we ask</b>'+q.why+'</div>';
-  h+='<div class="opts">';
-  for(var i=0;i<q.opts.length;i++)
-    h+='<button class="opt'+(S[q.id]===q.opts[i][0]?' sel':'')+'" data-v="'+q.opts[i][0]+'">'+q.opts[i][1]+'</button>';
-  h+='</div>';
-  if(q.weight)h+='<div class="card"><p class="label">And roughly your weight — it sets the target</p>'+
-   '<p style="text-align:center;font-size:28px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums">'+
-   '<span id="wtv">'+S.weightKg+'</span><span style="font-size:16px;font-weight:600;color:var(--muted);margin-left:3px">kg</span></p>'+
-   '<input type="range" id="wt" min="50" max="130" step="1" value="'+S.weightKg+'" aria-label="Body weight in kilograms"></div>';
-  h+='<div class="spacer"></div>';
-  if(S.qi>0)h+='<button class="btn ghost" id="back">Back</button>';
-  h+='</div>';
-  stage.innerHTML=h;
-  if(q.weight){
-    var w=document.getElementById('wt');
-    w.oninput=function(){S.weightKg=+w.value;document.getElementById('wtv').textContent=w.value};
-  }
-  var btns=stage.querySelectorAll('.opt');
-  for(var j=0;j<btns.length;j++)btns[j].onclick=function(){
-    S[q.id]=this.getAttribute('data-v');
-    ev('QuizAnswer · '+q.id);
-    var done=S.qi,last=false;
-    if(S.qi===0&&(S[q.id]==='research')){S.qi=2;}
-    else if(S.qi<QUIZ.length-1)S.qi++;
-    else{ev('QuizComplete',true);last=true}
-    var next=last?scrMagic:scrQuiz;
-    if(TEASERS[done])return go(function(){scrTeaser(done,next)});
-    go(next);
-  };
-  if(S.qi>0)document.getElementById('back').onclick=function(){S.qi--;go(scrQuiz)};
+function chips(){
+  var L={glp:{none:'No GLP‑1',early:'GLP‑1, first weeks',steady:'GLP‑1, steady',stopping:'Stopping soon',stopped:'Recently stopped'},
+    meno:{peri:'Perimenopause',meno:'Menopause',post:'Post-menopause',unsure:'Stage unsure'},
+    strength:{none:'No strength work',occ:'Strength: now and then',low:'Strength 1–2×',high:'Strength 3×+'}};
+  var o='';
+  for(var k in L)if(S[k])o+='<span class="chip">'+L[k][S[k]]+'</span>';
+  if(S.breakfast)o+='<span class="chip">Breakfast protein '+BFAST[S.breakfast]+' g</span>';
+  if(S.age)o+='<span class="chip">'+QUIZ[6].opts.filter(function(a){return a[0]===S.age})[0][1]+'</span>';
+  return '<div class="chips">'+o+'</div>';
 }
-function scrMagic(){
-  prog(8);
-  var steps=[[0,'Matching your medication stage'],[26,'Adjusting protein for falling oestrogen'],
-             [52,'Mapping your dose week'],[76,'Checking your breakfast against the target']];
-  var h='<div class="screen">'+driveBadge('build')+
-   '<h2>Building your plan</h2>'+
-   '<div class="card" style="align-items:center;gap:16px">'+ring(0,'0','%','',false,false,'mr')+
-     '<p class="lead" id="mstep" style="text-align:center">'+steps[0][1]+'</p></div>'+
-   '<ul class="build" id="ml">';
+function scrQuiz(){
+  field(null);
+  var list=visible(),pos=list.indexOf(S.qi),q=QUIZ[S.qi];
+  prog(Math.round((pos+1)/(list.length+1)*100));
+  var h='<div class="screen">'+badge('quiz')+chips()+'<h2>'+val(q.q)+'</h2>';
+  if(q.kind==='weight'){
+    h+='<div class="weight"><b><span id="wv">'+S.lb+'</span><u>lb</u></b>'+
+       '<input type="range" id="wt" min="100" max="300" step="1" value="'+S.lb+'" aria-label="Body weight in pounds"></div>'+
+       (q.why?'<p class="why">'+q.why+'</p>':'')+'<div class="spacer"></div><button class="btn" id="wn">Continue</button>';
+  }else{
+    var o=val(q.opts);h+='<div class="opts">';
+    for(var i=0;i<o.length;i++)h+='<button class="opt'+(S[q.id]===o[i][0]?' sel':'')+'" data-v="'+o[i][0]+'">'+o[i][1]+(o[i][2]?'<small>'+o[i][2]+'</small>':'')+'</button>';
+    h+='</div>'+(q.why?'<p class="why">'+q.why+'</p>':'')+'<div class="spacer"></div>';
+  }
+  if(pos>0)h+='<button class="btn ghost" id="back">Back</button>';
+  stage.innerHTML=h+'</div>';
+  function next(){
+    ev('QuizAnswer · '+q.id);
+    var l=visible(),p=l.indexOf(S.qi),last=p===l.length-1,nx=last?scrBuild:scrQuiz;
+    if(last)ev('QuizComplete',true);else S.qi=l[p+1];
+    var t=TEASERS[q.id];
+    if(t&&(!t.when||t.when()))return go(function(){scrTeaser(t,nx)});
+    go(nx);
+  }
+  if(q.kind==='weight'){
+    var w=document.getElementById('wt');
+    w.oninput=function(){S.lb=+w.value;document.getElementById('wv').textContent=w.value};
+    document.getElementById('wn').onclick=next;
+  }else{
+    var b=stage.querySelectorAll('.opt');
+    for(var j=0;j<b.length;j++)b[j].onclick=function(){
+      S[q.id]=this.getAttribute('data-v');
+      if(q.id==='glp'&&!onGlp()){S.med=null;S.exit=null}
+      this.className='opt sel';setTimeout(next,160);
+    };
+  }
+  if(pos>0)document.getElementById('back').onclick=function(){var l=visible();S.qi=l[l.indexOf(S.qi)-1];go(scrQuiz)};
+}
+function scrTeaser(z,next){
+  field(null);
+  stage.innerHTML='<div class="screen">'+badge('teaser')+'<h2>'+z.t+'</h2>'+
+   '<div class="art">'+z.art()+'<p class="cap">'+z.cap+'</p></div>'+
+   '<p class="lead">'+z.b+'</p><p class="src">'+z.src+'</p>'+
+   (z.m?'<div class="method"><b>The Harmony method</b>'+z.m+'</div>':'')+
+   '<div class="spacer"></div><button class="btn" id="tc">Continue</button></div>';
+  ev('TeaserViewed');
+  document.getElementById('tc').onclick=function(){go(next)};
+}
+function scrBuild(){
+  field('forest');prog(100);
+  var steps=[[0,onGlp()?'Matching your medication stage':'Reading your menopause stage'],[25,'Setting protein for your body weight'],
+    [50,'Choosing your first strength sessions'],[75,exitPhase()?'Dating your last-shot plan':'Laying out your first 14 days']];
+  var h='<div class="screen">'+badge('build')+'<h2>Building your plan</h2>'+ring(0,'0','%','','mr')+'<ul class="build">';
   for(var i=0;i<steps.length;i++)h+='<li id="m'+i+'"><i></i><span>'+steps[i][1]+'</span></li>';
-  h+='</ul><div class="spacer"></div>'+
-   '<p class="src">Built from your seven answers. Nothing here is a diagnosis.</p></div>';
-  stage.innerHTML=h;
-  var rf=document.querySelector('#mr .rf'),rv=document.querySelector('#mr .rv'),
-      st=document.getElementById('mstep'),C=2*Math.PI*62,n=0;
+  stage.innerHTML=h+'</ul><div class="spacer"></div><p class="small">Built from your answers. Nothing here is a diagnosis.</p></div>';
+  var rf=document.querySelector('#mr .rf'),rv=document.querySelector('#mr .rv'),C=2*Math.PI*86,n=0;
   rf.style.transition='none';
-  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var red=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var tick=setInterval(function(){
-    n+=reduced?25:2;
-    if(n>100)n=100;
-    rf.setAttribute('stroke-dashoffset',(C*(1-n/100)).toFixed(1));
-    rv.innerHTML=n+'<u>%</u>';
-    for(var i=0;i<steps.length;i++)if(n>=steps[i][0]){
-      var el=document.getElementById('m'+i);if(el)el.className='done';
-      st.textContent=steps[i][1];
-    }
-    if(n>=100){clearInterval(tick);ev('PlanBuilt');setTimeout(function(){go(scrResult)},620)}
-  },reduced?120:38);
+    n=Math.min(100,n+(red?25:2));
+    rf.setAttribute('stroke-dashoffset',(C*(1-n/100)).toFixed(1));rv.innerHTML=n+'<u>%</u>';
+    for(var i=0;i<steps.length;i++)if(n>=steps[i][0])document.getElementById('m'+i).className='done';
+    if(n>=100){clearInterval(tick);ev('PlanBuilt');setTimeout(function(){go(scrResult)},600)}
+  },red?120:36);
+}
+function calendar(){
+  var d=['M','T','W','T','F','S','S'],key={1:'Test',7:'Re-test',14:'Report'},h='<div class="cal">';
+  for(var i=1;i<=14;i++){
+    var k=key[i],rest=(i%7===3||i%7===6);
+    h+='<div class="'+(k?'key':(rest?'rest':''))+'"><b>'+d[(i-1)%7]+'</b>'+(k||('Day '+i))+'</div>';
+  }
+  return h+'</div><div class="legend"><span><i style="background:#224228"></i>Strength test</span><span><i style="background:#fff"></i>Session + protein</span><span><i style="background:#efe7da"></i>Rest day</span></div>';
+}
+function exitLine(){
+  if(!exitPhase()||S.exit===null||S.exit===undefined)return '';
+  var w=+S.exit;
+  if(w===0)return '<div class="method"><b>Your last-shot plan</b>When you set a date, your plan switches to Exit mode — the weeks after the last dose get the most support.</div>';
+  return '<div class="method"><b>Your last-shot plan</b>'+(w>0?'Your last dose is about '+w+' weeks away. Exit mode starts '+Math.max(1,w-2)+' weeks before it.':
+    'You are about '+(-w)+' weeks past your last dose — Exit mode is on from day 1.')+'</div>';
 }
 function scrResult(){
-  prog(9);
-  var t=target(),have=BFAST[S.breakfast]||0,gap=Math.max(0,t.morning-have),r=risk();
-  var pct=Math.min(100,Math.round(have/t.morning*100));
-  var bands=['Lower','Moderate','Elevated'];
-  stage.innerHTML='<div class="screen">'+driveBadge('result')+
-   '<h2>Your daily protein target</h2>'+
-   '<div class="card" style="align-items:center;gap:16px">'+
-     ring(100,t.daily,'g','Every day')+
-     '<p class="lead" style="text-align:center"><span class="num">'+t.morning+' g</span> of it before noon — that is where the loss happens.</p></div>'+
-   '<div class="card'+(gap>0?'':'')+'" style="align-items:center;gap:14px">'+
-     ring(pct,have,'g','Your breakfast now',gap>0,true)+
-     '<p class="lead" style="text-align:center">That is <span class="num">'+pct+'%</span> of your morning target'+
-     (gap>0?' — <b class="num">'+gap+' g</b> short of the muscle-protecting range.':', which already clears it.')+'</p></div>'+
-   '<div class="rows">'+
-     '<div class="row"><span>Protein factor applied</span><b>'+t.f+' g/kg</b></div>'+
-     '<div class="row"><span>Body weight used</span><b>'+S.weightKg+' kg</b></div>'+
-     '<div class="row"><span>Lean-mass risk profile</span><b>'+bands[r]+'</b></div>'+
-   '</div>'+
-   '<p class="small">Based on your answers, not a diagnosis. Nothing here replaces your prescriber.</p>'+
-   '<h3>Your dose week</h3>'+week(0)+
-   '<div class="note"><b class="hd">Why this matters now</b>You are in the window that decides how much muscle you keep. You are not shrinking — you are rebuilding.</div>'+
+  field('sage');prog(null);
+  var t=target(),r=risk(),bands=['Lower','Moderate','Elevated'];
+  stage.innerHTML='<div class="screen">'+badge('result')+
+   '<h2>Your plan is ready</h2>'+
+   ring(100,t.daily,'g','protein a day')+
+   '<p class="lead" style="text-align:center"><span class="nb">'+t.morning+' g</span> of it before noon.</p>'+
+   '<div class="panel">'+
+     '<div class="kv"><span>Lean-mass risk</span><b>'+bands[r]+'</b></div>'+
+     '<div class="kv"><span>Protein factor</span><b>'+t.f+' g/kg</b></div>'+
+     '<div class="kv"><span>Body weight used</span><b>'+S.lb+' lb</b></div></div>'+
+   '<h3>Your first 14 days</h3>'+calendar()+exitLine()+
+   '<p class="small">On day 14 you get a report you can show your doctor. Based on your answers, not a diagnosis.</p>'+
    '<button class="btn" id="save">Save my plan</button></div>';
-  document.getElementById('save').onclick=function(){ev('ResultViewed');go(scrLead)};
-}
-function week(shotIdx){
-  var d=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],h='<div class="week">';
-  var kind=['shot','low','low','up','up','full','full'],mark=['Shot','Low','Low','Up','Up','Full','Full'];
-  for(var i=0;i<7;i++){
-    var rel=(i-shotIdx+7)%7;
-    h+='<div class="day '+kind[rel]+(i===0?' today':'')+'"><span class="d">'+d[i]+'</span>'+
-       '<span class="m">'+mark[rel]+'</span></div>';
-  }
-  return h+'</div><div class="keys"><span><i class="k-shot"></i>Injection day</span>'+
-   '<span><i class="k-low"></i>Low appetite</span><span><i class="k-up"></i>Returning</span>'+
-   '<span><i class="k-full"></i>Full appetite</span></div>';
+  ev('ResultViewed');
+  document.getElementById('save').onclick=function(){go(scrLead)};
 }
 function scrLead(){
-  prog(10);
-  stage.innerHTML='<div class="screen">'+driveBadge('lead')+
-   '<h2>Where should we send it?</h2>'+
-   '<p class="lead">Your protein target and dose-week plan, so you have them even before you decide.</p>'+
+  field(null);
+  stage.innerHTML='<div class="screen">'+badge('lead')+'<h2>Where should we send your plan?</h2>'+
+   '<p class="lead">Your protein target and 14-day calendar, so you have them even before you decide.</p>'+
    '<input type="email" id="em" placeholder="'+EMAIL_PH+'" autocomplete="email" aria-label="Email address">'+
-   '<div class="spacer"></div><button class="btn" id="next">Save and continue</button>'+
-   '<p class="small">We email the plan. You can delete the record at any time.</p></div>';
+   '<div class="spacer"></div><button class="btn" id="next">Send my plan</button>'+
+   '<p class="small">One email with the plan. Delete your data any time.</p></div>';
   document.getElementById('next').onclick=function(){ev('LeadCaptured');go(scrPaywall)};
 }
 function scrPaywall(){
-  var t=target();
-  var plans=[['p4','4 weeks','$29.99',''],['q4','Quarterly','$59.99','save 33%'],['y4','Annual','$129.99','save 64%']];
-  var h='<div class="screen">'+driveBadge('paywall')+
-   '<h2>'+t.daily+' g a day, built around your shot</h2>'+
-   '<div class="note warm"><b class="hd">What this costs next to the medication</b>The medication runs $200–1,000 a month. Protecting what it takes from your muscle and bone starts at $7.50 a week.</div>'+
+  field(null);
+  var t=target(),plans=[
+    ['year','<span class="nm">12 months<span class="save">save 67%</span><small>$2.50 a week</small></span>','$129.99<small>billed once a year</small>'],
+    ['month','<span class="nm">4 weeks<small>then $29.99 every 4 weeks</small></span>','$14.99<small>first 4 weeks</small>']];
+  var h='<div class="screen">'+badge('paywall')+'<h2>Start your 14 days</h2>'+
+   '<div class="panel light">'+
+    '<div class="kv"><span>Daily protein target</span><b>'+t.daily+' g</b></div>'+
+    '<div class="kv"><span>Strength test + weekly re-test</span><b>Day 1</b></div>'+
+    '<div class="kv"><span>Report for your doctor</span><b>Day 14</b></div></div>'+
    '<div class="opts">';
-  for(var i=0;i<plans.length;i++)
-    h+='<button class="plan'+(S.plan===plans[i][0]?' sel':'')+'" data-p="'+plans[i][0]+'">'+
-       '<span>'+plans[i][1]+(plans[i][3]?'<span class="save">'+plans[i][3]+'</span>':'')+'</span>'+
-       '<span class="pr">'+plans[i][2]+'</span></button>';
+  for(var i=0;i<plans.length;i++)h+='<button class="plan'+(S.plan===plans[i][0]?' sel':'')+'" data-p="'+plans[i][0]+'">'+plans[i][1]+'<span class="pr">'+plans[i][2]+'</span></button>';
   h+='</div><div class="spacer"></div><button class="btn" id="buy">Start my plan</button>'+
-   '<p class="small">Cancel any time. Your plan stays saved for 24 hours. No medical advice. 18+.</p></div>';
-  stage.innerHTML=h;
-  ev('PaywallView');
+   '<p class="small">Cancel in one tap, any time. We remind you before every renewal. No medical advice. 18+.</p></div>';
+  stage.innerHTML=h;ev('PaywallView');
   var ps=stage.querySelectorAll('.plan');
-  for(var j=0;j<ps.length;j++)ps[j].onclick=function(){
-    S.plan=this.getAttribute('data-p');ev('PlanSelected · '+S.plan);go(scrPaywall);
-  };
-  document.getElementById('buy').onclick=function(){ev('Purchase (mock, reporting only)',true);go(scrDose)};
+  for(var j=0;j<ps.length;j++)ps[j].onclick=function(){S.plan=this.getAttribute('data-p');ev('PlanSelected · '+S.plan);scrPaywall()};
+  document.getElementById('buy').onclick=function(){ev('Purchase (mock, reporting only)',true);go(scrTestIntro)};
 }
-function scrDose(){
-  prog(10);
-  var opts=[['0','Today'],['1','Tomorrow'],['2','In 2–3 days'],['4','In 4 or more days'],['x','Not sure yet']];
-  var h='<div class="screen">'+driveBadge('dose')+
-   '<h2>When is your next shot?</h2><p class="lead">It sets which day of the week your plan treats as low-appetite.</p><div class="opts">';
+function scrTestIntro(){
+  field('forest');prog(0);
+  stage.innerHTML='<div class="screen">'+badge('test')+'<h2>Day 1. Your strength test.</h2>'+
+   '<p class="lead">Three moves, about five minutes, at home. No equipment beyond a chair, stairs and two shopping bags.</p>'+
+   '<div class="panel">'+
+    '<div class="kv"><span>Chair stands</span><b>30 s</b></div>'+
+    '<div class="kv"><span>One flight of stairs</span><b>timed</b></div>'+
+    '<div class="kv"><span>Carry two bags</span><b>timed</b></div></div>'+
+   '<p class="lead">This is your baseline. You repeat it every week — the number is yours, not the medication’s.</p>'+
+   '<div class="spacer"></div><button class="btn" id="st">Start the test</button>'+
+   '<p class="small">Stop if anything hurts. Skip any move that is not safe for you.</p></div>';
+  document.getElementById('st').onclick=function(){ev('StrengthTestStart');go(scrChair)};
+}
+function scrChair(){
+  field(null);prog(33);
+  stage.innerHTML='<div class="screen">'+badge('test')+'<h2>How many chair stands in 30 seconds?</h2>'+
+   '<p class="lead">Arms crossed, stand up fully, sit back down. Count every full stand.</p>'+
+   '<div class="weight"><b id="cv">'+S.chair+'</b><div class="stepper"><button id="cm" aria-label="One fewer">−</button><button id="cp" aria-label="One more">+</button></div></div>'+
+   '<div class="spacer"></div><button class="btn" id="n">Next</button></div>';
+  function upd(d){S.chair=Math.max(0,Math.min(30,S.chair+d));document.getElementById('cv').textContent=S.chair}
+  document.getElementById('cm').onclick=function(){upd(-1)};document.getElementById('cp').onclick=function(){upd(1)};
+  document.getElementById('n').onclick=function(){go(scrStairs)};
+}
+function pick(title,lead,key,opts,next,p){
+  field(null);prog(p);
+  var h='<div class="screen">'+badge('test')+'<h2>'+title+'</h2><p class="lead">'+lead+'</p><div class="opts">';
   for(var i=0;i<opts.length;i++)h+='<button class="opt" data-v="'+opts[i][0]+'">'+opts[i][1]+'</button>';
-  h+='</div><div class="spacer"></div></div>';
-  stage.innerHTML=h;
+  stage.innerHTML=h+'</div><div class="spacer"></div></div>';
   var b=stage.querySelectorAll('.opt');
-  for(var j=0;j<b.length;j++)b[j].onclick=function(){ev('DoseWeekSet');go(scrMeal)};
+  for(var j=0;j<b.length;j++)b[j].onclick=function(){S[key]=this.getAttribute('data-v');this.className='opt sel';setTimeout(function(){go(next)},160)};
 }
-function scrMeal(){
-  var t=target();
-  var h='<div class="screen">'+driveBadge('meal')+
-   '<h2>Log your first meal</h2>'+
-   '<p class="lead">Day 1, before noon. Target: <span class="num">'+t.morning+' g</span>. Photograph it, or pick one to try the scoring.</p>'+
-   '<div class="opts">';
-  for(var i=0;i<MEALS.length;i++)
-    h+='<button class="meal" data-i="'+i+'"><span>'+MEALS[i][0]+'</span><span class="pr">'+MEALS[i][1]+' g</span></button>';
-  h+='</div><p class="small">Photo recognition is mocked in this prototype.</p><div class="spacer"></div></div>';
-  stage.innerHTML=h;
-  var b=stage.querySelectorAll('.meal');
-  for(var j=0;j<b.length;j++)b[j].onclick=function(){
-    S.meal=+this.getAttribute('data-i');ev('FirstMealLogged',true);go(scrAha);
-  };
+function scrStairs(){pick('One flight of stairs — how long?','Walk up at a steady pace. Time it, or pick the closest.','stairs',
+  [['fast','Under 10 seconds'],['mid','10–15 seconds'],['slow','Over 15 seconds'],['rail','I need the rail or a rest']],scrCarry,66)}
+function scrCarry(){pick('Carry two full bags — how long?','A bag in each hand, about 10 lb each. Walk until you want to put them down.','carry',
+  [['long','A minute or more'],['mid','30–60 seconds'],['short','Under 30 seconds'],['no','I could not do it']],scrScore,100)}
+function scrScore(){
+  field('sage');prog(null);
+  var s=score(),stl={fast:'<10 s',mid:'10–15 s',slow:'15 s+',rail:'with rail'}[S.stairs],cal={long:'60 s+',mid:'30–60 s',short:'<30 s',no:'—'}[S.carry];
+  stage.innerHTML='<div class="screen">'+badge('score')+'<h2>Your Strength Score</h2>'+
+   '<p class="lead">Day 1 baseline. We re-test every week.</p>'+
+   ring(s.total,s.total,'','of 100','sr')+
+   '<div class="tests"><div><b>'+S.chair+'</b>chair stands in 30 s</div><div><b>'+stl+'</b>one flight of stairs</div><div><b>'+cal+'</b>carry two bags</div></div>'+
+   '<div class="panel"><div class="kv"><span>Your protein target</span><b>'+target().daily+' g</b></div></div>'+
+   '<p class="small">Harmony’s own composite of three functional tests. Not a clinical assessment.</p>'+
+   '<div class="spacer"></div><button class="btn" id="n">See what day 14 looks like</button></div>';
+  ev('StrengthScoreSet',true);
+  document.getElementById('n').onclick=function(){go(scrReport)};
 }
-function scrAha(){
-  var t=target(),p=MEALS[S.meal][1],pct=Math.round(p/t.morning*100),ok=pct>=80;
-  stage.innerHTML='<div class="screen">'+driveBadge('aha')+
-   '<h2>'+MEALS[S.meal][0]+'</h2>'+
-   '<div class="card" style="align-items:center;gap:14px">'+
-     ring(pct,p,'g','Of '+t.morning+' g before noon',!ok)+
-     '<p class="lead" style="text-align:center"><span class="num">'+pct+'%</span> of your morning target'+
-     (ok?' — you are in the muscle-protecting range.':'.')+'</p></div>'+
-   (ok?'<div class="note"><b class="hd">Why that counts</b>Enough protein early is what tells your body to hold on to muscle while the medication suppresses your appetite.</div>'
-      :'<div class="note warm"><b class="hd">A twenty-second fix</b>Add Greek yoghurt and you are at <b class="num">'+(p+15)+' g</b> — over the line, without more volume.</div>')+
-   '<div class="spacer"></div><button class="btn" id="n">See tomorrow</button></div>';
-  document.getElementById('n').onclick=function(){go(scrLoop)};
-}
-function scrLoop(){
-  stage.innerHTML='<div class="screen">'+driveBadge('loop')+
-   '<h2>Day 1 in range</h2>'+
-   '<div class="streak"><span class="n">1</span><span>Protein days in range.<br><span style="font-size:14px">Shot days are rest days — your streak will not break the day after your injection.</span></span></div>'+
-   '<div class="note"><b class="hd">Tomorrow is day 2 of your dose week</b>'+DOSE[1]+'. We will open with a plan built for a small appetite.</div>'+
-   '<h3>Your week</h3>'+week(0)+
-   '<div class="note"><b class="hd">What we never show you</b>Your weight is not the headline here. The numbers you see are the ones you control: protein, sessions, days in range.</div>'+
-   '<div class="spacer"></div><button class="btn ghost" id="again">Run it again</button></div>';
-  document.getElementById('again').onclick=function(){
-    S={step:0,qi:0,weightKg:74,plan:'q4',meal:null};logEl.innerHTML='';go(scrHook);
-  };
+function scrReport(){
+  field('sage');prog(null);
+  var b=score().total,w7=Math.min(100,b+4),w14=Math.min(100,b+9),pct=function(v){return Math.max(12,Math.round(v))+'%'};
+  stage.innerHTML='<div class="screen">'+badge('report')+'<span class="tag">Sample report</span>'+
+   '<h2>Your first two weeks</h2><p class="lead">Strength Score by week. Day 1 is yours; days 7 and 14 show a typical path.</p>'+
+   '<div class="bars"><div style="height:'+pct(b)+'"><span>'+b+'</span></div><div style="height:'+pct(w7)+';background:#849671"><span>'+w7+'</span></div><div style="height:'+pct(w14)+';background:#224228"><span>'+w14+'</span></div></div>'+
+   '<div class="blab"><span>Day 1</span><span>Day 7</span><span>Day 14</span></div>'+
+   '<div class="panel">'+
+    '<div class="kv"><span>Strength</span><b>+'+(w14-b)+'</b></div>'+
+    '<div class="kv"><span>Protein target hit</span><b>10/14 days</b></div>'+
+    '<div class="kv"><span>Sleep, hours</span><b>6.1 → 6.8</b></div>'+
+    '<div class="kv"><span>Hot flashes a night</span><b>4 → 3</b></div></div>'+
+   '<p class="small">Days 7 and 14 are illustrative until you complete them. The report is a PDF you can share with your doctor.</p>'+
+   '<button class="btn" id="dl">Download report for my doctor</button>'+
+   '<button class="btn ghost" id="again">Run it again</button></div>';
+  ev('ReportViewed');
+  document.getElementById('dl').onclick=function(){ev('ReportDownload (mock)');this.textContent='Report saved (mock)'};
+  document.getElementById('again').onclick=function(){reset();logEl.innerHTML='';go(scrHook)};
 }
 
 /* overlays */
-function tog(btn,panel,after){
-  btn.onclick=function(){
-    var on=panel.hidden;panel.hidden=!on;btn.setAttribute('aria-pressed',String(on));if(after)after();
-  };
-}
+function tog(btn,panel,after){btn.onclick=function(){var on=panel.hidden;panel.hidden=!on;btn.setAttribute('aria-pressed',String(on));if(after)after()}}
 tog(document.getElementById('tEvents'),document.getElementById('events'));
 tog(document.getElementById('tDrives'),document.getElementById('drives'),function(){
-  var l=document.getElementById('driveLegend'),k=Object.keys(DRIVES),o='';
-  for(var i=0;i<k.length;i++)o+=k[i]+' → '+DRIVES[k[i]]+'<br>';
-  l.innerHTML=o;
+  var k=Object.keys(DRIVES),o='';for(var i=0;i<k.length;i++)o+=k[i]+' → '+DRIVES[k[i]]+'<br>';
+  document.getElementById('driveLegend').innerHTML=o;
 });
-scrHook();
+/* review shortcut: index.html#s=result opens one screen with sample answers */
+(function(){
+  var m=/s=(\w+)/.exec(location.hash||''),map={hook:scrHook,quiz:scrQuiz,teaser:function(){scrTeaser(TEASERS.breakfast,scrBuild)},
+    build:scrBuild,result:scrResult,lead:scrLead,paywall:scrPaywall,test:scrTestIntro,chair:scrChair,score:scrScore,report:scrReport};
+  if(m&&map[m[1]]){S.glp='early';S.med='sema';S.meno='meno';S.worry='strength';S.breakfast='carb';S.strength='occ';S.age='50';
+    S.stairs='mid';S.carry='mid';S.qi=+(/q=(\d)/.exec(location.hash)||[0,0])[1];map[m[1]]();}
+  else scrHook();
+})();
 </script>
+</body>
+</html>
