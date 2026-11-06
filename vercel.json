@@ -1,6 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/app", "destination": "https://harmony-plan-app.vercel.app", "permanent": false },
+    { "source": "/app/:path*", "destination": "https://harmony-plan-app.vercel.app", "permanent": false }
+  ],
   "headers": [
     { "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
   ]

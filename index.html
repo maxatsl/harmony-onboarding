@@ -3,17 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Harmony — Keep strong and harmonize your life</title>
-<meta name="description" content="A strength and protein plan for women in menopause, on GLP-1 or not.">
+<title>Harmony — Your menopause weight & strength plan</title>
+<meta name="description" content="A 1-minute quiz: your goal weight, a projected date and a strength and protein plan for women in menopause, on GLP-1 or not.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-/* Style B "Olive field", built on the Oura token system (DESIGN.md): warm paper, thin serif display,
-   earth fields. Forest green replaces Oura's action blue as the one action colour. */
+/* Style "Olive field" (Oura token system): warm paper, thin serif display, forest green as the one action colour. */
 :root{
   --forest:#224228; --forest-2:#2d5234; --olive:#5c6f5d; --sage:#849671; --sage-2:#b8c09f; --sage-pale:#ced4b8;
   --canvas:#f7f1e8; --paper-2:#efe7da; --white:#fff; --ink:#1c1b1a; --stone:#4a4741; --ash:#6f6d69;
-  --gold:#af751b; --gold-pale:#ddbe78;
+  --gold:#af751b; --gold-pale:#ddbe78; --red:#b4532a;
   --serif:'Newsreader',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
@@ -21,105 +20,101 @@
 html,body{margin:0}
 body{background:#e7e0d3;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 h1,h2,h3,p{margin:0}
-h1,h2{font-family:var(--serif);font-weight:300;letter-spacing:-.02em;line-height:1.04;text-wrap:balance}
-h1{font-size:52px}
-h2{font-size:34px}
+h1,h2{font-family:var(--serif);font-weight:300;letter-spacing:-.02em;line-height:1.06;text-wrap:balance}
+h1{font-size:40px}
+h2{font-size:32px}
 h3{font-size:17px;font-weight:600;line-height:1.3}
 button{font:inherit;cursor:pointer;color:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .nb{white-space:nowrap}
 
 .wrap{max-width:960px;margin:0 auto;padding:28px 16px 48px;display:flex;flex-direction:column;gap:20px}
-.caption{max-width:400px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:4px}
+.caption{max-width:420px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:4px}
 .caption .t{font-family:var(--serif);font-size:26px;font-weight:300}
 .caption .s{font-size:14px;color:var(--stone)}
+.caption a{color:var(--forest);font-weight:600}
 
-/* the phone; its field colour changes by screen */
 .phone{max-width:400px;width:100%;margin:0 auto;border-radius:40px;overflow:hidden;display:flex;flex-direction:column;
   min-height:min(800px,100svh);background:var(--canvas);transition:background .25s ease-out}
 .phone.f-forest{background:var(--forest);color:var(--canvas)}
 .phone.f-sage{background:var(--sage-pale)}
-.bar{display:flex;align-items:center;gap:10px;padding:22px 24px 10px}
+.bar{display:flex;align-items:center;gap:10px;padding:20px 24px 8px}
 .wm{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:.01em}
-.tools{display:flex;gap:6px;margin-left:auto;align-self:flex-start}
+.step{margin-left:auto;font-size:13px;color:var(--ash)}
+.f-forest .step{color:var(--sage-pale)}
+.back{border:0;background:none;padding:4px 8px 4px 0;font-size:22px;line-height:1;color:var(--stone)}
+.tools{display:flex;gap:6px}
 .devbtn{font-size:12px;font-weight:500;border:0;border-radius:999px;padding:5px 9px;background:rgba(0,0,0,.06);color:inherit}
-.f-forest .devbtn{background:rgba(255,255,255,.12)}
 .devbtn[aria-pressed="true"]{background:var(--forest);color:var(--canvas)}
-.f-forest .devbtn[aria-pressed="true"]{background:var(--canvas);color:var(--forest)}
 .track{height:4px;border-radius:4px;background:rgba(0,0,0,.08);margin:6px 24px 0;overflow:hidden}
 .track i{display:block;height:100%;background:var(--forest);border-radius:4px;transition:width .3s ease-out}
 .f-forest .track{background:rgba(255,255,255,.14)} .f-forest .track i{background:var(--canvas)}
 .screen{padding:20px 24px 28px;display:flex;flex-direction:column;gap:16px;flex:1}
 .spacer{flex:1;min-height:8px}
 
+.kick{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gold)}
 .lead{font-size:16px;color:var(--stone)}
 .f-forest .lead{color:var(--sage-pale)}
 .small{font-size:13px;color:var(--ash);line-height:1.45}
 .f-forest .small{color:var(--sage)}
 .src{font-size:12px;color:var(--ash);line-height:1.45}
-.brandbox{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
-.slogan{font-family:var(--serif);font-size:15px;font-weight:300;line-height:1.2;color:var(--gold-pale);white-space:nowrap}
 
 .btn{display:block;width:100%;border:0;border-radius:999px;padding:18px 20px;font-weight:600;font-size:16px;
-  background:var(--forest);color:var(--canvas);transition:transform .08s,background .15s}
+  background:var(--forest);color:var(--canvas);transition:transform .08s,background .15s,opacity .15s}
 .btn:hover{background:var(--forest-2)}
 .btn:active{transform:scale(.985)}
+.btn:disabled{opacity:.35;cursor:default}
 .f-forest .btn{background:var(--canvas);color:var(--forest)}
-.f-forest .btn:hover{background:#fff}
 .btn.ghost{background:transparent;color:var(--stone);padding:10px}
-.f-forest .btn.ghost{background:transparent;color:var(--sage-pale)}
-
-/* hook */
-.photo{margin:4px 0 0;height:360px;border-radius:24px;overflow:hidden;background:var(--forest-2);position:relative}
-.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}
 
 /* quiz */
 .opts{display:flex;flex-direction:column;gap:10px}
-.opt{display:block;width:100%;text-align:left;border:0;border-radius:18px;padding:16px 18px;font-size:16px;
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-radius:18px;padding:16px 18px;font-size:16px;
   background:var(--white);color:var(--ink);transition:background .12s,transform .08s}
 .opt:hover{background:#fbf8f3}
 .opt:active{transform:scale(.99)}
 .opt.sel{background:var(--forest);color:var(--canvas)}
 .opt small{display:block;font-size:13px;opacity:.7;margin-top:2px}
+.opt .em{font-size:22px;width:28px;text-align:center;flex:none}
+.opt .box{width:22px;height:22px;border-radius:7px;box-shadow:inset 0 0 0 2px var(--sage-2);flex:none;margin-left:auto}
+.opt.sel .box{background:var(--gold-pale);box-shadow:none}
 .why{font-size:14px;color:var(--ash)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}
-.chip{font-size:12px;font-weight:500;background:var(--paper-2);color:var(--stone);border-radius:999px;padding:5px 10px;white-space:nowrap}
 .weight{background:var(--white);border-radius:24px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;align-items:center}
 .weight b{font-family:var(--serif);font-weight:300;font-size:64px;line-height:1}
 .weight b u{text-decoration:none;font-family:var(--sans);font-size:18px;color:var(--stone);margin-left:4px}
+.weight .hint{font-size:13px;color:var(--stone);text-align:center}
+.weight .warn{font-size:13px;color:var(--red);text-align:center;font-weight:500}
 input[type=range]{width:100%;accent-color:var(--forest)}
 .stepper{display:flex;align-items:center;justify-content:center;gap:22px}
-.stepper button{width:56px;height:56px;border-radius:999px;border:0;background:var(--forest);color:var(--canvas);font-size:26px;line-height:1}
+.stepper button{width:52px;height:52px;border-radius:999px;border:0;background:var(--forest);color:var(--canvas);font-size:24px;line-height:1}
 
-/* teasers: drawn figures from real numbers */
-.art{background:var(--white);border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px;align-items:center}
-.art svg{width:100%;max-width:300px;height:auto;display:block}
+/* teasers */
+.art{background:var(--white);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.art svg{width:100%;max-width:320px;height:auto;display:block}
 .art .cap{font-size:13px;color:var(--ash);text-align:center}
 .method{background:var(--paper-2);border-radius:18px;padding:14px 16px;font-size:15px}
 .method b{display:block;font-size:13px;color:var(--forest);margin-bottom:2px}
+.big{font-family:var(--serif);font-weight:300;font-size:30px;line-height:1.1}
+.big em{font-style:normal;color:var(--forest);font-weight:400}
+.sooner{align-self:flex-start;font-size:13px;font-weight:600;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:5px 12px}
 
 /* rings and data */
-.ring{position:relative;width:200px;height:200px;margin:4px auto 0;flex:none}
+.ring{position:relative;width:180px;height:180px;margin:4px auto 0;flex:none}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg);display:block}
 .ring .rt{fill:none;stroke:var(--sage-2);stroke-width:13}
 .ring .rf{fill:none;stroke:var(--forest);stroke-width:13;stroke-linecap:round;transition:stroke-dashoffset .6s ease-out}
 .f-forest .ring .rt{stroke:rgba(255,255,255,.14)} .f-forest .ring .rf{stroke:var(--gold-pale)}
 .ring .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring .rv{font-family:var(--serif);font-weight:300;font-size:64px;line-height:1;color:var(--forest)}
+.ring .rv{font-family:var(--serif);font-weight:300;font-size:56px;line-height:1;color:var(--forest)}
 .f-forest .ring .rv{color:var(--canvas)}
-.ring .rv u{text-decoration:none;font-family:var(--sans);font-size:20px;margin-left:2px}
+.ring .rv u{text-decoration:none;font-family:var(--sans);font-size:18px;margin-left:2px}
 .ring .rs{font-size:13px;color:var(--stone)}
-.f-forest .ring .rs{color:var(--sage-pale)}
 .panel{background:var(--forest);color:var(--canvas);border-radius:24px;padding:6px 18px}
-.f-forest .panel{background:var(--forest-2)}
 .panel.light{background:var(--white);color:var(--ink)}
 .kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;font-size:15px}
 .kv+.kv{box-shadow:0 -1px 0 rgba(255,255,255,.12) inset}
 .panel.light .kv+.kv{box-shadow:0 -1px 0 #ece6dc inset}
-.kv b{font-family:var(--serif);font-weight:300;font-size:26px;white-space:nowrap}
-.tests{display:flex;gap:8px}
-.tests div{flex:1;background:var(--canvas);border-radius:16px;padding:12px;font-size:12px;line-height:1.35;color:var(--stone)}
-.tests b{display:block;font-size:20px;font-weight:500;color:var(--ink)}
+.kv b{font-family:var(--serif);font-weight:300;font-size:24px;white-space:nowrap}
 
 /* 14-day calendar */
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
@@ -127,16 +122,17 @@ input[type=range]{width:100%;accent-color:var(--forest)}
 .cal div b{display:block;font-size:11px;font-weight:500;color:var(--ash)}
 .cal .key{background:var(--forest);color:var(--canvas)} .cal .key b{color:var(--sage-pale)}
 .cal .rest{background:var(--paper-2)}
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--stone)}
-.legend span{display:flex;align-items:center;gap:6px}
-.legend i{width:12px;height:12px;border-radius:4px;display:block}
 
-/* build list */
-.build{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
-.build li{color:var(--sage);display:flex;gap:10px;align-items:flex-start;transition:color .2s}
-.build li.done{color:var(--canvas)}
-.build li i{width:18px;height:18px;border-radius:999px;background:rgba(255,255,255,.14);flex:none;margin-top:3px}
-.build li.done i{background:var(--gold-pale)}
+/* build: per-section bars, Noom style */
+.secs{display:flex;flex-direction:column;gap:14px}
+.sec{display:flex;flex-direction:column;gap:6px;font-size:15px}
+.sec .row{display:flex;justify-content:space-between;color:var(--sage-pale)}
+.sec .row b{font-weight:500;color:var(--canvas)}
+.sec .tr{height:8px;border-radius:8px;background:rgba(255,255,255,.14);overflow:hidden}
+.sec .tr i{display:block;height:100%;width:0;background:var(--gold-pale);border-radius:8px}
+.pop{background:var(--canvas);color:var(--ink);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.pop .yn{display:flex;gap:8px}
+.pop .yn button{flex:1;border:0;border-radius:999px;padding:12px;background:var(--forest);color:var(--canvas);font-weight:600}
 
 /* paywall */
 .plan{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;border:0;
@@ -147,45 +143,67 @@ input[type=range]{width:100%;accent-color:var(--forest)}
 .save{font-size:11px;font-weight:600;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:3px 8px;margin-left:6px}
 input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radius:16px;background:var(--white);color:var(--ink)}
 
-/* report bars */
-.bars{display:flex;align-items:flex-end;gap:12px;height:130px;margin-top:22px}
-.bars div{flex:1;border-radius:12px 12px 4px 4px;position:relative;background:var(--sage-2)}
-.bars span{position:absolute;top:-22px;left:0;right:0;text-align:center;font-size:13px;color:var(--forest)}
-.bars .empty{background:transparent;box-shadow:inset 0 0 0 2px var(--sage-2)}
-.blab{display:flex;gap:12px;font-size:12px;color:var(--olive)}
-.blab span{flex:1;text-align:center}
-.tag{align-self:flex-start;font-size:12px;font-weight:500;background:var(--forest);color:var(--canvas);border-radius:999px;padding:4px 10px}
-
 /* prototype chrome */
 .side{max-width:400px;width:100%;margin:0 auto;background:var(--canvas);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
 .log{font-size:13px;line-height:1.6;max-height:220px;overflow-y:auto;margin:0;padding:0;list-style:none;font-variant-numeric:tabular-nums}
 .log li{display:flex;gap:10px}
 .log .t{color:var(--ash)} .log .e{font-weight:600} .log .e.key{color:var(--forest)}
-.drive{font-size:12px;font-weight:500;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:4px 10px;align-self:flex-start}
+
+/* Apple Pay mock sheet */
+.phone{position:relative}
+.ap-wrap{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;z-index:20;animation:fade .2s}
+.ap{width:100%;background:#f2f2f7;color:#000;border-radius:22px 22px 0 0;padding:16px 18px 26px;font-family:-apple-system,'SF Pro Text',Inter,sans-serif;animation:up .28s ease-out}
+@keyframes up{from{transform:translateY(100%)}to{transform:none}}
+.ap .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ap .logo{font-weight:600;font-size:20px;letter-spacing:-.01em}
+.ap .x{border:0;background:#e3e3e8;width:30px;height:30px;border-radius:50%;font-size:15px;color:#555}
+.ap .row{background:#fff;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;font-size:15px}
+.ap .row:first-of-type{border-radius:12px 12px 0 0}.ap .row.last{border-radius:0 0 12px 12px;margin-bottom:12px}
+.ap .row+.row{border-top:1px solid #e5e5ea}
+.ap .row small{color:#8e8e93;display:block;font-size:12px}
+.ap .card{width:42px;height:28px;border-radius:5px;background:linear-gradient(135deg,#e9e9ee,#bfc0c8);flex:none}
+.ap .tot{display:flex;justify-content:space-between;font-size:15px;padding:4px 4px 14px}
+.ap .tot b{font-size:22px}
+.ap .face{display:flex;flex-direction:column;align-items:center;gap:8px;padding:6px 0 2px;font-size:15px;color:#000}
+.ap .fid{width:56px;height:56px;border-radius:14px;border:3px solid #0a84ff;position:relative;display:flex;align-items:center;justify-content:center;font-size:28px;color:#0a84ff;transition:.25s}
+.ap .fid.ok{border-color:#34c759;background:#34c759;color:#fff}
+.ap .side{font-size:12px;color:#8e8e93;text-align:center;margin-top:10px}
+.ap .paybtn{display:block;width:100%;border:0;border-radius:12px;background:#000;color:#fff;font-size:18px;font-weight:600;padding:14px;margin-top:4px}
+/* fireworks */
+.fw{position:absolute;inset:0;pointer-events:none;z-index:30}
+/* upsell + account */
+.ups{background:var(--white);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.ups ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:15px;color:var(--stone)}
+.price{font-family:var(--serif);font-size:34px;font-weight:300}
+.apbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;border:0;border-radius:999px;padding:17px;background:#000;color:#fff;font-weight:600;font-size:16px}
+.f-forest .apbtn{background:#000;color:#fff}
+.btn.line{background:transparent;box-shadow:inset 0 0 0 2px var(--forest);color:var(--forest)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.08);border-radius:16px;padding:12px 14px;font-size:15px}
+.steps li i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--gold-pale);color:var(--forest);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
 
 .fade{animation:fade .22s ease-out}
 @keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:440px){
   .wrap{padding:0;gap:0} .caption,.side{display:none} .phone{border-radius:0;min-height:100svh}
-  h1{font-size:46px}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="caption">
-    <p class="t">Harmony — first session</p>
-    <p class="s">Clickable prototype: ad click → quiz → plan → paywall → strength test → 2-week report. Payments and scoring are mocked.</p>
+    <p class="t">Harmony — the quiz</p>
+    <p class="s">Where the ad lands: quiz → projected date → plan → paywall → Apple Pay (mock) → upsell → account.<br>
+      The product itself (what she gets after paying) is a separate link: <a href="https://harmony-plan-app.vercel.app">harmony-plan-app.vercel.app</a></p>
   </div>
 
-  <div class="phone f-forest" id="phone">
+  <div class="phone" id="phone">
     <div class="bar">
-      <span class="brandbox"><span class="wm">Harmony</span><span class="slogan" id="slogan" hidden>Keep strong and harmonize your life</span></span>
-      <div class="tools" id="devTools" hidden>
-        <button class="devbtn" id="tDrives" aria-pressed="false">Drives</button>
-        <button class="devbtn" id="tEvents" aria-pressed="false">Events</button>
-      </div>
+      <button class="back" id="backBtn" aria-label="Back" hidden>←</button>
+      <span class="wm">Harmony</span>
+      <span class="step" id="stepLbl"></span>
+      <div class="tools" id="devTools" hidden><button class="devbtn" id="tEvents" aria-pressed="false">Events</button></div>
     </div>
     <div class="track" id="trackWrap"><i id="prog" style="width:0%"></i></div>
     <div id="stage"></div>
@@ -197,59 +215,60 @@ input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radi
       data sources classified as health. Purchase still fires for our own reporting.</p>
     <ul class="log" id="log"></ul>
   </div>
-  <div class="side" id="drives" hidden>
-    <h3>Octalysis drives in use</h3>
-    <p class="small">White Hat by design. <b>CD8 Loss and Avoidance is deliberately withheld:</b> the day after an
-      injection is a rest day and the streak does not break.</p>
-    <p class="small" id="driveLegend"></p>
-  </div>
 </div>
 
 <script>
-/* ---------- content ---------- */
-var GLP_OPTS=[['none','No, not taking one'],['early','Yes, first 12 weeks','Ozempic, Wegovy, Zepbound, Mounjaro'],
+/* ============ content ============
+   Order follows Noom's weight-loss quiz: the goal first (the pain she came with),
+   then what changed, then body numbers → first projected date. Medication and habits
+   come after the date, and each answer "sharpens" it. */
+var GOALS=[['10','Up to 10 lb'],['20','11–20 lb'],['40','21–40 lb'],['60','More than 40 lb'],
+  ['0','I don’t need to lose weight','I want to get stronger and feel like myself']];
+var GOAL_MID={'10':8,'20':15,'40':30,'60':45,'0':0};
+var CHANGES=[['belly','🫃','Weight settles around my middle'],['stuck','⚖️','I eat less, but the scale won’t move'],
+  ['strength','🛍️','Bags and stairs feel heavier'],['tired','🔋','Tired most days'],['flashes','🌡️','Hot flashes, poor sleep'],
+  ['mood','🌧️','Mood and focus aren’t what they were']];
+var GLP_OPTS=[['none','No'],['early','Yes, first 12 weeks','Ozempic, Wegovy, Zepbound, Mounjaro'],
   ['steady','Yes, on a steady dose'],['stopping','Planning to stop soon'],['stopped','Stopped in the last year']];
 function onGlp(){return S.glp&&S.glp!=='none'}
 function exitPhase(){return S.glp==='stopping'||S.glp==='stopped'}
+function losing(){return S.goal!=='0'}
 
 var QUIZ=[
- {id:'glp',q:'Are you taking a GLP‑1 right now?',
-  why:'We ask because protein and training needs change with the dose. Not on one? You get the menopause plan.',opts:GLP_OPTS},
- {id:'med',q:'Which medication?',when:onGlp,
-  why:'Appetite suppression differs by medication. We never advise on dose — that stays with your prescriber.',
-  opts:[['sema','Semaglutide','Ozempic, Wegovy'],['tirz','Tirzepatide','Mounjaro, Zepbound'],['other','Another one'],['na','Prefer not to say']]},
+ {id:'goal',q:'How much weight do you want to lose?',opts:GOALS,
+  why:'Your answer sets your plan and the date we project for you.'},
+ {id:'changes',kind:'multi',q:'Since your 40s, what has changed the most?',why:'Choose all that apply.',opts:CHANGES},
+ {id:'age',q:'How old are you?',why:'Muscle and metabolism change by decade. Your plan is set to yours.',
+  opts:[['40','40–44'],['45','45–49'],['50','50–54'],['55','55–59'],['60','60 or older']]},
+ {id:'height',kind:'height',q:'How tall are you?',why:'We use it to check that your goal is in a healthy range.'},
+ {id:'lb',kind:'weight',q:'What is your current weight?',why:'It sets your protein target in grams. Only you see it.'},
+ {id:'goalLb',kind:'goalw',when:losing,q:'What is your goal weight?'},
  {id:'meno',q:'Where are you with menopause?',
   why:'Falling oestrogen changes how much protein it takes to hold on to muscle.',
   opts:[['peri','Perimenopause','Cycles changing, first symptoms'],['meno','Menopause','No period for close to a year'],['post','Post-menopause','More than a year'],['unsure','Not sure']]},
- {id:'worry',q:'What bothers you most right now?',
-  why:'Your answer sets what your first week focuses on.',
-  opts:[['strength','Losing strength and muscle'],['energy','Always tired, low energy'],['flashes','Hot flashes and poor sleep'],['weight','My weight behaves differently']]},
- {id:'breakfast',q:'A typical breakfast?',
-  opts:[['coffee','Coffee, maybe nothing'],['carb','Toast or cereal'],['yog','Yoghurt and fruit'],['prot','Eggs or a protein shake']]},
- {id:'strength',q:'Strength training right now?',
-  opts:[['none','None'],['occ','Now and then'],['low','Once or twice a week'],['high','Three times a week or more']]},
- {id:'age',q:'How old are you?',why:'Strength norms are set by age.',
-  opts:[['40','40–44'],['45','45–49'],['50','50–54'],['55','55–59'],['60','60 or older']]},
- {id:'weight',q:'Roughly your weight?',kind:'weight',why:'It sets your protein target in grams.'},
+ {id:'glp',q:'Are you taking a GLP‑1 medication?',opts:GLP_OPTS,
+  why:'Protein and training needs change with the dose. We never advise on medication.'},
+ {id:'med',q:'Which medication?',when:onGlp,
+  why:'Appetite suppression differs by medication. Dosing stays with your prescriber.',
+  opts:[['sema','Semaglutide','Ozempic, Wegovy'],['tirz','Tirzepatide','Mounjaro, Zepbound'],['other','Another one'],['na','Prefer not to say']]},
  {id:'exit',when:exitPhase,
   q:function(){return S.glp==='stopping'?'When is your last planned dose?':'When was your last dose?'},
   why:'Your plan counts from that date, so the hardest weeks get the most support.',
   opts:function(){return S.glp==='stopping'?
     [['2','In the next 4 weeks'],['8','In 1–3 months'],['16','In 3 months or more'],['0','Not decided yet']]:
-    [['-2','Less than a month ago'],['-8','1–3 months ago'],['-20','3–12 months ago']]}}
+    [['-2','Less than a month ago'],['-8','1–3 months ago'],['-20','3–12 months ago']]}},
+ {id:'strength',q:'Do you do any strength training now?',
+  opts:[['none','None'],['occ','Now and then'],['low','Once or twice a week'],['high','Three times a week or more']]},
+ {id:'breakfast',q:'What does a typical breakfast look like?',
+  opts:[['coffee','Coffee, maybe nothing'],['carb','Toast or cereal'],['yog','Yoghurt and fruit'],['prot','Eggs or a protein shake']]}
 ];
 var BFAST={coffee:0,carb:8,yog:14,prot:24};
-var DRIVES={hook:'CD7 Curiosity + CD1 Calling',quiz:'CD3 Instant Feedback + CD7 Zeigarnik',teaser:'CD7 Curiosity',
- build:'CD2 Progress',result:'CD2 Accomplishment — the proof moment',lead:'CD4 Ownership',
- paywall:'CD6 Scarcity — the only Black Hat screen',test:'CD3 Empowerment',score:'CD2 — the aha moment',
- report:'CD2 + CD4 Investment, CD8 withheld'};
-var EMAIL_PH='you@example.com'; // taste-skill-ignore: RFC 2606 reserved domain in a field placeholder
 
-var S,stage=document.getElementById('stage'),phone=document.getElementById('phone'),logEl=document.getElementById('log');
-function reset(){S={qi:0,lb:165,plan:'year',chair:11,stairs:null,carry:null}}
+var S,stage=document.getElementById('stage'),phone=document.getElementById('phone'),logEl=document.getElementById('log'),HIST=[];
+function reset(){S={qi:0,goal:null,changes:[],hIn:64,lb:175,goalLb:null,plan:'year'};HIST=[]}
 reset();
 
-/* ---------- helpers ---------- */
+/* ============ helpers ============ */
 function ev(name,key){
   var li=document.createElement('li'),t=new Date().toLocaleTimeString([],{hour12:false});
   li.innerHTML='<span class="t">'+t+'</span><span class="e'+(key?' key':'')+'">'+name+'</span>';
@@ -257,20 +276,28 @@ function ev(name,key){
 }
 function field(f){phone.className='phone'+(f?' f-'+f:'')}
 function prog(p){document.getElementById('trackWrap').hidden=(p===null);if(p!==null)document.getElementById('prog').style.width=p+'%'}
-function badge(k){return document.getElementById('drives').hidden?'':'<span class="drive">'+DRIVES[k]+'</span>'}
-function go(fn){document.getElementById('slogan').hidden=true;stage.className='';void stage.offsetWidth;stage.className='fade';fn();window.scrollTo(0,0)}
-function val(x){return typeof x==='function'?x():x}
-function kg(){return Math.round(S.lb/2.2046)}
-function ring(pct,value,unit,sub,id){
-  var c=2*Math.PI*86,off=c*(1-Math.max(0,Math.min(1,pct/100)));
-  return '<div class="ring"'+(id?' id="'+id+'"':'')+'><svg viewBox="0 0 200 200" aria-hidden="true">'+
-   '<circle class="rt" cx="100" cy="100" r="86"/><circle class="rf" cx="100" cy="100" r="86" stroke-dasharray="'+
-   c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg><div class="rc"><span class="rv">'+value+
-   (unit?'<u>'+unit+'</u>':'')+'</span><span class="rs">'+sub+'</span></div></div>';
+function stepLbl(t){document.getElementById('stepLbl').textContent=t||''}
+function go(fn,noHist){
+  if(!noHist&&stage.__cur)HIST.push({fn:stage.__cur,qi:stage.__qi});
+  stage.__cur=fn;stage.__qi=S.qi;stage.className='';void stage.offsetWidth;stage.className='fade';
+  document.getElementById('backBtn').hidden=!HIST.length||[scrBuild,scrSuccess,scrUpsell,scrAccount,scrDone].indexOf(fn)>-1;
+  fn();window.scrollTo(0,0)
 }
+document.getElementById('backBtn').onclick=function(){var h=HIST.pop();if(!h)return;S.qi=h.qi;go(h.fn,true)};
+function val(x){return typeof x==='function'?x():x}
+function kg(lb){return Math.round((lb||S.lb)/2.2046)}
+function ft(i){return Math.floor(i/12)+'′'+(i%12)+'″'}
+function minHealthy(){return Math.ceil(18.5*S.hIn*S.hIn/703)}   /* BMI 18.5 at her height */
+function maxHealthy(){return Math.floor(24.9*S.hIn*S.hIn/703)}
 function visible(){var o=[];for(var i=0;i<QUIZ.length;i++)if(!QUIZ[i].when||QUIZ[i].when())o.push(i);return o}
+function ring(pct,value,unit,sub){
+  var c=2*Math.PI*86,off=c*(1-Math.max(0,Math.min(1,pct/100)));
+  return '<div class="ring"><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="rt" cx="100" cy="100" r="86"/>'+
+   '<circle class="rf" cx="100" cy="100" r="86" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg>'+
+   '<div class="rc"><span class="rv">'+value+(unit?'<u>'+unit+'</u>':'')+'</span><span class="rs">'+sub+'</span></div></div>';
+}
 
-/* ---------- the model: computed from her answers ---------- */
+/* ============ the model, from her answers ============ */
 function target(){
   var f=1.2;
   if(S.meno==='meno'||S.meno==='post')f+=0.1;
@@ -280,27 +307,55 @@ function target(){
   var d=Math.round(kg()*f/5)*5;
   return {f:Math.round(f*10)/10,daily:d,morning:Math.round(d*0.35)};
 }
-function risk(){
-  var t=target(),gap=t.morning-(BFAST[S.breakfast]||0),s=0;
-  if(gap>18)s+=2;else if(gap>8)s+=1;
-  if(S.strength==='none')s+=2;else if(S.strength==='occ')s+=1;
-  if(S.meno==='meno'||S.meno==='post')s+=1;
-  if(onGlp())s+=1;
-  if(+S.age>=55)s+=1;
-  return s>=5?2:(s>=3?1:0);
+/* Pace is held inside 0.5–1 lb a week, the range Noom and most clinical programmes anchor to.
+   First estimate uses a conservative pace; later answers that show room to change (no strength
+   work yet, little protein at breakfast) move it up. It is an estimate, shown as one. */
+function pace(final){
+  var p=0.6;
+  if(final){
+    if(S.strength==='none'||S.strength==='occ')p+=0.1;
+    if((BFAST[S.breakfast]||0)<15)p+=0.1;
+    if(onGlp())p+=0.1;
+  }
+  return Math.min(p,0.8);
 }
-function score(){
-  var c=Math.min(40,Math.round(S.chair/20*40));
-  var st={fast:30,mid:22,slow:14,rail:6}[S.stairs]||0;
-  var ca={long:30,mid:20,short:10,no:4}[S.carry]||0;
-  return {total:c+st+ca,c:c,st:st,ca:ca};
-}
+function toLose(){return Math.max(0,S.lb-(S.goalLb||S.lb))}
+function weeks(final){return toLose()?Math.max(4,Math.ceil(toLose()/pace(final))):2}
+function dateIn(w){var d=new Date();d.setDate(d.getDate()+w*7);return d.toLocaleDateString('en-US',{month:'long',day:'numeric'})}
 
-/* ---------- drawn figures, each from a real number ---------- */
-function artAdoption(){
-  var h='<svg viewBox="0 0 300 152" role="img" aria-label="22 of 100 marks filled: 22 per cent of US adults aged 50 to 64 currently take a GLP-1">';
-  for(var i=0;i<100;i++)h+='<circle cx="'+(22+(i%10)*28)+'" cy="'+(12+Math.floor(i/10)*14)+'" r="5" fill="'+(i<22?'#224228':'#ced4b8')+'"/>';
-  return h+'</svg>';
+/* projected path: Harmony (steady, strength rising) vs eating less alone (drops, then returns) */
+function chart(w){
+  var W=320,H=190,L=34,R=W-12,T=22,B=H-30,lose=toLose()||10,st=S.lb,gl=st-lose,
+      y=function(v){return T+(st-v)/(lose*1.15)*(B-T)},x=function(t){return L+t*(R-L)},p1='',p2='',p3='';
+  for(var i=0;i<=24;i++){var t=i/24;
+    p1+=(i?'L':'M')+x(t).toFixed(1)+' '+y(st-lose*(1-Math.pow(1-t,1.5))).toFixed(1);
+    var yo=t<.4?lose*.75*Math.sin(t/.4*Math.PI/2):lose*(.75-.6*Math.sin((t-.4)/.6*Math.PI/2));
+    p2+=(i?'L':'M')+x(t).toFixed(1)+' '+y(st-yo).toFixed(1);
+    p3+=(i?'L':'M')+x(t).toFixed(1)+' '+(B-8-(B-T-30)*.55*Math.pow(t,.8)).toFixed(1);}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Projected weight from '+st+' to '+gl+' pounds by '+dateIn(w)+'">'+
+   '<line x1="'+L+'" y1="'+B+'" x2="'+R+'" y2="'+B+'" stroke="#e5ddcf"/>'+
+   (S.goal!=='0'?'<path d="'+p2+'" fill="none" stroke="#c9bfae" stroke-width="2.5" stroke-dasharray="5 5"/>':'')+
+   '<path d="'+p3+'" fill="none" stroke="#af751b" stroke-width="2.5"/>'+
+   (S.goal!=='0'?'<path d="'+p1+'" fill="none" stroke="#224228" stroke-width="4" stroke-linecap="round"/>'+
+   '<circle cx="'+x(0)+'" cy="'+y(st)+'" r="5" fill="#224228"/><circle cx="'+x(1)+'" cy="'+y(gl)+'" r="7" fill="#224228" stroke="#fff" stroke-width="3"/>'+
+   '<text x="'+x(0)+'" y="'+(y(st)-10)+'" font-size="12" fill="#1c1b1a" font-family="Inter,sans-serif">'+st+' lb</text>'+
+   '<text x="'+(x(1)-4)+'" y="'+(y(gl)-14)+'" font-size="13" font-weight="700" fill="#224228" text-anchor="end" font-family="Inter,sans-serif">'+gl+' lb</text>':'')+
+   '<text x="'+R+'" y="'+(T+4)+'" font-size="11" fill="#af751b" text-anchor="end" font-family="Inter,sans-serif">Strength ↑</text>'+
+   '<text x="'+L+'" y="'+(H-10)+'" font-size="11" fill="#6f6d69" font-family="Inter,sans-serif">Today</text>'+
+   '<text x="'+R+'" y="'+(H-10)+'" font-size="11" fill="#6f6d69" text-anchor="end" font-family="Inter,sans-serif">'+dateIn(w)+'</text></svg>';
+  return '<div class="art">'+s+'<p class="cap">'+(S.goal!=='0'?'<b style="color:#224228">━ Harmony</b> &nbsp; <span style="color:#a39a8a">┅ eating less alone</span> &nbsp; ':'')+
+   '<b style="color:#af751b">━ strength</b><br>Illustrative path'+(S.goal!=='0'?'. Based on 0.5–1 lb a week, not a promise.':', not a promise.')+'</p></div>';
+}
+function artWhy(){
+  return '<svg viewBox="0 0 300 150" role="img" aria-label="During the menopause transition the rate of fat gain doubles and lean mass starts to fall">'+
+   '<text x="0" y="16" font-size="13" fill="#4a4741" font-family="Inter,sans-serif">Fat gain per year</text>'+
+   '<text x="0" y="40" font-size="12" fill="#6f6d69" font-family="Inter,sans-serif">Before</text><rect x="80" y="28" width="90" height="18" rx="6" fill="#ced4b8"/>'+
+   '<text x="0" y="66" font-size="12" fill="#6f6d69" font-family="Inter,sans-serif">Transition</text><rect x="80" y="54" width="180" height="18" rx="6" fill="#af751b"/>'+
+   '<text x="266" y="68" font-size="13" font-weight="700" fill="#684d07" font-family="Inter,sans-serif">×2</text>'+
+   '<text x="0" y="102" font-size="13" fill="#4a4741" font-family="Inter,sans-serif">Lean mass (muscle)</text>'+
+   '<text x="0" y="128" font-size="12" fill="#6f6d69" font-family="Inter,sans-serif">Transition</text>'+
+   '<path d="M80 116 L170 116 L260 136" fill="none" stroke="#224228" stroke-width="4" stroke-linecap="round"/>'+
+   '<text x="266" y="140" font-size="13" font-weight="700" fill="#224228" font-family="Inter,sans-serif">↓</text></svg>';
 }
 function artLean(){
   return '<svg viewBox="0 0 300 140" role="img" aria-label="Body weight down 15 per cent, lean mass down 9.7 per cent">'+
@@ -321,84 +376,107 @@ function artSpread(){
        '<text x="'+(x+17)+'" y="208" font-size="12" fill="#4a4741" text-anchor="middle" font-family="Inter,sans-serif">'+m[i][0]+'</text>';}
   return h+'</svg>';
 }
-/* teasers shown after a question id; `when` limits who sees them */
+
+/* interstitials shown after a question id */
 var TEASERS={
- glp:{when:onGlp,t:'You are not early. You are in the middle of it.',art:artAdoption,
-   cap:'Each mark is one adult in a hundred; filled ones take a GLP‑1 now.',
-   b:'About 22% of US adults aged 50–64 take a GLP‑1 right now — the highest of any age group, close to double the national 12%.',
-   src:'KFF Health Tracking Poll, fielded 27 Oct – 2 Nov 2025'},
- meno:{when:onGlp,t:'The scale cannot tell you what you lost.',art:artLean,cap:'Change from baseline over 68 weeks on semaglutide 2.4 mg.',
+ changes:{kick:'It’s not your willpower',t:function(){return S.changes.indexOf('stuck')>-1?'Eating less stops working after 40. Here is why.':'Your body is changing the rules. Here is how.'},
+   art:artWhy,cap:'Women followed through the menopause transition.',
+   b:'As oestrogen falls, the body stores fat faster — especially around the middle — and starts losing muscle. Less muscle burns less energy, so the old “eat less” plan stalls.',
+   src:'SWAN body-composition study, Greendale et al., JCI Insight 2019 (1,246 women).',
+   m:'So Harmony does not cut your food. It builds muscle back with short strength sessions and enough protein, and the weight follows.'},
+ goalLb:{proj:true},
+ glp:{when:onGlp,kick:'Worth knowing',t:'The scale cannot tell you what you lost.',art:artLean,cap:'Change from baseline over 68 weeks on semaglutide 2.4 mg.',
    b:'In the STEP‑1 body-composition substudy, weight fell 15.0% — and lean body mass fell 9.7%. Muscle is not protected by default.',
    src:'Wilding et al., NEJM 2021; DXA substudy, 140 participants'},
- breakfast:{t:'Three meals of 30 g beat one of 65 g',art:artSpread,cap:'The same 90 g of protein a day, in two patterns.',
+ breakfast:{kick:'The Harmony method',t:'Three meals of 30 g beat one of 65 g',art:artSpread,cap:'The same 90 g of protein a day, in two patterns.',
    b:'Only the pattern changed — and 24-hour muscle protein synthesis came out 25% higher with protein spread evenly.',
    src:'Mamerow et al., Journal of Nutrition 2014. Crossover, 8 adults — a small study.',
-   m:'So we put a third of your target before noon and ask you to change one meal, not three. That is our method, not a clinical finding.'}
+   m:'So we put a third of your target before noon and ask you to change one meal, not three.'}
 };
 
-/* ---------- screens ---------- */
-function scrHook(){
-  field('forest');prog(null);document.getElementById('slogan').hidden=false;
-  stage.innerHTML='<div class="screen" style="padding-top:0">'+badge('hook')+
-   '<div class="photo" id="photo"><img src="assets/hook-a.webp" width="800" height="934" alt="A woman in her fifties doing a squat with a dumbbell at home" fetchpriority="high" onerror="this.remove()"></div>'+
-   '<h1 style="margin-top:10px">Your body changed. Your plan should too.</h1>'+
-   '<p class="lead">A strength and protein plan for women in menopause, on GLP‑1 or not.</p>'+
-   '<div class="spacer"></div>'+
-   '<button class="btn" id="go">Take the 1-minute quiz</button>'+
-   '<p class="small">No prescriptions, no dosing advice. 18+.</p></div>';
-  document.getElementById('go').onclick=function(){ev('QuizStart');S.qi=0;go(scrQuiz)};
-}
-function chips(){
-  var L={glp:{none:'No GLP‑1',early:'GLP‑1, first weeks',steady:'GLP‑1, steady',stopping:'Stopping soon',stopped:'Recently stopped'},
-    meno:{peri:'Perimenopause',meno:'Menopause',post:'Post-menopause',unsure:'Stage unsure'},
-    strength:{none:'No strength work',occ:'Strength: now and then',low:'Strength 1–2×',high:'Strength 3×+'}};
-  var o='';
-  for(var k in L)if(S[k])o+='<span class="chip">'+L[k][S[k]]+'</span>';
-  if(S.breakfast)o+='<span class="chip">Breakfast protein '+BFAST[S.breakfast]+' g</span>';
-  if(S.age)o+='<span class="chip">'+QUIZ[6].opts.filter(function(a){return a[0]===S.age})[0][1]+'</span>';
-  return '<div class="chips">'+o+'</div>';
-}
+/* ============ screens ============ */
 function scrQuiz(){
   field(null);
   var list=visible(),pos=list.indexOf(S.qi),q=QUIZ[S.qi];
-  prog(Math.round((pos+1)/(list.length+1)*100));
-  var h='<div class="screen">'+badge('quiz')+chips()+'<h2>'+val(q.q)+'</h2>';
-  if(q.kind==='weight'){
-    h+='<div class="weight"><b><span id="wv">'+S.lb+'</span><u>lb</u></b>'+
-       '<input type="range" id="wt" min="100" max="300" step="1" value="'+S.lb+'" aria-label="Body weight in pounds"></div>'+
-       (q.why?'<p class="why">'+q.why+'</p>':'')+'<div class="spacer"></div><button class="btn" id="wn">Continue</button>';
+  prog(Math.round((pos+1)/(list.length+2)*100));stepLbl((pos+1)+' of '+list.length);
+  var h='<div class="screen">';
+  if(pos===0)h+='<p class="kick">Weight & strength plan for women 40+</p>';
+  h+='<h2>'+val(q.q)+'</h2>';
+  if(q.kind==='weight'||q.kind==='goalw'){
+    if(q.kind==='goalw'&&S.goalLb===null)S.goalLb=Math.max(minHealthy(),S.lb-GOAL_MID[S.goal]);
+    var v=q.kind==='weight'?S.lb:S.goalLb,mn=q.kind==='weight'?100:Math.max(90,minHealthy()-15),mx=q.kind==='weight'?350:S.lb-1;
+    h+='<div class="weight"><b><span id="wv">'+v+'</span><u>lb</u></b>'+
+       '<input type="range" id="wt" min="'+mn+'" max="'+mx+'" step="1" value="'+v+'" aria-label="'+(q.kind==='weight'?'Current':'Goal')+' weight in pounds">'+
+       (q.kind==='goalw'?'<p class="hint" id="gh"></p><p class="warn" id="gw" hidden></p>':'')+'</div>'+
+       (q.why?'<p class="why">'+q.why+'</p>':'')+
+       (q.kind==='goalw'?'<p class="why">Most Harmony plans aim for 0.5–1 lb a week. Slower than a crash diet, and it stays off.</p>':'')+
+       '<div class="spacer"></div><button class="btn" id="wn">Continue</button>';
+  }else if(q.kind==='height'){
+    h+='<div class="weight"><div class="stepper"><button id="hm" aria-label="One inch shorter">−</button>'+
+       '<b><span id="hv">'+ft(S.hIn)+'</span></b><button id="hp" aria-label="One inch taller">+</button></div></div>'+
+       '<p class="why">'+q.why+'</p><div class="spacer"></div><button class="btn" id="wn">Continue</button>';
+  }else if(q.kind==='multi'){
+    h+='<p class="why">'+q.why+'</p><div class="opts">';
+    for(var i=0;i<q.opts.length;i++){var o=q.opts[i],on=S.changes.indexOf(o[0])>-1;
+      h+='<button class="opt'+(on?' sel':'')+'" data-v="'+o[0]+'"><span class="em">'+o[1]+'</span><span>'+o[2]+'</span><span class="box"></span></button>';}
+    h+='</div><div class="spacer"></div><button class="btn" id="wn"'+(S.changes.length?'':' disabled')+'>Continue</button>';
   }else{
-    var o=val(q.opts);h+='<div class="opts">';
-    for(var i=0;i<o.length;i++)h+='<button class="opt'+(S[q.id]===o[i][0]?' sel':'')+'" data-v="'+o[i][0]+'">'+o[i][1]+(o[i][2]?'<small>'+o[i][2]+'</small>':'')+'</button>';
+    var op=val(q.opts);h+='<div class="opts">';
+    for(var j=0;j<op.length;j++)h+='<button class="opt'+(S[q.id]===op[j][0]?' sel':'')+'" data-v="'+op[j][0]+'"><span>'+op[j][1]+(op[j][2]?'<small>'+op[j][2]+'</small>':'')+'</span></button>';
     h+='</div>'+(q.why?'<p class="why">'+q.why+'</p>':'')+'<div class="spacer"></div>';
   }
-  if(pos>0)h+='<button class="btn ghost" id="back">Back</button>';
+  if(pos===0)h+='<p class="small">About 1 minute · 10 questions · see your date before any sign-up. 18+.</p>';
   stage.innerHTML=h+'</div>';
+
   function next(){
     ev('QuizAnswer · '+q.id);
+    if(pos===0)ev('QuizStart');
     var l=visible(),p=l.indexOf(S.qi),last=p===l.length-1,nx=last?scrBuild:scrQuiz;
     if(last)ev('QuizComplete',true);else S.qi=l[p+1];
     var t=TEASERS[q.id];
+    if(t&&t.proj)return go(function(){scrProjection(nx)});
     if(t&&(!t.when||t.when()))return go(function(){scrTeaser(t,nx)});
+    if(q.id==='lb'&&!losing())return go(function(){scrProjection(nx)});
     go(nx);
   }
-  if(q.kind==='weight'){
+  if(q.kind==='weight'||q.kind==='goalw'){
     var w=document.getElementById('wt');
-    w.oninput=function(){S.lb=+w.value;document.getElementById('wv').textContent=w.value};
+    function upd(){
+      var x=+w.value;document.getElementById('wv').textContent=x;
+      if(q.kind==='weight'){S.lb=x;S.goalLb=null;return}
+      S.goalLb=x;
+      var lo=minHealthy(),gw=document.getElementById('gw'),bad=x<lo;
+      document.getElementById('gh').textContent='You’d lose '+(S.lb-x)+' lb. Healthy range for '+ft(S.hIn)+': '+lo+'–'+maxHealthy()+' lb.';
+      gw.hidden=!bad;gw.textContent='That is below a healthy weight for your height. Choose '+lo+' lb or more.';
+      document.getElementById('wn').disabled=bad;
+    }
+    w.oninput=upd;if(q.kind==='goalw')upd();
+    document.getElementById('wn').onclick=next;
+  }else if(q.kind==='height'){
+    function hu(d){S.hIn=Math.max(54,Math.min(76,S.hIn+d));S.goalLb=null;document.getElementById('hv').textContent=ft(S.hIn)}
+    document.getElementById('hm').onclick=function(){hu(-1)};document.getElementById('hp').onclick=function(){hu(1)};
+    document.getElementById('wn').onclick=next;
+  }else if(q.kind==='multi'){
+    var bs=stage.querySelectorAll('.opt');
+    for(var k=0;k<bs.length;k++)bs[k].onclick=function(){
+      var v=this.getAttribute('data-v'),ix=S.changes.indexOf(v);
+      if(ix>-1)S.changes.splice(ix,1);else S.changes.push(v);
+      this.classList.toggle('sel');document.getElementById('wn').disabled=!S.changes.length;
+    };
     document.getElementById('wn').onclick=next;
   }else{
     var b=stage.querySelectorAll('.opt');
-    for(var j=0;j<b.length;j++)b[j].onclick=function(){
+    for(var n=0;n<b.length;n++)b[n].onclick=function(){
       S[q.id]=this.getAttribute('data-v');
+      if(q.id==='goal')S.goalLb=null;
       if(q.id==='glp'&&!onGlp()){S.med=null;S.exit=null}
       this.className='opt sel';setTimeout(next,160);
     };
   }
-  if(pos>0)document.getElementById('back').onclick=function(){var l=visible();S.qi=l[l.indexOf(S.qi)-1];go(scrQuiz)};
 }
 function scrTeaser(z,next){
-  field(null);
-  stage.innerHTML='<div class="screen">'+badge('teaser')+'<h2>'+z.t+'</h2>'+
+  field(null);stepLbl('');
+  stage.innerHTML='<div class="screen">'+(z.kick?'<p class="kick">'+z.kick+'</p>':'')+'<h2>'+val(z.t)+'</h2>'+
    '<div class="art">'+z.art()+'<p class="cap">'+z.cap+'</p></div>'+
    '<p class="lead">'+z.b+'</p><p class="src">'+z.src+'</p>'+
    (z.m?'<div class="method"><b>The Harmony method</b>'+z.m+'</div>':'')+
@@ -406,167 +484,210 @@ function scrTeaser(z,next){
   ev('TeaserViewed');
   document.getElementById('tc').onclick=function(){go(next)};
 }
+/* the first projected date: Noom's engine. Later answers bring it closer. */
+function scrProjection(next){
+  field(null);stepLbl('');
+  var w=weeks(false),hl=losing()?
+    'You could reach <em>'+S.goalLb+' lb</em> by <em class="nb">'+dateIn(w)+'</em>':
+    'In <em>14 days</em> you can see your strength go up';
+  stage.innerHTML='<div class="screen"><p class="kick">Your first estimate</p><p class="big">'+hl+'</p>'+chart(w)+
+   '<p class="lead">'+(losing()?'That is '+toLose()+' lb at a pace that keeps your muscle. ':'')+
+   'Answer a few more questions — we’ll check if you can get there <b>sooner</b>.</p>'+
+   '<div class="spacer"></div><button class="btn" id="tc">Continue</button></div>';
+  ev('ProjectionViewed · first');setTimeout(function(){fireworks(false)},250);
+  document.getElementById('tc').onclick=function(){go(next)};
+}
 function scrBuild(){
-  field('forest');prog(100);
-  var steps=[[0,onGlp()?'Matching your medication stage':'Reading your menopause stage'],[25,'Setting protein for your body weight'],
-    [50,'Choosing your first strength sessions'],[75,exitPhase()?'Dating your last-shot plan':'Laying out your first 14 days']];
-  var h='<div class="screen">'+badge('build')+'<h2>Building your plan</h2>'+ring(0,'0','%','','mr')+'<ul class="build">';
-  for(var i=0;i<steps.length;i++)h+='<li id="m'+i+'"><i></i><span>'+steps[i][1]+'</span></li>';
-  stage.innerHTML=h+'</ul><div class="spacer"></div><p class="small">Built from your answers. Nothing here is a diagnosis.</p></div>';
-  var rf=document.querySelector('#mr .rf'),rv=document.querySelector('#mr .rv'),C=2*Math.PI*86,n=0;
-  rf.style.transition='none';
-  var red=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  field('forest');prog(100);stepLbl('');
+  var secs=['Body profile','Menopause stage',onGlp()?'Medication stage':'Metabolism','Protein target','Strength plan'];
+  var h='<div class="screen"><h2>Building your plan</h2><div class="secs">';
+  for(var i=0;i<secs.length;i++)h+='<div class="sec"><div class="row"><span>'+secs[i]+'</span><b id="p'+i+'">0%</b></div><div class="tr"><i id="b'+i+'"></i></div></div>';
+  h+='</div><div id="popWrap"></div><div class="spacer"></div><p class="small">Built from your answers. Nothing here is a diagnosis.</p></div>';
+  stage.innerHTML=h;
+  var red=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches,n=0,paused=false,asked=false;
   var tick=setInterval(function(){
-    n=Math.min(100,n+(red?25:2));
-    rf.setAttribute('stroke-dashoffset',(C*(1-n/100)).toFixed(1));rv.innerHTML=n+'<u>%</u>';
-    for(var i=0;i<steps.length;i++)if(n>=steps[i][0])document.getElementById('m'+i).className='done';
-    if(n>=100){clearInterval(tick);ev('PlanBuilt');setTimeout(function(){go(scrResult)},600)}
-  },red?120:36);
+    if(paused)return;
+    n=Math.min(100*secs.length,n+(red?25:4));
+    for(var i=0;i<secs.length;i++){var v=Math.max(0,Math.min(100,n-i*100));document.getElementById('b'+i).style.width=v+'%';document.getElementById('p'+i).textContent=v+'%'}
+    /* Noom-style pop-up mid-build: one more real question while "processing" */
+    if(!asked&&n>=260){asked=true;paused=true;
+      document.getElementById('popWrap').innerHTML='<div class="pop"><b>To fine-tune your plan:</b>Do you have knee, hip or back pain that limits squats or stairs?<div class="yn"><button data-v="y">Yes</button><button data-v="n">No</button></div></div>';
+      var yb=document.querySelectorAll('.pop button');
+      for(var k=0;k<yb.length;k++)yb[k].onclick=function(){S.joints=this.getAttribute('data-v');ev('QuizAnswer · joints');document.getElementById('popWrap').innerHTML='';paused=false};
+    }
+    if(n>=100*secs.length){clearInterval(tick);ev('PlanBuilt');setTimeout(function(){go(scrLead)},500)}
+  },red?120:30);
+}
+function scrLead(){
+  field(null);prog(null);stepLbl('');
+  stage.innerHTML='<div class="screen"><p class="kick">Your plan is ready</p><h2>Enter your email to see your final date'+(losing()?' for '+S.goalLb+' lb':'')+'</h2>'+
+   '<p class="lead">We’ll also send your protein target and 14-day calendar, so you have them even before you decide.</p>'+
+   '<input type="email" id="em" placeholder="you@example.com" autocomplete="email" aria-label="Email address">'+
+   '<div class="spacer"></div><button class="btn" id="next">See my plan</button>'+
+   '<p class="small">One email with the plan. Delete your data any time.</p></div>';
+  document.getElementById('next').onclick=function(){ev('LeadCaptured',true);go(scrResult)};
 }
 function calendar(){
   var d=['M','T','W','T','F','S','S'],key={1:'Test',7:'Re-test',14:'Report'},h='<div class="cal">';
-  for(var i=1;i<=14;i++){
-    var k=key[i],rest=(i%7===3||i%7===6);
-    h+='<div class="'+(k?'key':(rest?'rest':''))+'"><b>'+d[(i-1)%7]+'</b>'+(k||('Day '+i))+'</div>';
-  }
-  return h+'</div><div class="legend"><span><i style="background:#224228"></i>Strength test</span><span><i style="background:#fff"></i>Session + protein</span><span><i style="background:#efe7da"></i>Rest day</span></div>';
-}
-function exitLine(){
-  if(!exitPhase()||S.exit===null||S.exit===undefined)return '';
-  var w=+S.exit;
-  if(w===0)return '<div class="method"><b>Your last-shot plan</b>When you set a date, your plan switches to Exit mode — the weeks after the last dose get the most support.</div>';
-  return '<div class="method"><b>Your last-shot plan</b>'+(w>0?'Your last dose is about '+w+' weeks away. Exit mode starts '+Math.max(1,w-2)+' weeks before it.':
-    'You are about '+(-w)+' weeks past your last dose — Exit mode is on from day 1.')+'</div>';
+  for(var i=1;i<=14;i++){var k=key[i],rest=(i%7===3||i%7===6);
+    h+='<div class="'+(k?'key':(rest?'rest':''))+'"><b>'+d[(i-1)%7]+'</b>'+(k||('Day '+i))+'</div>';}
+  return h+'</div>';
 }
 function scrResult(){
-  field('sage');prog(null);
-  var t=target(),r=risk(),bands=['Lower','Moderate','Elevated'];
-  stage.innerHTML='<div class="screen">'+badge('result')+
-   '<h2>Your plan is ready</h2>'+
-   ring(100,t.daily,'g','protein a day')+
-   '<p class="lead" style="text-align:center"><span class="nb">'+t.morning+' g</span> of it before noon.</p>'+
+  field('sage');
+  var t=target(),w1=weeks(false),w2=weeks(true),gain=w1-w2;
+  stage.innerHTML='<div class="screen">'+
+   (losing()?'<p class="big">You can reach <em>'+S.goalLb+' lb</em> by <em class="nb">'+dateIn(w2)+'</em></p>'+
+     (gain>0?'<span class="sooner">'+gain+' weeks sooner than your first estimate</span>':''):
+     '<p class="big">Your strength plan is ready</p>')+
+   chart(w2)+
    '<div class="panel">'+
-     '<div class="kv"><span>Lean-mass risk</span><b>'+bands[r]+'</b></div>'+
-     '<div class="kv"><span>Protein factor</span><b>'+t.f+' g/kg</b></div>'+
-     '<div class="kv"><span>Body weight used</span><b>'+S.lb+' lb</b></div></div>'+
-   '<h3>Your first 14 days</h3>'+calendar()+exitLine()+
+     '<div class="kv"><span>Protein a day</span><b>'+t.daily+' g</b></div>'+
+     '<div class="kv"><span>Before noon</span><b>'+t.morning+' g</b></div>'+
+     '<div class="kv"><span>Strength sessions</span><b>3 × 20 min</b></div>'+
+     (S.joints==='y'?'<div class="kv"><span>Joint-friendly moves</span><b>on</b></div>':'')+'</div>'+
+   '<h3>Your first 14 days</h3>'+calendar()+
    '<p class="small">On day 14 you get a report you can show your doctor. Based on your answers, not a diagnosis.</p>'+
-   '<button class="btn" id="save">Save my plan</button></div>';
-  ev('ResultViewed');
-  document.getElementById('save').onclick=function(){go(scrLead)};
-}
-function scrLead(){
-  field(null);
-  stage.innerHTML='<div class="screen">'+badge('lead')+'<h2>Where should we send your plan?</h2>'+
-   '<p class="lead">Your protein target and 14-day calendar, so you have them even before you decide.</p>'+
-   '<input type="email" id="em" placeholder="'+EMAIL_PH+'" autocomplete="email" aria-label="Email address">'+
-   '<div class="spacer"></div><button class="btn" id="next">Send my plan</button>'+
-   '<p class="small">One email with the plan. Delete your data any time.</p></div>';
-  document.getElementById('next').onclick=function(){ev('LeadCaptured');go(scrPaywall)};
+   '<button class="btn" id="save">Get my plan</button></div>';
+  ev('ResultViewed');ev('ProjectionViewed · final');if(gain>0)setTimeout(function(){fireworks(false)},250);
+  document.getElementById('save').onclick=function(){go(scrPaywall)};
 }
 function scrPaywall(){
   field(null);
   var t=target(),plans=[
     ['year','<span class="nm">12 months<span class="save">save 67%</span><small>$2.50 a week</small></span>','$129.99<small>billed once a year</small>'],
     ['month','<span class="nm">4 weeks<small>then $29.99 every 4 weeks</small></span>','$14.99<small>first 4 weeks</small>']];
-  var h='<div class="screen">'+badge('paywall')+'<h2>Start your 14 days</h2>'+
+  var h='<div class="screen"><h2>'+(losing()?'Your plan to '+S.goalLb+' lb is ready':'Your strength plan is ready')+'</h2>'+
    '<div class="panel light">'+
     '<div class="kv"><span>Daily protein target</span><b>'+t.daily+' g</b></div>'+
-    '<div class="kv"><span>Strength test + weekly re-test</span><b>Day 1</b></div>'+
-    '<div class="kv"><span>Report for your doctor</span><b>Day 14</b></div></div>'+
-   '<div class="opts">';
+    '<div class="kv"><span>Home strength test</span><b>Day 1</b></div>'+
+    '<div class="kv"><span>Report for your doctor</span><b>Day 14</b></div></div><div class="opts">';
   for(var i=0;i<plans.length;i++)h+='<button class="plan'+(S.plan===plans[i][0]?' sel':'')+'" data-p="'+plans[i][0]+'">'+plans[i][1]+'<span class="pr">'+plans[i][2]+'</span></button>';
   h+='</div><div class="spacer"></div><button class="btn" id="buy">Start my plan</button>'+
    '<p class="small">Cancel in one tap, any time. We remind you before every renewal. No medical advice. 18+.</p></div>';
   stage.innerHTML=h;ev('PaywallView');
   var ps=stage.querySelectorAll('.plan');
-  for(var j=0;j<ps.length;j++)ps[j].onclick=function(){S.plan=this.getAttribute('data-p');ev('PlanSelected · '+S.plan);scrPaywall()};
-  document.getElementById('buy').onclick=function(){ev('Purchase (mock, reporting only)',true);go(scrTestIntro)};
+  for(var j=0;j<ps.length;j++)ps[j].onclick=function(){S.plan=this.getAttribute('data-p');ev('PlanSelected · '+S.plan);
+    var all=stage.querySelectorAll('.plan');for(var k=0;k<all.length;k++)all[k].className='plan'+(all[k].getAttribute('data-p')===S.plan?' sel':'')};
+  document.getElementById('buy').onclick=applePay;
 }
-function scrTestIntro(){
-  field('forest');prog(0);
-  stage.innerHTML='<div class="screen">'+badge('test')+'<h2>Day 1. Your strength test.</h2>'+
-   '<p class="lead">Three moves, about five minutes, at home. No equipment beyond a chair, stairs and two shopping bags.</p>'+
-   '<div class="panel">'+
-    '<div class="kv"><span>Chair stands</span><b>30 s</b></div>'+
-    '<div class="kv"><span>One flight of stairs</span><b>timed</b></div>'+
-    '<div class="kv"><span>Carry two bags</span><b>timed</b></div></div>'+
-   '<p class="lead">This is your baseline. You repeat it every week — the number is yours, not the medication’s.</p>'+
-   '<div class="spacer"></div><button class="btn" id="st">Start the test</button>'+
-   '<p class="small">Stop if anything hurts. Skip any move that is not safe for you.</p></div>';
-  document.getElementById('st').onclick=function(){ev('StrengthTestStart');go(scrChair)};
+
+/* ============ fireworks: small bursts on the date screens, a big show after payment ============ */
+function fireworks(big){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var c=document.createElement('canvas'),r=phone.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+  c.className='fw';c.width=r.width*dpr;c.height=r.height*dpr;phone.appendChild(c);
+  var x=c.getContext('2d'),P=[],cols=['#ddbe78','#af751b','#849671','#224228','#e8794a','#f7f1e8'],t=0,bursts=big?7:2;
+  x.scale(dpr,dpr);
+  function burst(){var cx=r.width*(.2+Math.random()*.6),cy=r.height*(.15+Math.random()*.35),n=big?70:45,col=cols[Math.floor(Math.random()*cols.length)];
+    for(var i=0;i<n;i++){var a=Math.PI*2*i/n,sp=2+Math.random()*3.5;
+      P.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,l:1,c:Math.random()<.7?col:cols[i%cols.length],s:2+Math.random()*2.5})}}
+  for(var b=0;b<bursts;b++)setTimeout(burst,b*(big?260:220));
+  (function f(){t++;x.clearRect(0,0,r.width,r.height);
+    for(var i=P.length-1;i>=0;i--){var q=P[i];q.vx*=.985;q.vy=q.vy*.985+.07;q.x+=q.vx;q.y+=q.vy;q.l-=.012;
+      if(q.l<=0){P.splice(i,1);continue}x.globalAlpha=q.l;x.fillStyle=q.c;x.beginPath();x.arc(q.x,q.y,q.s,0,7);x.fill()}
+    if(t<(big?260:170))requestAnimationFrame(f);else c.remove()})();
 }
-function scrChair(){
-  field(null);prog(33);
-  stage.innerHTML='<div class="screen">'+badge('test')+'<h2>How many chair stands in 30 seconds?</h2>'+
-   '<p class="lead">Arms crossed, stand up fully, sit back down. Count every full stand.</p>'+
-   '<div class="weight"><b id="cv">'+S.chair+'</b><div class="stepper"><button id="cm" aria-label="One fewer">−</button><button id="cp" aria-label="One more">+</button></div></div>'+
-   '<div class="spacer"></div><button class="btn" id="n">Next</button></div>';
-  function upd(d){S.chair=Math.max(0,Math.min(30,S.chair+d));document.getElementById('cv').textContent=S.chair}
-  document.getElementById('cm').onclick=function(){upd(-1)};document.getElementById('cp').onclick=function(){upd(1)};
-  document.getElementById('n').onclick=function(){go(scrStairs)};
+
+/* ============ Apple Pay (mock): sheet → Face ID → done ============ */
+var APPLE=/Mac|iPhone|iPad|iPod/.test(navigator.userAgent),APL=APPLE?'\uF8FF Pay':'Apple Pay';
+function price(){return S.plan==='year'?'$129.99':'$14.99'}
+function applePay(){
+  ev('ApplePaySheet');
+  var w=document.createElement('div');w.className='ap-wrap';
+  w.innerHTML='<div class="ap" role="dialog" aria-label="Apple Pay, demo"><div class="hd"><span class="logo">'+APL+'</span><button class="x" id="apx" aria-label="Cancel">✕</button></div>'+
+   '<div class="row"><span class="card"></span><span style="flex:1">Apple Card<small>•••• 4242</small></span><span style="color:#0a84ff">›</span></div>'+
+   '<div class="row"><span>Contact<small>you@example.com</small></span></div>'+
+   '<div class="row last"><span>'+(S.plan==='year'?'Harmony · 12 months':'Harmony · first 4 weeks')+'<small>'+(S.plan==='year'?'Renews yearly at $129.99':'Then $29.99 every 4 weeks')+'. Cancel any time.</small></span></div>'+
+   '<div class="tot"><span>Pay Harmony</span><b>'+price()+'</b></div>'+
+   '<div class="face" id="apf"><button class="paybtn" id="appay">Confirm with Face ID</button></div>'+
+   '<p class="side">Demo: no card is charged.</p></div>';
+  phone.appendChild(w);
+  document.getElementById('apx').onclick=function(){ev('ApplePayCancel');w.remove()};
+  document.getElementById('appay').onclick=function(){
+    var f=document.getElementById('apf');f.innerHTML='<div class="fid" id="fid">☺</div><span id="fl">Face ID</span>';
+    setTimeout(function(){var d=document.getElementById('fid');if(!d)return;d.className='fid ok';d.textContent='✓';document.getElementById('fl').textContent='Done'},900);
+    setTimeout(function(){w.remove();ev('Purchase (mock, reporting only)',true);save();go(scrSuccess)},1700);
+  };
 }
-function pick(title,lead,key,opts,next,p){
-  field(null);prog(p);
-  var h='<div class="screen">'+badge('test')+'<h2>'+title+'</h2><p class="lead">'+lead+'</p><div class="opts">';
-  for(var i=0;i<opts.length;i++)h+='<button class="opt" data-v="'+opts[i][0]+'">'+opts[i][1]+'</button>';
-  stage.innerHTML=h+'</div><div class="spacer"></div></div>';
-  var b=stage.querySelectorAll('.opt');
-  for(var j=0;j<b.length;j++)b[j].onclick=function(){S[key]=this.getAttribute('data-v');this.className='opt sel';setTimeout(function(){go(next)},160)};
+function scrSuccess(){
+  field('forest');prog(null);stepLbl('');
+  stage.innerHTML='<div class="screen" style="text-align:center;align-items:center"><div class="spacer"></div>'+
+   '<div style="font-size:64px;line-height:1">🎉</div><p class="kick" style="color:var(--gold-pale)">Payment successful</p>'+
+   '<h1>Welcome to Harmony.</h1><p class="lead">'+(losing()?'Your plan to '+S.goalLb+' lb by '+dateIn(weeks(true))+' starts today.':'Your strength plan starts today.')+
+   '<br>A receipt is on its way to your email.</p><div class="spacer"></div><button class="btn" id="n">Continue</button></div>';
+  setTimeout(function(){fireworks(true)},150);
+  document.getElementById('n').onclick=function(){go(scrUpsell)};
 }
-function scrStairs(){pick('One flight of stairs — how long?','Walk up at a steady pace. Time it, or pick the closest.','stairs',
-  [['fast','Under 10 seconds'],['mid','10–15 seconds'],['slow','Over 15 seconds'],['rail','I need the rail or a rest']],scrCarry,66)}
-function scrCarry(){pick('Carry two full bags — how long?','A bag in each hand, about 10 lb each. Walk until you want to put them down.','carry',
-  [['long','A minute or more'],['mid','30–60 seconds'],['short','Under 30 seconds'],['no','I could not do it']],scrScore,100)}
-function scrScore(){
-  field('sage');prog(null);
-  var s=score(),stl={fast:'<10 s',mid:'10–15 s',slow:'15 s+',rail:'with rail'}[S.stairs],cal={long:'60 s+',mid:'30–60 s',short:'<30 s',no:'—'}[S.carry];
-  stage.innerHTML='<div class="screen">'+badge('score')+'<h2>Your Strength Score</h2>'+
-   '<p class="lead">Day 1 baseline. We re-test every week.</p>'+
-   ring(s.total,s.total,'','of 100','sr')+
-   '<div class="tests"><div><b>'+S.chair+'</b>chair stands in 30 s</div><div><b>'+stl+'</b>one flight of stairs</div><div><b>'+cal+'</b>carry two bags</div></div>'+
-   '<div class="panel"><div class="kv"><span>Your protein target</span><b>'+target().daily+' g</b></div></div>'+
-   '<p class="small">Harmony’s own composite of three functional tests. Not a clinical assessment.</p>'+
-   '<div class="spacer"></div><button class="btn" id="n">See what day 14 looks like</button></div>';
-  ev('StrengthScoreSet',true);
-  document.getElementById('n').onclick=function(){go(scrReport)};
+/* one-time upsell, picked by quiz branch (see discovery/harmony-upsells.md) */
+var UPS={
+ glp:{t:'Low‑Appetite Protein Plan',h:function(){return 'Want help hitting '+target().daily+' g on low‑appetite days?'},
+   b:['4-week menu sized to your protein target','Small portions and liquid protein for the days after a dose','A weekly shopping list']},
+ exit:{t:'Last‑Shot Plan',h:function(){return 'Want a plan for the 12 months after your last dose?'},
+   b:['Strength and protein, week by week from your last dose','Extra support in the first 3 months, when regain risk is highest','A monthly check-in report for your doctor']},
+ meno:{t:'Hot Flash & Sleep Plan',h:function(){return 'Want fewer bad nights while you build strength?'},
+   b:['Finds your hot-flash triggers from your 1-tap check-ins','A 10-minute evening routine for better sleep','A sleep and symptoms report every 2 weeks']}};
+function upsellKey(){return exitPhase()?'exit':(onGlp()?'glp':'meno')}
+function scrUpsell(){
+  field(null);
+  var u=UPS[upsellKey()];
+  stage.innerHTML='<div class="screen"><p class="kick">One more thing</p><h2>'+u.h()+'</h2>'+
+   '<div class="ups"><h3>'+u.t+'</h3><ul>'+u.b.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'+
+   '<p class="price">$39.99 <span class="small">one-time</span></p></div>'+
+   '<p class="small">One-time payment, not a subscription. Covered by the same 14-day refund.</p>'+
+   '<div class="spacer"></div><button class="apbtn" id="add">Add with '+APL+'</button>'+
+   '<button class="btn line" id="skip">No thanks, continue</button></div>';
+  ev('UpsellView · '+upsellKey());
+  document.getElementById('add').onclick=function(){S.addon=u.t;ev('UpsellPurchase (mock)',true);save();this.textContent='Added ✓';setTimeout(function(){go(scrAccount)},500)};
+  document.getElementById('skip').onclick=function(){ev('UpsellSkip');go(scrAccount)};
 }
-function scrReport(){
-  field('sage');prog(null);
-  var b=score().total,w7=Math.min(100,b+4),w14=Math.min(100,b+9),pct=function(v){return Math.max(12,Math.round(v))+'%'};
-  stage.innerHTML='<div class="screen">'+badge('report')+'<span class="tag">Sample report</span>'+
-   '<h2>Your first two weeks</h2><p class="lead">Strength Score by week. Day 1 is yours; days 7 and 14 show a typical path.</p>'+
-   '<div class="bars"><div style="height:'+pct(b)+'"><span>'+b+'</span></div><div style="height:'+pct(w7)+';background:#849671"><span>'+w7+'</span></div><div style="height:'+pct(w14)+';background:#224228"><span>'+w14+'</span></div></div>'+
-   '<div class="blab"><span>Day 1</span><span>Day 7</span><span>Day 14</span></div>'+
-   '<div class="panel">'+
-    '<div class="kv"><span>Strength</span><b>+'+(w14-b)+'</b></div>'+
-    '<div class="kv"><span>Protein target hit</span><b>10/14 days</b></div>'+
-    '<div class="kv"><span>Sleep, hours</span><b>6.1 → 6.8</b></div>'+
-    '<div class="kv"><span>Hot flashes a night</span><b>4 → 3</b></div></div>'+
-   '<p class="small">Days 7 and 14 are illustrative until you complete them. The report is a PDF you can share with your doctor.</p>'+
-   '<button class="btn" id="dl">Download report for my doctor</button>'+
-   '<button class="btn ghost" id="again">Run it again</button></div>';
-  ev('ReportViewed');
-  document.getElementById('dl').onclick=function(){ev('ReportDownload (mock)');this.textContent='Report saved (mock)'};
-  document.getElementById('again').onclick=function(){reset();logEl.innerHTML='';go(scrHook)};
+function scrAccount(){
+  field(null);
+  stage.innerHTML='<div class="screen"><p class="kick">Last step</p><h2>Create your account to keep your plan</h2>'+
+   '<p class="lead">Your answers, protein target and 14-day calendar are saved to it.</p>'+
+   '<button class="apbtn" id="sia">'+(APPLE?'\uF8FF ':'')+'Continue with Apple</button>'+
+   '<button class="btn line" id="sie">Continue with email</button>'+
+   '<div class="spacer"></div><p class="small">By continuing you agree to the Terms and Privacy Policy. We never sell your health data.</p></div>';
+  function next(){ev('AccountCreated (mock)');go(scrDone)}
+  document.getElementById('sia').onclick=next;document.getElementById('sie').onclick=next;
+}
+/* hand-off: the quiz ends here; the product is a separate app (harmony-plan-app.vercel.app).
+   Different domain, so the profile travels in the link, not in localStorage. */
+var APP_URL='https://harmony-plan-app.vercel.app';
+function profile(){
+  var t=target();
+  return {lb:S.lb,goalLb:losing()?S.goalLb:null,hIn:S.hIn,age:S.age,meno:S.meno,glp:S.glp,med:S.med,
+    exit:S.exit,strength:S.strength,breakfast:S.breakfast,joints:S.joints,changes:S.changes,protein:t.daily,morning:t.morning,
+    goalDate:losing()?dateIn(weeks(true)):null,plan:S.plan,addon:S.addon||null,ts:Date.now()};
+}
+function save(){try{localStorage.setItem('harmony.profile',JSON.stringify(profile()))}catch(e){}}
+function appLink(){
+  var j=JSON.stringify(profile()),b=btoa(unescape(encodeURIComponent(j))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  return APP_URL+'/#p='+b;
+}
+function scrDone(){
+  field('forest');prog(null);stepLbl('');
+  stage.innerHTML='<div class="screen"><p class="kick" style="color:var(--gold-pale)">You’re all set</p>'+
+   '<h1>Day 1 starts with a 5-minute strength test.</h1>'+
+   '<ul class="steps"><li><i>1</i>Open the Harmony app</li><li><i>2</i>Do the strength test at home: a chair, stairs, two bags</li><li><i>3</i>Get your Strength Score and today’s plan</li></ul>'+
+   '<p class="lead">Your answers are already in the app'+(S.addon?', plus your '+S.addon:'')+'.</p>'+
+   '<div class="spacer"></div><a class="btn" href="'+appLink()+'" style="text-align:center;text-decoration:none" id="open">Open the Harmony app</a>'+
+   '<p class="small">In the real flow this opens the iOS app after install. Here it opens the web version of the product.</p></div>';
+  document.getElementById('open').onclick=function(){ev('AppOpened')};
 }
 
 /* overlays */
-function tog(btn,panel,after){btn.onclick=function(){var on=panel.hidden;panel.hidden=!on;btn.setAttribute('aria-pressed',String(on));if(after)after()}}
-tog(document.getElementById('tEvents'),document.getElementById('events'));
-tog(document.getElementById('tDrives'),document.getElementById('drives'),function(){
-  var k=Object.keys(DRIVES),o='';for(var i=0;i<k.length;i++)o+=k[i]+' → '+DRIVES[k[i]]+'<br>';
-  document.getElementById('driveLegend').innerHTML=o;
-});
-/* jury/dev overlays: add ?dev to the URL to show the Drives and Events buttons */
+var tEv=document.getElementById('tEvents');
+tEv.onclick=function(){var p=document.getElementById('events'),on=p.hidden;p.hidden=!on;tEv.setAttribute('aria-pressed',String(on))};
 if(/[?&]dev\b/.test(location.search))document.getElementById('devTools').hidden=false;
-/* review shortcut: index.html#s=result opens one screen with sample answers */
+/* review shortcut: #s=<screen> opens one screen with sample answers */
 (function(){
-  var m=/s=(\w+)/.exec(location.hash||''),map={hook:scrHook,quiz:scrQuiz,teaser:function(){scrTeaser(TEASERS.breakfast,scrBuild)},
-    build:scrBuild,result:scrResult,lead:scrLead,paywall:scrPaywall,test:scrTestIntro,chair:scrChair,score:scrScore,report:scrReport};
-  if(m&&map[m[1]]){S.glp='early';S.med='sema';S.meno='meno';S.worry='strength';S.breakfast='carb';S.strength='occ';S.age='50';
-    S.stairs='mid';S.carry='mid';S.qi=+(/q=(\d)/.exec(location.hash)||[0,0])[1];map[m[1]]();}
-  else scrHook();
+  var m=/s=(\w+)/.exec(location.hash||''),
+    map={quiz:scrQuiz,why:function(){scrTeaser(TEASERS.changes,scrQuiz)},projection:function(){scrProjection(scrQuiz)},
+      build:scrBuild,lead:scrLead,result:scrResult,paywall:scrPaywall,success:scrSuccess,upsell:scrUpsell,account:scrAccount,done:scrDone};
+  if(m&&map[m[1]]){S.goal='20';S.changes=['belly','stuck','tired'];S.age='50';S.hIn=64;S.lb=178;S.goalLb=163;S.meno='meno';
+    S.glp='none';S.strength='occ';S.breakfast='carb';S.qi=+(/q=(\d+)/.exec(location.hash)||[0,0])[1];stage.__cur=map[m[1]];stage.__qi=S.qi;map[m[1]]();}
+  else go(scrQuiz,true);
 })();
 </script>
 </body>
