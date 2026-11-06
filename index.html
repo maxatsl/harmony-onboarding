@@ -613,7 +613,8 @@ function applePay(){
 function scrSuccess(){
   field('forest');prog(null);stepLbl('');
   stage.innerHTML='<div class="screen" style="text-align:center;align-items:center"><div class="spacer"></div>'+
-   '<div style="font-size:64px;line-height:1">🎉</div><p class="kick" style="color:var(--gold-pale)">Payment successful</p>'+
+   '<img src="assets/success-park.webp" width="800" height="600" alt="A smiling woman in her fifties with her arms raised on an autumn path" style="width:100%;height:auto;max-height:260px;object-fit:cover;border-radius:24px;display:block">'+
+   '<p class="kick" style="color:var(--gold-pale)">🎉 Payment successful</p>'+
    '<h1>Welcome to Harmony.</h1><p class="lead">'+(losing()?'Your plan to '+S.goalLb+' lb by '+dateIn(weeks(true))+' starts today.':'Your strength plan starts today.')+
    '<br>A receipt is on its way to your email.</p><div class="spacer"></div><button class="btn" id="n">Continue</button></div>';
   setTimeout(function(){fireworks(true)},150);
@@ -667,8 +668,8 @@ function appLink(){
 }
 function scrDone(){
   field('forest');prog(null);stepLbl('');
-  stage.innerHTML='<div class="screen"><p class="kick" style="color:var(--gold-pale)">You’re all set</p>'+
-   '<h1>Day 1 starts with a 5-minute strength test.</h1>'+
+  stage.innerHTML='<div class="screen"><img src="assets/done-kitchen.webp" width="800" height="600" alt="A woman in her kitchen smiling at her phone" style="width:100%;height:auto;max-height:260px;object-fit:cover;border-radius:24px;display:block"><p class="kick" style="color:var(--gold-pale)">You’re all set</p>'+
+   '<h2>Day 1 starts with a 5-minute strength test.</h2>'+
    '<ul class="steps"><li><i>1</i>Open the Harmony app</li><li><i>2</i>Do the strength test at home: a chair, stairs, two bags</li><li><i>3</i>Get your Strength Score and today’s plan</li></ul>'+
    '<p class="lead">Your answers are already in the app'+(S.addon?', plus your '+S.addon:'')+'.</p>'+
    '<div class="spacer"></div><a class="btn" href="'+appLink()+'" style="text-align:center;text-decoration:none" id="open">Open the Harmony app</a>'+
