@@ -62,7 +62,7 @@
    '.device:before{content:"";position:absolute;top:30px;left:50%;transform:translateX(-50%);width:124px;height:36px;border-radius:20px;background:#000;z-index:50}'+
    '.device:after{content:"";position:absolute;right:-7px;top:220px;width:4px;height:96px;border-radius:2px;background:#2c2c2e}'+
    '.device .phone{max-width:none!important;width:432px!important;height:934px!important;min-height:934px!important;border-radius:56px!important;overflow-y:auto!important;overflow-x:hidden!important;margin:0!important}'+
-   '.device .phone .bar,.device .phone .top{padding-top:62px!important}'+
+   '.device .phone>.bar,.device .phone>.top{padding-top:62px!important}'+
    '.device .phone::-webkit-scrollbar{display:none}'+
    '.devcap{text-align:center;font:500 12px Inter;color:#6f6d69;margin-top:12px}'+
   '}';
