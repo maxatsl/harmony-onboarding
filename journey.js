@@ -78,7 +78,7 @@
     var h='<h1>Harmony: from ad to day 14</h1><p class="intro">Click through the phone on the right; the step you are on lights up. Two links: the quiz (web) and the app (product).</p>',n=0;
     LANES.forEach(function(l,li){
       if(li)h+='<div class="hand"><span>↓ payment → account → her answers travel in the link → app ↓</span></div>';
-      h+='<div class="lane '+l.id+'"><div class="lh"><b>'+l.title+'</b><a href="'+l.url+'">'+l.url.replace('https://','')+'</a></div><span style="font-size:12px;opacity:.7">'+l.sub+'</span><div class="steps">';
+      h+='<div class="lane '+l.id+'"><div class="lh"><b>'+l.title+'</b><a href="'+l.url+'">'+(l.id==='app'?'Open the app →':'Start the quiz →')+' '+l.url.replace('https://','')+'</a></div><span style="font-size:12px;opacity:.7">'+l.sub+'</span><div class="steps">';
       l.steps.forEach(function(s){n++;h+='<div class="st" id="js-'+s[0]+'"><i>'+n+'</i><div><b>'+s[1]+'</b><em>'+s[2]+'</em><u>Why: '+s[3]+'</u></div></div>'});
       h+='</div></div>';
     });
