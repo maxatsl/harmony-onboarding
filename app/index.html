@@ -170,6 +170,7 @@ button{font:inherit;cursor:pointer;color:inherit}
   </div>
 </div>
 
+<script src="journey.js"></script>
 <script>
 /* ============ profile: from the quiz if she took it, otherwise a demo profile ============ */
 var DEMO={lb:178,goalLb:163,hIn:64,age:'50',meno:'meno',glp:'none',strength:'occ',breakfast:'carb',joints:'n',protein:95,morning:33,goalDate:null,plan:'year'};
@@ -212,7 +213,7 @@ function protToday(d){return (A.prot[d]||[]).reduce(function(a,b){return a+b[1]}
 var FOODS=[['2 eggs',12],['Greek yogurt',17],['Protein shake',25],['Chicken breast',30],['Cottage cheese',14],['Lentils, 1 cup',18],['Salmon',25],['Tofu',15]];
 
 /* ============ screens ============ */
-function scrToday(){
+function scrToday(){window.jStep&&jStep('today');
   field(null);chrome(true);
   if(!A.tests[1]){return scrWelcome()}
   var d=A.day,ls=latestScore(),s=session(d),done=A.sess[d]||{},n=0;for(var k in done)if(done[k])n++;
@@ -269,7 +270,7 @@ function wire(d,s){
 }
 
 /* --- first open --- */
-function scrWelcome(){
+function scrWelcome(){window.jStep&&jStep('test');
   field('forest');chrome(false);
   show('<img class="hero" src="img/welcome-chair.webp" width="800" height="639" alt="A woman in her fifties doing a sit-to-stand from a kitchen chair at home">'+
    '<p class="kick" style="color:var(--gold-pale)">Welcome'+(isDemo?' (demo profile)':'')+'</p><h2>Day 1 starts with a 5-minute strength test.</h2>'+
@@ -282,13 +283,13 @@ function scrWelcome(){
   el('st').onclick=function(){T={day:1,chair:11};scrChair()};
   el('skip').onclick=function(){A.tests[1]={chair:11,stairs:'mid',carry:'mid'};persist();tab('today')};
 }
-function scrTestIntro(){
+function scrTestIntro(){window.jStep&&jStep('test');
   field('forest');chrome(false);
   show('<p class="kick" style="color:var(--gold-pale)">Day '+T.day+' re-test</p><h1>Same three moves. Let’s see what moved.</h1>'+
    '<p class="lead">Day 1 you scored '+score(A.tests[1])+'.</p><div class="spacer"></div><button class="btn" id="st">Start</button>');
   el('st').onclick=scrChair;
 }
-function scrChair(){
+function scrChair(){window.jStep&&jStep('test');
   field(null);chrome(false);
   show('<p class="kick">1 of 3</p><h2>How many chair stands in 30 seconds?</h2><p class="lead">Arms crossed, stand up fully, sit back down. Count every full stand.</p>'+
    '<div class="counter"><b id="cv">'+T.chair+'</b><div class="stepper"><button id="cm" aria-label="One fewer">−</button><button id="cp" aria-label="One more">+</button></div></div>'+
@@ -308,7 +309,7 @@ function scrStairs(){pick(2,'One flight of stairs — how long?','Walk up at a s
   [['fast','Under 10 seconds'],['mid','10–15 seconds'],['slow','Over 15 seconds'],['rail','I need the rail or a rest']],scrCarry)}
 function scrCarry(){pick(3,'Carry two full bags — how long?','A bag in each hand, about 10 lb each. Walk until you want to put them down.','carry',
   [['long','A minute or more'],['mid','30–60 seconds'],['short','Under 30 seconds'],['no','I could not do it']],scrScore)}
-function scrScore(){
+function scrScore(){window.jStep&&jStep('score');
   A.tests[T.day]={chair:T.chair,stairs:T.stairs,carry:T.carry};persist();
   var v=score(A.tests[T.day]),base=score(A.tests[1]),stl={fast:'<10 s',mid:'10–15 s',slow:'15 s+',rail:'with rail'}[T.stairs],cal={long:'60 s+',mid:'30–60 s',short:'<30 s',no:'—'}[T.carry];
   field('forest');chrome(false);
@@ -322,7 +323,7 @@ function scrScore(){
 }
 
 /* --- progress and the day-14 report --- */
-function scrProgress(){
+function scrProgress(){window.jStep&&jStep('report');
   field(null);chrome(true);
   if(!A.tests[1])return scrWelcome();
   var b=score(A.tests[1]),w7=A.tests[7]?score(A.tests[7]):null,w14=A.tests[14]?score(A.tests[14]):null,
@@ -369,7 +370,7 @@ function fillSample(){
 }
 
 /* --- plan / profile --- */
-function scrMe(){
+function scrMe(){window.jStep&&jStep('plan');
   field(null);chrome(true);
   var M={peri:'Perimenopause',meno:'Menopause',post:'Post-menopause',unsure:'Not sure'},G={none:'Not on a GLP‑1',early:'GLP‑1, first 12 weeks',steady:'GLP‑1, steady dose',stopping:'Stopping soon',stopped:'Stopped in the last year'};
   show('<p class="kick">Your plan</p><h2>Built from your quiz'+(isDemo?' (demo)':'')+'</h2>'+

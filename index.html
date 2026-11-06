@@ -182,6 +182,35 @@ input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radi
 .steps li{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.08);border-radius:16px;padding:12px 14px;font-size:15px}
 .steps li i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--gold-pale);color:var(--forest);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
 
+/* fact screens between questions */
+.factcard{position:relative;overflow:hidden;border-radius:28px;padding:26px 22px 22px;background:linear-gradient(160deg,#224228 0%,#2d5234 60%,#5c6f5d 100%);color:var(--canvas);display:flex;flex-direction:column;gap:6px}
+.factcard:before,.factcard:after{content:"";position:absolute;border-radius:50%;background:rgba(221,190,120,.18)}
+.factcard:before{width:220px;height:220px;right:-70px;top:-80px}.factcard:after{width:120px;height:120px;left:-40px;bottom:-50px;background:rgba(255,255,255,.07)}
+.factcard .em{font-size:34px;line-height:1}
+.factcard .num{font-family:var(--serif);font-weight:300;font-size:88px;line-height:1;color:var(--gold-pale);letter-spacing:-.03em;animation:pop .6s ease-out}
+.factcard .lbl{font-size:15px;color:var(--sage-pale);max-width:280px;position:relative}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.you{background:var(--white);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.you .chip{align-self:flex-start;font-size:12px;font-weight:600;background:var(--paper-2);color:var(--forest);border-radius:999px;padding:4px 10px}
+.half{align-self:flex-start;font-size:13px;font-weight:600;background:var(--gold-pale);color:var(--forest);border-radius:999px;padding:5px 12px}
+/* paywall conversion block */
+.timerbar{position:sticky;top:0;z-index:5;margin:-20px -24px 0;padding:10px 24px;background:#b4532a;color:#fff;font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.timerbar b{font-variant-numeric:tabular-nums;font-size:18px;background:rgba(0,0,0,.18);padding:2px 10px;border-radius:8px}
+.goalchips{display:flex;flex-wrap:wrap;gap:6px}
+.goalchips span{font-size:13px;font-weight:500;background:var(--white);border-radius:999px;padding:6px 11px}
+.plan{position:relative}
+.plan .rib{position:absolute;top:-10px;right:16px;font-size:11px;font-weight:700;letter-spacing:.04em;background:var(--gold);color:#fff;border-radius:999px;padding:3px 10px}
+.plan s{opacity:.55;font-weight:400;margin-right:6px}
+.plan .pd{display:block;font-size:12px;font-weight:600;color:var(--gold)}
+.plan.sel .pd{color:var(--gold-pale)}
+.plan.sel{box-shadow:0 0 0 3px var(--gold-pale)}
+.get{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;font-size:15px}
+.get li:before{content:"✓";display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--forest);color:var(--canvas);font-size:12px;align-items:center;justify-content:center;margin-right:10px}
+.guar{display:flex;gap:12px;align-items:center;background:var(--paper-2);border-radius:18px;padding:12px 14px;font-size:14px}
+.guar span{font-size:28px}
+.btn.pulse{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,66,40,.45)}50%{box-shadow:0 0 0 10px rgba(34,66,40,0)}}
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-size:12px;color:var(--ash)}
 .fade{animation:fade .22s ease-out}
 @keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -217,6 +246,7 @@ input[type=email]{width:100%;font:inherit;padding:16px 18px;border:0;border-radi
   </div>
 </div>
 
+<script src="journey.js"></script>
 <script>
 /* ============ content ============
    Order follows Noom's weight-loss quiz: the goal first (the pain she came with),
@@ -378,6 +408,44 @@ function artSpread(){
 }
 
 /* interstitials shown after a question id */
+/* fact screens: a big number tied to her previous answer, with its source */
+var AGE_L={'40':'40–44','45':'45–49','50':'50–54','55':'55–59','60':'60+'};
+var FACTS={
+ age:{em:'💪',num:'3–8%',lbl:'of muscle mass is lost per decade after 30, and faster after menopause',
+   t:function(){return 'At '+(AGE_L[S.age]||'your age')+', muscle still responds to training'},
+   you:function(){return ['You said: '+(AGE_L[S.age]||''),'Your plan starts at your level with chair-based moves, then adds load every week.']},
+   src:'Volpi et al., Curr Opin Clin Nutr Metab Care 2004; ACSM position stand on resistance training.'},
+ glp:{when:function(){return !onGlp()},em:'🌿',num:'78%',lbl:'of US adults aged 50–64 are not taking a GLP‑1',
+   t:'Most women your age do this without medication',
+   you:function(){return ['You said: no GLP‑1','Your plan runs on strength and protein alone. If you start a GLP‑1 later, it adapts to your dose.']},
+   src:'KFF Health Tracking Poll, Nov 2025: 22% of adults 50–64 currently take a GLP‑1.'},
+ meno:{em:'🤝',num:'1.3M',lbl:'US women reach menopause every year',half:true,
+   t:function(){return ({peri:'Perimenopause',meno:'Menopause',post:'Post-menopause'}[S.meno]||'Not sure')+': you are far from alone'},
+   you:function(){var m={peri:'Perimenopause often lasts several years. Starting strength work now protects the muscle you have.',
+     meno:'In the years around the final period, lean mass keeps falling. This is when strength work pays off most.',
+     post:'Lean mass keeps drifting down after menopause. Regular strength work is how you hold on to it.',
+     unsure:'Not sure is common. Your plan works for every stage, and you can update it any time.'};
+     return ['You said: '+({peri:'perimenopause',meno:'menopause',post:'post-menopause',unsure:'not sure'}[S.meno]||''),m[S.meno]||m.unsure]},
+   src:'NIH / The Menopause Society; SWAN body-composition study, Greendale et al. 2019.'},
+ strength:{em:'🏋️‍♀️',num:'24%',lbl:'of US adults meet both activity guidelines, cardio and strength',
+   t:function(){return (S.strength==='low'||S.strength==='high')?'You are already ahead of 3 in 4 adults':'Starting from zero is the norm'},
+   you:function(){return (S.strength==='low'||S.strength==='high')?['You said: '+(S.strength==='high'?'3× a week or more':'once or twice a week'),'We build on it: progressive load, re-tested every week.']:
+     ['You said: '+(S.strength==='none'?'none':'now and then'),'Beginners usually see the biggest early change in strength. Your day-14 report will show it.']},
+   src:'CDC, National Health Interview Survey 2020: 24.2% of adults met both guidelines.'}
+};
+function scrFact(f,next){
+  field(null);stepLbl('');window.jStep&&jStep('facts');
+  var y=f.you(),left=visible().length-visible().indexOf(S.qi);
+  stage.innerHTML='<div class="screen">'+(f.half?'<span class="half">🎉 Halfway there</span>':'<p class="kick">Did you know?</p>')+
+   '<div class="factcard"><span class="em">'+f.em+'</span><span class="num">'+f.num+'</span><span class="lbl">'+f.lbl+'</span></div>'+
+   '<h2>'+val(f.t)+'</h2>'+
+   '<div class="you"><span class="chip">'+y[0]+'</span><span class="lead">'+y[1]+'</span></div>'+
+   '<p class="src">'+f.src+'</p><div class="spacer"></div>'+
+   '<p class="small" style="text-align:center">'+(left>0?left+' question'+(left>1?'s':'')+' left · your date gets sharper with each answer':'Last step: building your plan')+'</p>'+
+   '<button class="btn" id="tc">Continue</button></div>';
+  ev('FactViewed');if(f.half)setTimeout(function(){fireworks(false)},200);
+  document.getElementById('tc').onclick=function(){go(next)};
+}
 var TEASERS={
  changes:{kick:'It’s not your willpower',t:function(){return S.changes.indexOf('stuck')>-1?'Eating less stops working after 40. Here is why.':'Your body is changing the rules. Here is how.'},
    art:artWhy,cap:'Women followed through the menopause transition.',
@@ -396,7 +464,7 @@ var TEASERS={
 
 /* ============ screens ============ */
 function scrQuiz(){
-  field(null);
+  field(null);window.jStep&&jStep({goal:'pain',changes:'pain',age:'body',height:'body',lb:'body',goalLb:'body',meno:'branch',glp:'branch',med:'branch',exit:'branch',strength:'habits',breakfast:'habits'}[QUIZ[S.qi].id]);
   var list=visible(),pos=list.indexOf(S.qi),q=QUIZ[S.qi];
   prog(Math.round((pos+1)/(list.length+2)*100));stepLbl((pos+1)+' of '+list.length);
   var h='<div class="screen">';
@@ -436,6 +504,8 @@ function scrQuiz(){
     var t=TEASERS[q.id];
     if(t&&t.proj)return go(function(){scrProjection(nx)});
     if(t&&(!t.when||t.when()))return go(function(){scrTeaser(t,nx)});
+    var fc=FACTS[q.id];
+    if(fc&&(!fc.when||fc.when()))return go(function(){scrFact(fc,nx)});
     if(q.id==='lb'&&!losing())return go(function(){scrProjection(nx)});
     go(nx);
   }
@@ -474,7 +544,7 @@ function scrQuiz(){
     };
   }
 }
-function scrTeaser(z,next){
+function scrTeaser(z,next){window.jStep&&jStep('facts');
   field(null);stepLbl('');
   stage.innerHTML='<div class="screen">'+(z.kick?'<p class="kick">'+z.kick+'</p>':'')+'<h2>'+val(z.t)+'</h2>'+
    '<div class="art">'+z.art()+'<p class="cap">'+z.cap+'</p></div>'+
@@ -485,7 +555,7 @@ function scrTeaser(z,next){
   document.getElementById('tc').onclick=function(){go(next)};
 }
 /* the first projected date: Noom's engine. Later answers bring it closer. */
-function scrProjection(next){
+function scrProjection(next){window.jStep&&jStep('date1');
   field(null);stepLbl('');
   var w=weeks(false),hl=losing()?
     'You could reach <em>'+S.goalLb+' lb</em> by <em class="nb">'+dateIn(w)+'</em>':
@@ -497,7 +567,7 @@ function scrProjection(next){
   ev('ProjectionViewed · first');setTimeout(function(){fireworks(false)},250);
   document.getElementById('tc').onclick=function(){go(next)};
 }
-function scrBuild(){
+function scrBuild(){window.jStep&&jStep('build');
   field('forest');prog(100);stepLbl('');
   var secs=['Body profile','Menopause stage',onGlp()?'Medication stage':'Metabolism','Protein target','Strength plan'];
   var h='<div class="screen"><h2>Building your plan</h2><div class="secs">';
@@ -518,7 +588,7 @@ function scrBuild(){
     if(n>=100*secs.length){clearInterval(tick);ev('PlanBuilt');setTimeout(function(){go(scrLead)},500)}
   },red?120:30);
 }
-function scrLead(){
+function scrLead(){window.jStep&&jStep('email');
   field(null);prog(null);stepLbl('');
   stage.innerHTML='<div class="screen"><p class="kick">Your plan is ready</p><h2>Enter your email to see your final date'+(losing()?' for '+S.goalLb+' lb':'')+'</h2>'+
    '<p class="lead">We’ll also send your protein target and 14-day calendar, so you have them even before you decide.</p>'+
@@ -533,7 +603,7 @@ function calendar(){
     h+='<div class="'+(k?'key':(rest?'rest':''))+'"><b>'+d[(i-1)%7]+'</b>'+(k||('Day '+i))+'</div>';}
   return h+'</div>';
 }
-function scrResult(){
+function scrResult(){window.jStep&&jStep('date2');
   field('sage');
   var t=target(),w1=weeks(false),w2=weeks(true),gain=w1-w2;
   stage.innerHTML='<div class="screen">'+
@@ -553,19 +623,31 @@ function scrResult(){
   document.getElementById('save').onclick=function(){go(scrPaywall)};
 }
 function scrPaywall(){
-  field(null);
+  field(null);window.jStep&&jStep('paywall');
+  if(!S.tEnd)S.tEnd=Date.now()+10*60*1000;   /* intro price reservation; production must honour it server-side */
   var t=target(),plans=[
-    ['year','<span class="nm">12 months<span class="save">save 67%</span><small>$2.50 a week</small></span>','$129.99<small>billed once a year</small>'],
-    ['month','<span class="nm">4 weeks<small>then $29.99 every 4 weeks</small></span>','$14.99<small>first 4 weeks</small>']];
-  var h='<div class="screen"><h2>'+(losing()?'Your plan to '+S.goalLb+' lb is ready':'Your strength plan is ready')+'</h2>'+
-   '<div class="panel light">'+
-    '<div class="kv"><span>Daily protein target</span><b>'+t.daily+' g</b></div>'+
-    '<div class="kv"><span>Home strength test</span><b>Day 1</b></div>'+
-    '<div class="kv"><span>Report for your doctor</span><b>Day 14</b></div></div><div class="opts">';
+    ['year','<span class="rib">MOST POPULAR</span><span class="nm">12 months<span class="save">save 67%</span><small>vs paying every 4 weeks</small></span>','<s>$389.87</s>$129.99<span class="pd">$0.36 / day</span>'],
+    ['month','<span class="nm">4 weeks<small>then $29.99 every 4 weeks</small></span>','<s>$29.99</s>$14.99<span class="pd">$0.54 / day</span>']];
+  var h='<div class="screen"><div class="timerbar"><span>🎁 Intro price reserved for</span><b id="tm">10:00</b></div>'+
+   '<h2>'+(losing()?'Your plan to '+S.goalLb+' lb is ready':'Your strength plan is ready')+'</h2>'+
+   '<div class="goalchips">'+(losing()?'<span>🎯 '+S.goalLb+' lb by '+dateIn(weeks(true))+'</span>':'')+'<span>🥚 '+t.daily+' g protein a day</span><span>💪 Strength Score on day 1</span></div>'+
+   '<div class="opts">';
   for(var i=0;i<plans.length;i++)h+='<button class="plan'+(S.plan===plans[i][0]?' sel':'')+'" data-p="'+plans[i][0]+'">'+plans[i][1]+'<span class="pr">'+plans[i][2]+'</span></button>';
-  h+='</div><div class="spacer"></div><button class="btn" id="buy">Start my plan</button>'+
-   '<p class="small">Cancel in one tap, any time. We remind you before every renewal. No medical advice. 18+.</p></div>';
+  h+='</div><p class="src" style="margin-top:-6px">Crossed-out prices: the regular $29.99 every 4 weeks, and 13 × $29.99 for a year.</p>'+
+   '<button class="btn pulse" id="buy">Get my plan</button>'+
+   '<div class="trust"><span>🔒 Secure checkout</span><span>'+(APPLE?'\uF8FF':'')+' Apple Pay</span><span>✕ Cancel in one tap</span><span>🔔 Reminder before renewal</span></div>'+
+   '<h3>What you get</h3><ul class="get"><li>A strength plan for '+({peri:'perimenopause',meno:'menopause',post:'post-menopause'}[S.meno]||'your stage')+(onGlp()?', timed to your GLP‑1 week':'')+'</li>'+
+   '<li>Your protein target: '+t.daily+' g, a third before noon</li><li>20-minute home sessions, joint-friendly if you need</li>'+
+   '<li>A weekly Strength Score re-test</li><li>A day-14 report to show your doctor</li></ul>'+
+   '<div class="guar"><span>🛡️</span><div><b>14-day money-back guarantee</b><br>Not for you? Write to us within 14 days for a full refund.</div></div>'+
+   '<p class="small">Subscription renews automatically until cancelled. No medical advice. 18+.</p></div>';
   stage.innerHTML=h;ev('PaywallView');
+  var tm=document.getElementById('tm'),iv=setInterval(function(){
+    if(!document.getElementById('tm'))return clearInterval(iv);
+    var r=Math.max(0,Math.round((S.tEnd-Date.now())/1000));
+    tm.textContent=Math.floor(r/60)+':'+('0'+r%60).slice(-2);
+    if(!r){clearInterval(iv);tm.parentNode.firstChild.textContent='🎁 Intro price still holds today'}
+  },500);
   var ps=stage.querySelectorAll('.plan');
   for(var j=0;j<ps.length;j++)ps[j].onclick=function(){S.plan=this.getAttribute('data-p');ev('PlanSelected · '+S.plan);
     var all=stage.querySelectorAll('.plan');for(var k=0;k<all.length;k++)all[k].className='plan'+(all[k].getAttribute('data-p')===S.plan?' sel':'')};
@@ -592,7 +674,7 @@ function fireworks(big){
 /* ============ Apple Pay (mock): sheet → Face ID → done ============ */
 var APPLE=/Mac|iPhone|iPad|iPod/.test(navigator.userAgent),APL=APPLE?'\uF8FF Pay':'Apple Pay';
 function price(){return S.plan==='year'?'$129.99':'$14.99'}
-function applePay(){
+function applePay(){window.jStep&&jStep('pay');
   ev('ApplePaySheet');
   var w=document.createElement('div');w.className='ap-wrap';
   w.innerHTML='<div class="ap" role="dialog" aria-label="Apple Pay, demo"><div class="hd"><span class="logo">'+APL+'</span><button class="x" id="apx" aria-label="Cancel">✕</button></div>'+
@@ -610,7 +692,7 @@ function applePay(){
     setTimeout(function(){w.remove();ev('Purchase (mock, reporting only)',true);save();go(scrSuccess)},1700);
   };
 }
-function scrSuccess(){
+function scrSuccess(){window.jStep&&jStep('pay');
   field('forest');prog(null);stepLbl('');
   stage.innerHTML='<div class="screen" style="text-align:center;align-items:center"><div class="spacer"></div>'+
    '<img src="assets/success-park.webp" width="800" height="600" alt="A smiling woman in her fifties with her arms raised on an autumn path" style="width:100%;height:auto;max-height:260px;object-fit:cover;border-radius:24px;display:block">'+
@@ -629,7 +711,7 @@ var UPS={
  meno:{t:'Hot Flash & Sleep Plan',h:function(){return 'Want fewer bad nights while you build strength?'},
    b:['Finds your hot-flash triggers from your 1-tap check-ins','A 10-minute evening routine for better sleep','A sleep and symptoms report every 2 weeks']}};
 function upsellKey(){return exitPhase()?'exit':(onGlp()?'glp':'meno')}
-function scrUpsell(){
+function scrUpsell(){window.jStep&&jStep('upsell');
   field(null);
   var u=UPS[upsellKey()];
   stage.innerHTML='<div class="screen"><p class="kick">One more thing</p><h2>'+u.h()+'</h2>'+
@@ -642,7 +724,7 @@ function scrUpsell(){
   document.getElementById('add').onclick=function(){S.addon=u.t;ev('UpsellPurchase (mock)',true);save();this.textContent='Added ✓';setTimeout(function(){go(scrAccount)},500)};
   document.getElementById('skip').onclick=function(){ev('UpsellSkip');go(scrAccount)};
 }
-function scrAccount(){
+function scrAccount(){window.jStep&&jStep('handoff');
   field(null);
   stage.innerHTML='<div class="screen"><p class="kick">Last step</p><h2>Create your account to keep your plan</h2>'+
    '<p class="lead">Your answers, protein target and 14-day calendar are saved to it.</p>'+
@@ -666,7 +748,7 @@ function appLink(){
   var j=JSON.stringify(profile()),b=btoa(unescape(encodeURIComponent(j))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
   return APP_URL+'/#p='+b;
 }
-function scrDone(){
+function scrDone(){window.jStep&&jStep('handoff');
   field('forest');prog(null);stepLbl('');
   stage.innerHTML='<div class="screen"><img src="assets/done-kitchen.webp" width="800" height="600" alt="A woman in her kitchen smiling at her phone" style="width:100%;height:auto;max-height:260px;object-fit:cover;border-radius:24px;display:block"><p class="kick" style="color:var(--gold-pale)">You’re all set</p>'+
    '<h2>Day 1 starts with a 5-minute strength test.</h2>'+
@@ -685,7 +767,7 @@ if(/[?&]dev\b/.test(location.search))document.getElementById('devTools').hidden=
 (function(){
   var m=/s=(\w+)/.exec(location.hash||''),
     map={quiz:scrQuiz,why:function(){scrTeaser(TEASERS.changes,scrQuiz)},projection:function(){scrProjection(scrQuiz)},
-      build:scrBuild,lead:scrLead,result:scrResult,paywall:scrPaywall,success:scrSuccess,upsell:scrUpsell,account:scrAccount,done:scrDone};
+      fact:function(){scrFact(FACTS.meno,scrQuiz)},build:scrBuild,lead:scrLead,result:scrResult,paywall:scrPaywall,success:scrSuccess,upsell:scrUpsell,account:scrAccount,done:scrDone};
   if(m&&map[m[1]]){S.goal='20';S.changes=['belly','stuck','tired'];S.age='50';S.hIn=64;S.lb=178;S.goalLb=163;S.meno='meno';
     S.glp='none';S.strength='occ';S.breakfast='carb';S.qi=+(/q=(\d+)/.exec(location.hash)||[0,0])[1];stage.__cur=map[m[1]];stage.__qi=S.qi;map[m[1]]();}
   else go(scrQuiz,true);
