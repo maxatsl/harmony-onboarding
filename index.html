@@ -311,7 +311,7 @@ function go(fn,noHist){
   if(!noHist&&stage.__cur)HIST.push({fn:stage.__cur,qi:stage.__qi});
   stage.__cur=fn;stage.__qi=S.qi;stage.className='';void stage.offsetWidth;stage.className='fade';
   document.getElementById('backBtn').hidden=!HIST.length||[scrBuild,scrSuccess,scrUpsell,scrAccount,scrDone].indexOf(fn)>-1;
-  fn();window.scrollTo(0,0)
+  fn();window.scrollTo(0,0);phone.scrollTop=0
 }
 document.getElementById('backBtn').onclick=function(){var h=HIST.pop();if(!h)return;S.qi=h.qi;go(h.fn,true)};
 function val(x){return typeof x==='function'?x():x}

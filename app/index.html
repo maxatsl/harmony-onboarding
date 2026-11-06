@@ -194,7 +194,9 @@ function el(id){return document.getElementById(id)}
 function toast(t){var x=el('toast');x.textContent=t;x.className='toast on';clearTimeout(x._t);x._t=setTimeout(function(){x.className='toast'},1800)}
 function field(f){phone.className='phone'+(f?' f-'+f:'')}
 function chrome(on){el('tabs').hidden=!on}
-function show(html){body.className='body fade';void body.offsetWidth;body.innerHTML=html;body.scrollTop=0}
+function show(html,keep){if(!keep){body.className='body fade';void body.offsetWidth}body.innerHTML=html;if(!keep)body.scrollTop=0}
+/* taps on Today (food, check-in, exercises) re-render in place: keep the scroll where it was */
+function keepToday(){var y=body.scrollTop,py=phone.scrollTop;scrToday(true);body.scrollTop=y;phone.scrollTop=py}
 function ring(pct,v,unit,sub){var c=2*Math.PI*86,off=c*(1-Math.max(0,Math.min(1,pct)));
   return '<div class="ring"><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="rt" cx="100" cy="100" r="86"/><circle class="rf" cx="100" cy="100" r="86" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg><div class="rc"><span class="rv">'+v+(unit||'')+'</span><span class="rs">'+sub+'</span></div></div>'}
 
@@ -213,7 +215,7 @@ function protToday(d){return (A.prot[d]||[]).reduce(function(a,b){return a+b[1]}
 var FOODS=[['2 eggs',12],['Greek yogurt',17],['Protein shake',25],['Chicken breast',30],['Cottage cheese',14],['Lentils, 1 cup',18],['Salmon',25],['Tofu',15]];
 
 /* ============ screens ============ */
-function scrToday(){window.jStep&&jStep('today');
+function scrToday(keep){window.jStep&&jStep('today');
   field(null);chrome(true);
   if(!A.tests[1]){return scrWelcome()}
   var d=A.day,ls=latestScore(),s=session(d),done=A.sess[d]||{},n=0;for(var k in done)if(done[k])n++;
@@ -249,7 +251,7 @@ function scrToday(){window.jStep&&jStep('today');
      '<p class="small">We make today light and keep your streak. We never advise on dose.</p>'+
      '<button class="btn soft" id="shot">'+(A.shot[d]?'Undo: not today':'Yes, injection day')+'</button></div>';
   if(P.goalLb)h+='<p class="small" style="text-align:center">Goal: '+P.goalLb+' lb'+(P.goalDate?' by '+P.goalDate:'')+' · '+P.protein+' g protein a day</p>';
-  show(h);
+  show(h,keep);
   wire(d,s);
 }
 function seg(k,label,opts,cur){var h='<div class="ci"><span>'+label+'</span><div class="seg">';
@@ -257,14 +259,14 @@ function seg(k,label,opts,cur){var h='<div class="ci"><span>'+label+'</span><div
 function wire(d,s){
   var ex=body.querySelectorAll('.ex');
   for(var i=0;i<ex.length;i++)ex[i].onclick=function(){var j=this.getAttribute('data-i');A.sess[d]=A.sess[d]||{};A.sess[d][j]=!A.sess[d][j];persist();
-    var n=0;for(var k in A.sess[d])if(A.sess[d][k])n++;if(n===s.length)toast('Session done. That’s day '+d+'.');scrToday()};
+    var n=0;for(var k in A.sess[d])if(A.sess[d][k])n++;if(n===s.length)toast('Session done. That’s day '+d+'.');keepToday()};
   var fs=body.querySelectorAll('.food');
   for(var f=0;f<fs.length;f++)fs[f].onclick=function(){var x=FOODS[this.getAttribute('data-f')];(A.prot[d]=A.prot[d]||[]).push(x);persist();
-    var p=protToday(d);if(p>=P.protein&&p-x[1]<P.protein)toast('Protein target hit: '+p+' g');scrToday()};
-  if(el('undo'))el('undo').onclick=function(){A.prot[d].pop();persist();scrToday()};
+    var p=protToday(d);if(p>=P.protein&&p-x[1]<P.protein)toast('Protein target hit: '+p+' g');keepToday()};
+  if(el('undo'))el('undo').onclick=function(){A.prot[d].pop();persist();keepToday()};
   var sb=body.querySelectorAll('.seg button');
-  for(var b=0;b<sb.length;b++)sb[b].onclick=function(){A.ci[d]=A.ci[d]||{};A.ci[d][this.getAttribute('data-k')]=this.getAttribute('data-v');persist();scrToday()};
-  if(el('shot'))el('shot').onclick=function(){A.shot[d]=!A.shot[d];persist();scrToday()};
+  for(var b=0;b<sb.length;b++)sb[b].onclick=function(){A.ci[d]=A.ci[d]||{};A.ci[d][this.getAttribute('data-k')]=this.getAttribute('data-v');persist();keepToday()};
+  if(el('shot'))el('shot').onclick=function(){A.shot[d]=!A.shot[d];persist();keepToday()};
   if(el('rt'))el('rt').onclick=function(){T={day:d,chair:A.tests[1].chair};scrTestIntro()};
   if(el('rep'))el('rep').onclick=function(){tab('progress')};
 }
